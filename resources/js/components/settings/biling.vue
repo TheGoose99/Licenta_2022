@@ -36,6 +36,7 @@
                                     <th scope="col">Symbol</th>
                                     <th scope="col">Bought Amount</th>
                                     <th scope="col">For</th>
+                                    <th scope="col">Used Wallet</th>
                                     <th scope="col">Transaction Data</th>
                                 </tr>
                             </thead>
@@ -45,6 +46,7 @@
                                         <td scope="row">{{ purchases.crypto_symbol }}</td>
                                         <td scope="row">${{ purchases.bought_amount }}</td>
                                         <td scope="row">${{ purchases.bought_for }}</td>
+                                        <td scope="row">{{ purchases.used_wallet }}</td>
                                         <td scope="row">{{ formatDate(purchases.created_at) }}</td>
                                     </tr>
                                 </tbody>
@@ -57,6 +59,7 @@
                                     <th scope="col">Symbol</th>
                                     <th scope="col">Sold Amount</th>
                                     <th scope="col">For</th>
+                                    <th scope="col">Used Wallet</th>
                                     <th scope="col">Transaction Data</th>
                                 </tr>
                             </thead>
@@ -66,6 +69,7 @@
                                     <td scope="row">{{ sells.crypto_symbol }}</td>
                                     <td scope="row">${{ sells.sold_amount }}</td>
                                     <td scope="row">${{ sells.sold_for }}</td>
+                                    <td scope="row">{{ sells.used_wallet }}</td>
                                     <td scope="row">{{ formatDate(sells.created_at) }}</td>
                                 </tr>
                             </tbody>

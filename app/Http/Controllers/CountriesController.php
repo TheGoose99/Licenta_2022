@@ -17,7 +17,7 @@ class CountriesController extends Controller
     {
         $countryName = DB::table('countries')->where('id', $id)->first();
 
-        return response()->json($countryName->name);
+        return response()->json($countryName->country_name);
     }
 
 }

@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <nav class="nav flex-column nav-pills nav-gap-y-1">
-                    <p class="nav-item nav-link has-icon nav-link-faded" :class="retrieveComponentMethod == 'profileEdit' ? 'active' : ''" @click="emitRoute('profileEdit')">
+                    <p class="nav-item nav-link has-icon nav-link-faded" :class="retrieveComponentMethod == 'profileView' ? 'active' : ''" @click="emitRoute('profileView')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Profile Information
                     </p>
                     <p class="nav-item nav-link has-icon nav-link-faded" :class="retrieveComponentMethod == 'changeUsername' ? 'active' : ''" @click="emitRoute('changeUsername')">

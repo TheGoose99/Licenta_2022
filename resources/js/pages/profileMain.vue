@@ -25,10 +25,12 @@ import changeUsername from '../components/settings/changeUsername.vue';
 import biling from '../components/settings/biling.vue';
 import profileRouting from '../components/settings/profileRouting.vue';
 import profileRoutesNav from '../components/settings/profileRoutesNav.vue';
+import profileView from '../components/settings/profileView.vue';
 
 export default {
     components: {
         profileEdit,
+        profileView,
         profileRouting,
         profileRoutesNav,
         changePassword,

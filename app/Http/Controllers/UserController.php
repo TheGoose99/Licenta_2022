@@ -60,15 +60,25 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+
+        $validatedData = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'phone' => 'nullable|numeric|digits_between:5,15',
+            'address' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|numeric|digits_between:3,200',
+            'country_id' => 'nullable|string|max:255',
+            'new_avatar' => 'nullable|string',
+        ]);
+
         $data = array();
-        $data['username'] = $request->username;
         $data['name'] = $request->name;
         $data['email'] = $request->email;
         $data['phone'] = $request->phone;
         $data['address'] = $request->address;
         $data['postal_code'] = $request->postal_code;
 
-        $countryName = DB::table('countries')->where('name', $request->country_id)->first();
+        $countryName = DB::table('countries')->where('country_name', $request->country_id)->first();
 
         $data['country_id'] = $countryName->id;
 
@@ -172,7 +182,7 @@ class UserController extends Controller
     public function changeUsername (Request $request, $id) {
 
         $validatedData = $request->validate([
-            'username' => 'required|unique:users',
+            'username' => 'required|unique:users|alpha_dash',
         ]);
 
 

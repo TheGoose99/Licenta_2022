@@ -24,17 +24,17 @@
                     <form method="PUT" @submit.prevent="updateData">
                         <div class="row mt-2">
                             <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" v-model="form.name"></div>
-                            <div class="col-md-6"><label class="labels">Phone</label><input type="text" class="form-control" v-model="form.phone"></div>
+                            <div class="col-md-6"><label class="labels">Phone</label><input type="number" class="form-control" v-model="form.phone"></div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" v-model="form.email"></div>
+                            <div class="col-md-12"><label class="labels">Email</label><input type="email" class="form-control" v-model="form.email"></div>
                             <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" v-model="form.address"></div>
                             <div class="col-md-6"><label class="labels">Postal Code</label><input type="text" class="form-control" v-model="form.postal_code"></div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-5"><label class="labels">Country</label>
                                 <select v-model="selected" @click="changeCountry">
-                                    <option v-for="country in countries" :key="country.id" >{{ country.name }}</option>
+                                    <option v-for="country in countries" :key="country.id" >{{ country.country_name }}</option>
                                 </select>
                                 <div class="py-3">
                                     <input type="file" class="col-md-auto" @change="onFileSelected">
@@ -84,6 +84,8 @@ export default {
                 address: this.form.address,
                 postal_code: this.form.postal_code,
                 country_id: this.form.country_id,
+                avatar: this.form.avatar,
+                new_avatar: this.profile_pic,
             }
 
             try {
@@ -138,7 +140,6 @@ export default {
             const response = await axios.get('/api/countries');
 
             this.countries = response.data;
-
         },
         handleError() {
             this.error = false;
@@ -183,5 +184,11 @@ export default {
     select > option
     {
         width: 200px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
     }
 </style>
