@@ -1,0 +1,44 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production",
+    "start": "vue-cli-service serve --open",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@mdi/font": "5.9.55",
+    "cors": "^2.8.5",
+    "mdb-vue-ui-kit": "^1.11.0",
+    "roboto-fontface": "*",
+    "sweetalert2": "^11.4.6",
+    "vue": "^3.2.31",
+    "vue-axios": "^3.4.1",
+    "vue-axios-cors": "^1.0.1",
+    "vue-loader": "^17.0.0",
+    "vue-moments-ago": "^0.2.0",
+    "vue-responsive-video-background-player": "^2.2.0",
+    "vue-router": "^4.0.13",
+    "vuetify": "^3.0.0-beta.0",
+    "vuex": "^4.0.2",
+    "webfontloader": "^1.0.0"
+  },
+  "devDependencies": {
+    "axios": "^0.25.0",
+    "laravel-mix": "^6.0.6",
+    "lodash": "^4.17.19",
+    "postcss": "^8.1.14",
+    "sass": "^1.38.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-mdb5": "~1.2.0",
+    "vue-cli-plugin-vuetify": "~2.4.8",
+    "vuetify-loader": "^2.0.0-alpha.0"
+  }
+}
