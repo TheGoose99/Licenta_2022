@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -68,7 +69,8 @@ class UserController extends Controller
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|numeric|digits_between:3,200',
             'country_id' => 'nullable|string|max:255',
-            'new_avatar' => 'nullable|string',
+            'image' => 'nullable',
+            'newimage' => 'nullable',
         ]);
 
         $data = array();
@@ -78,39 +80,30 @@ class UserController extends Controller
         $data['address'] = $request->address;
         $data['postal_code'] = $request->postal_code;
 
-        $countryName = DB::table('countries')->where('country_name', $request->country_id)->first();
-
-        $data['country_id'] = $countryName->id;
-
-        $image = $request->new_avatar;
-
-        $success = '';
-
-        $user = DB::table('users')->where('id', $id)->update($data);
-
-        // if($image) {
-        //     $position = strpos($image, ';');
-        //     $sub = substr($image, 0, $position);
-        //     $ext = explode('/', $sub)[1];
-
-        //     $name = time().".".$ext;
-        //     $upload_path = 'backend/users/avatars';
-        //     $image_url = $upload_path.$name;
-        //     $success = $image->save($image_url);
-        // }
-
-        $success = '';
-        if($success != '') {
-            $data['avatar'] = $image;
-            $img = DB::table('users')->where('id', $id)->first();
-            $image_path = $img->avatar;
-            $done = unlink($image_path);
-            $user = DB::table('users')->where('id', $id)->update($data);
-        } else {
-            $oldphoto = $request->avatar;
-            $data['avatar'] = $oldphoto;
-            $user = DB::table('users')->where('id', $id)->update($data);
+        if($request->country_id) {
+            $countryName = DB::table('countries')->where('country_name', $request->country_id)->first();
+            $data['country_id'] = $countryName->id;
         }
+
+        // $destination_path = 'public/images';
+        // $image = $request->file('newimage');
+        // $imagename = $image->getClientOriginalName();
+        // $path = $request->file('newimage')->storeAs($destination_path, $imagename);
+
+        // $data['image'] = $filename;
+
+        User::where('id', $id)->update($data);
+
+        // if($change_pic) {
+        //     $data['image'] = $image;
+        //     $img = User::where('id', $id)->first();
+        //     $image_path = $img->avatar;
+        //     $done = unlink($image_path);
+        //     $user = User::where('id', $id)->update($data);
+        // } else {
+        //     $oldphoto = $request->image;
+        //     $data['image'] = $oldphoto;
+        // }
     }
 
     /**
@@ -119,8 +112,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $user = User::find($id);
 
         $user->delete();
@@ -130,7 +122,8 @@ class UserController extends Controller
 
         $validatedData = $request->validate([
             'old_password' => 'required',
-            'password' => 'required|string|min:8|max:25',
+            'password' => 'required|string|min:8|max:25|confirmed',
+            'password_confirmation' => 'required|string|min:8|max:255',
         ]);
 
         $user = User::find($id)->first();
@@ -143,7 +136,7 @@ class UserController extends Controller
             // User::where('id', $id)->update(['password' => Hash::make($validatedData['password'])]);
 
         } else {
-            return "Not working";
+            return response()->json(['message' => 'Incorrect password!'], 401);
         }
 
     }
@@ -153,6 +146,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'wallet' => 'required',
         ]);
+
         $user = User::find($id)->first();
 
         $user->wallet = $request->wallet;
@@ -170,6 +164,7 @@ class UserController extends Controller
     }
 
     public function loadUsername (Request $request, $id) {
+
         $user = User::find($id)->first();
 
         if($user->username) {
@@ -185,9 +180,27 @@ class UserController extends Controller
             'username' => 'required|unique:users|alpha_dash',
         ]);
 
-
         $user = User::find($id)->first();
         $user->username = $request->username;
         $user->save();
+    }
+
+    public function forgotPassword (Request $request) {
+
+        $validateData = $request->validate([
+            'email' => 'required|string|email|max:255',
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:8|max:255|confirmed',
+            'password_confirmation' => 'required|string|min:8|max:255',
+        ]);
+
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        if($request->email == $user->email && $request->username == $user->username && $request->password == $request->password_confirmation) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+        } else {
+            return response()->json(['message' => 'Incorrect email or username'], 401);
+        }
     }
 }

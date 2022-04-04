@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters} from 'vuex';
+import { mapGetters, mapMutations} from 'vuex';
 
 export default {
     data() {
@@ -66,6 +66,8 @@ export default {
                     await axios.put('/api/user/changeUsername/'+this.userId, payload, {
                         withCredentials: true,
                     })
+
+                    this.$store.commit('setUsername', payload);
 
                     Toast.fire({
                             icon: 'success',
@@ -107,7 +109,8 @@ export default {
         },
     },
     computed:{
-        ...mapGetters({userId: 'userId'})
+        ...mapGetters({userId: 'userId'}),
+        ...mapMutations(['setUsername']),
     },
 }
 </script>

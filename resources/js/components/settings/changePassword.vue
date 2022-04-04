@@ -60,10 +60,11 @@ export default {
                 const payload = {
                     old_password: this.form.old_password,
                     password: this.form.new_password,
+                    password_confirmation: this.form.new_password_confirmation,
                 }
 
                 try {
-                    // await axios.get('/sanctum/csrf-cookie')
+
                     await axios.put('/api/user/changePassword/'+this.userId, payload, {
                         withCredentials: true,
                     })

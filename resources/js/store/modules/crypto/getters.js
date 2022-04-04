@@ -14,4 +14,7 @@ export default {
     retrieveselectedCryptoAmount(state) {
         return state.selectedCryptoAmount;
     },
+    retrieveselectedCryptoSymbol(state) {
+        return state.selectedCryptoSymbol;
+    },
 }

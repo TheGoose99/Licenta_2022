@@ -11,5 +11,6 @@ export default {
     selectedCrypto(state, payload) {
         state.selectedCrypto = payload.name;
         state.selectedCryptoAmount = payload.price;
+        state.selectedCryptoSymbol = payload.cryptoSymbol;
     },
 }

@@ -12,5 +12,46 @@ export default {
         })).catch(errors => {
             console.log(errors);
         })
+    },
+
+    async sell(context, payload) {
+        return context.dispatch('makeTransaction', {
+            ...payload,
+            mode: 'sell'
+        });
+    },
+
+    async buy(context, payload) {
+        return context.dispatch('makeTransaction', {
+            ...payload,
+            mode: 'buy'
+        });
+    },
+
+    async makeTransaction({getters}, payload) {
+
+        const userId = getters.userId;
+
+        let wallet= null;
+        let url = '';
+
+        if(payload.mode == 'buy') {
+            url = '/api/purchases';
+        } else {
+            url = '/api/sells';
+        }
+
+        await axios.get('/api/user/loadWallet/' + userId)
+            .then(({data}) => (wallet = data))
+        const response = await axios.post(url, {...payload, wallet, userId}, {
+            withCredentials: true,
+        })
+
+        if(!response.statusText) {
+            const error = new Error(
+                responseData.message || 'Failed to authenticate. Check your credentials.'
+            );
+        throw error;
+        }
     }
 }

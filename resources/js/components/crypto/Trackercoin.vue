@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <div class="card">
             <div class="form-group">
@@ -110,7 +109,7 @@
                     <td scope="row" :class="[PercentageColor(crypto.price_change_24h) ? 'text-success' : 'text-danger']">{{ crypto.price_change_24h.toFixed(3) }}</td>
                     <td scope="row" :class="[PercentageColor(crypto.price_change_percentage_24h) ? 'text-success' : 'text-danger']">{{ crypto.price_change_percentage_24h.toFixed(3) }}%</td>
                     <td scope="row">{{ formatDate(crypto.last_updated) }}</td>
-                    <td scope="row"><button @click="goTrade(crypto.name, crypto.current_price)" class="btn btn-warning">Trade</button></td>
+                    <td scope="row"><button @click="goTrade(crypto.name, crypto.current_price, crypto.symbol)" class="btn btn-warning">Trade</button></td>
                 </tr>
             </tbody>
         </table>
@@ -246,8 +245,8 @@ export default {
         cancelAutoUpdate () {
             clearInterval(this.timer);
         },
-        goTrade(name, price) {
-            const payload = { name, price }
+        goTrade(name, price, cryptoSymbol) {
+            const payload = { name, price, cryptoSymbol }
 
             this.$store.dispatch('cryptoAssignment', payload);
 

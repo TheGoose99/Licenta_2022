@@ -37,7 +37,22 @@ class SellController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'userId' => 'required|numeric',
+            'crypto' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'for' => 'required|numeric|max:255',
+            'wallet' => 'required|numeric'
+        ]);
+
+        $data = array();
+        $data['user_id'] = $request->userId;
+        $data['crypto_symbol'] = $request->crypto;
+        $data['sold_for'] = $request->amount;
+        $data['sold_amount'] = $request->for;
+        $data['used_wallet'] = $request->wallet;
+
+        Sell::create($data);
     }
 
     /**

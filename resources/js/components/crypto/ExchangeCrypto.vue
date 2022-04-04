@@ -1,5 +1,9 @@
 <template>
     <div>
+        <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+                <p> {{ error }}  </p>
+        </base-dialog>
+
         <base-dialog :show="open" @close="toggleDialogue">
             <div class="input-group">
                 <input class="form-control border-end-0 border" type="search" placeholder="Search" id="myInput" style="color: gray" v-model="searchTerm">
@@ -9,39 +13,44 @@
                     </button>
                 </span>
             </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col">
-                    <div class="p-3">
-                        <h4>Select a coin:</h4>
-                    </div>
-                    <div class="wrapper">
-                        <table class="table" v-if="filterSearch.length" style="display: inline-block; overflow: auto;">
-                            <tbody>
-                                <tr v-for="crypto in filterSearch" :key="crypto.id" @click="setSelectedCryptoCoin(crypto.name, crypto.current_price)">
-                                    <th scope="row"><img :src="crypto.image" alt="Crypto" id="em_photo"></th>
-                                    <td scope="row"><b>{{ crypto.name }}</b></td>
-                                    <td scope="row">{{ crypto.symbol }}</td>
-                                    <td scope="row">${{ crypto.current_price.toFixed(2) }}</td>
-                                    <td scope="row" :class="[PercentageColor(crypto.price_change_percentage_24h) ? 'text-success' : 'text-danger']">{{ crypto.price_change_percentage_24h.toFixed(3) }}%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-else class="text-center">Could Not Find Cryptocurrency</p>
-                        <p v-if="spendAmount == 0" class="text-center" style="color: red"><b>You need to first select a Cryptocurrency</b></p>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <div class="p-3">
+                            <h4>Select a coin:</h4>
+                        </div>
+                        <div class="wrapper">
+                            <table class="table" v-if="filterSearch.length" style="display: inline-block; overflow: auto;">
+                                <tbody>
+                                    <tr v-for="crypto in filterSearch" :key="crypto.id" @click="setSelectedCryptoCoin(crypto.name, crypto.current_price, crypto.symbol)">
+                                        <th scope="row"><img :src="crypto.image" alt="Crypto" id="em_photo"></th>
+                                        <td scope="row"><b>{{ crypto.name }}</b></td>
+                                        <td scope="row">{{ crypto.symbol }}</td>
+                                        <td scope="row">${{ crypto.current_price.toFixed(2) }}</td>
+                                        <td scope="row" :class="[PercentageColor(crypto.price_change_percentage_24h) ? 'text-success' : 'text-danger']">{{ crypto.price_change_percentage_24h.toFixed(3) }}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p v-else class="text-center">Could Not Find Cryptocurrency</p>
+                            <p v-if="spendAmount == 0" class="text-center" style="color: red"><b>You need to first select a Cryptocurrency</b></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </base-dialog>
 
         <div class="col">
+
             <div class="text-center">
-                <base-badge title="Buy Crypto With Debit/Credit Card" :class="'option3'"></base-badge>
+                <base-badge :title="switchMode()" :class="'option3'"></base-badge>
             </div>
-            <div class="m-3">
-                <h6 v-if="retrieveselectedCrypto" class="text-center"> 1 {{ retrieveselectedCrypto }} ≈ {{ retrieveselectedCryptoAmount }} USD</h6>
+            <div class="row">
+                <div class="m-3 text-center">
+                    <h6 v-if="retrieveselectedCrypto"> 1 {{ retrieveselectedCrypto }} ≈ {{ retrieveselectedCryptoAmount }} USD</h6>
+                    <button class="btn btn-warning rounded-circle" @click="toggleMode"><i class="fa-solid fa-right-left"></i></button>
+                </div>
             </div>
+
             <base-card id="baseCard">
                 <form @submit.prevent="buyFinal">
                     <div class="row">
@@ -64,7 +73,7 @@
                             <div class="input-group mb-3">
                             <label for="spendAmount">You receive:</label>
                                 <div class="input-group">
-                                    $<input type="number"
+                                    <input type="number"
                                         v-model="receiveAmount"
                                         placeholder="0.00"
                                         min="1"
@@ -76,18 +85,18 @@
                         </div>
                     </div>
 
-                        <div class="col-auto">
-                            <div class="text-end">
-                                <button class="btn btn-success">Buy Crypto</button>
-                            </div>
+                    <div class="col-auto">
+                        <div class="text-end">
+                            <button class="btn btn-success">Make Transaction</button>
                         </div>
-
+                    </div>
                 </form>
-                        <div class="col">
-                            <div class="text-right">
-                                <button @click="toggleDialogue" class="btn btn-warning" id="btn">Select a currency</button>
-                            </div>
-                        </div>
+
+                <div class="col">
+                    <div class="text-right">
+                        <button @click="toggleDialogue" class="btn btn-warning" id="btn">Select a currency</button>
+                    </div>
+                </div>
             </base-card>
         </div>
     </div>
@@ -108,6 +117,8 @@ export default {
             spendAmount: '',
             receiveAmount: 0,
             badAmount: false,
+            error: null,
+            mode: true,
         }
     },
     created() {
@@ -131,6 +142,7 @@ export default {
             'retrieveHighestCryptoData',
             'retrieveselectedCrypto',
             'retrieveselectedCryptoAmount',
+            'retrieveselectedCryptoSymbol',
         ]),
     },
     methods: {
@@ -143,16 +155,19 @@ export default {
             }
             return false;
         },
-        setSelectedCryptoCoin(name, price) {
+        setSelectedCryptoCoin(name, price, cryptoSymbol) {
 
-            const payload = { name, price }
+            const payload = { name, price, cryptoSymbol }
 
             this.$store.dispatch('cryptoAssignment', payload);
 
             this.open = false;
         },
         dealAmount() {
-            if(this.retrieveselectedCryptoAmount) {
+
+            if(this.retrieveselectedCryptoAmount && this.mode) {
+                this.receiveAmount = this.spendAmount / this.retrieveselectedCryptoAmount;
+            } else if(this.retrieveselectedCryptoAmount && !this.mode) {
                 this.receiveAmount = this.spendAmount * this.retrieveselectedCryptoAmount;
             } else {
                 this.open = true;
@@ -160,21 +175,59 @@ export default {
             }
 
             if(this.receiveAmount) {
-                return this.receiveAmount = this.receiveAmount.toFixed(2);
+                return this.receiveAmount = this.receiveAmount.toFixed(3);
             } else {
                 return this.receiveAmount = 0;
             }
         },
-        buyFinal() {
-            if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount && this.spendAmount > 10 && this.receiveAmount < 100000) {
-                console.log(this.retrieveselectedCrypto, this.retrieveselectedCryptoAmount, this.spendAmount, this.receiveAmount)
+        async buyFinal() {
+            if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount && this.spendAmount >= 10 && this.receiveAmount <= 1000000) {
 
-                // Un dispatch catre Vuex si de acolo voi face cu axios ce mai e de facut. Dar prima data sa ma gandesc la User Model sa mearga
+                const payload = {
+                    crypto: this.retrieveselectedCryptoSymbol,
+                    amount: this.retrieveselectedCryptoAmount,
+                    for: this.spendAmount,
+                }
+
+                try {
+                    if(this.mode) {
+                        await this.$store.dispatch('buy', payload);
+                    } else {
+                        await this.$store.dispatch('sell', payload);
+                    }
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Transaction made successfully'
+                    })
+
+                    await this.$router.replace('/market');
+
+                } catch(error) {
+                    console.log(error);
+                    this.error = error.message || 'Failed to finish the transaction. Try again later.'
+                }
+
             } else {
                 this.badAmount = true;
                 this.open = true;
             }
-        }
+        },
+        handleError() {
+            this.error = !this.error;
+        },
+        switchMode() {
+            if(this.mode) {
+                return 'Buy Crypto';
+            } else {
+                return 'Sell Crypto';
+            }
+        },
+        toggleMode() {
+            this.spendAmount = 0;
+            this.receiveAmount = 0;
+            this.mode = !this.mode;
+        },
     },
     unmounted: function () {
         document.body.style.backgroundColor = "#181a20";

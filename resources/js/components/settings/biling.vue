@@ -24,12 +24,12 @@
                 </div>
                 <div class="form-group mb-0">
                     <label class="d-block">Payment History</label>
-                    <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm" v-if="!PurchasesData && !SellsData">You have not made any payment.</div>
+                    <div v-if="!paymentMethod" class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have no payments.</div>
                     <div v-else>
                         <div class="py-1" >
                             <h1>Bought</h1>
                         </div>
-                        <table class="table table-striped table-light" v-if="PurchasesData || SellsData">
+                        <table class="table table-striped table-light">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>

@@ -47,6 +47,7 @@ export default {
         localStorage.setItem('token', responseData.access_token);
         localStorage.setItem('tokenExpiration', expirationDate);
         localStorage.setItem('userId', responseData.user_id);
+        localStorage.setItem('userName', responseData.username);
 
         timer = setTimeout(function() {
             context.dispatch('autoLogout');
@@ -55,6 +56,7 @@ export default {
         context.commit('setUser', {
             token: responseData.access_token,
             user_id: responseData.user_id,
+            user_name: responseData.username,
         });
 
     },
@@ -83,6 +85,8 @@ export default {
     logout(context) {
         localStorage.removeItem('token');
         localStorage.removeItem('tokenExpiration');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
 
         clearTimeout(timer);
 

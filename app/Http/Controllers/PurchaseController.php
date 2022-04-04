@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -38,7 +39,22 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'userId' => 'required|numeric',
+            'crypto' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'for' => 'required|numeric|max:255',
+            'wallet' => 'required|numeric'
+        ]);
+
+        $data = array();
+        $data['user_id'] = $request->userId;
+        $data['crypto_symbol'] = $request->crypto;
+        $data['bought_for'] = $request->for;
+        $data['bought_amount'] = $request->amount;
+        $data['used_wallet'] = $request->wallet;
+
+        Purchase::create($data);
     }
 
     /**

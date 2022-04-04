@@ -43,18 +43,22 @@ export default {
         throw error;
         }
 
-        if(payload.mode == 'trendyCrypto') {
-            context.commit('setTrendyCryptoData', {
-                trendyCryptos: responseData,
-            });
-        } else if(payload.mode == 'volumeCrypto') {
-            context.commit('setVolumeCryptoData', {
-                volumeCryptos: responseData,
-            });
-        } else if(payload.mode == 'highestcrypto') {
-            context.commit('setHighestCryptoData', {
-                highestCryptos: responseData,
-            });
+        switch (payload.mode) {
+            case 'trendyCrypto':
+                context.commit('setTrendyCryptoData', {
+                    trendyCryptos: responseData,
+                });
+                break;
+            case 'volumeCrypto':
+                context.commit('setVolumeCryptoData', {
+                    volumeCryptos: responseData,
+                });
+                break;
+            default:
+                context.commit('setHighestCryptoData', {
+                    highestCryptos: responseData,
+                });
+                break;
         }
     },
 
@@ -62,6 +66,7 @@ export default {
         context.commit('selectedCrypto', {
             name: payload.name,
             price: payload.price,
+            cryptoSymbol: payload.cryptoSymbol,
         });
     }
 };

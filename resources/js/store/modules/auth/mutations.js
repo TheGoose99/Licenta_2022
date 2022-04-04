@@ -2,6 +2,7 @@ export default {
     setUser(state, payload) {
         state.token = payload.token;
         state.userId = payload.user_id;
+        state.userName = payload.user_name;
         state.didAutoLogout = false;
     },
     setAutoLogout(state) {
@@ -10,13 +11,18 @@ export default {
     setToken(state, payload) {
         state.token = payload.token;
     },
+    setUsername(state, payload) {
+        state.userName = payload.username;
+    },
     loginVerify(state) {
         const storeToken = localStorage.getItem('token');
         const storeUser = localStorage.getItem('userId');
+        const storeUserName = localStorage.getItem('userName');
 
         if(storeToken) {
             state.token = storeToken;
             state.userId = storeUser;
+            state.userName = storeUserName;
             state.didAutoLogout = false;
         } else {
             return;

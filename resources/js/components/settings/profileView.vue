@@ -5,14 +5,15 @@
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img class="rounded-circle mt-6" id="em_photo" :src="form.avatar">
-                    <p class="font-weight-bold">{{ form.username }}</p>
-                    <p class="text-black-50">{{ form.email }}</p><span> </span>
+                    <p v-if="form.username" class="font-weight-bold">{{ form.username }}</p>
+                    <p v-else>No Username Found</p>
+                    <p v-if="form.email" class="text-black-50">{{ form.email }}</p>
+                    <p v-else>No Username Found</p><span> </span>
                 </div>
             </div>
             <div class="col-md-9 border-right">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+                    <h4 class="text-right">Profile Data</h4>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6">
@@ -65,7 +66,6 @@ export default {
             form: {
                 name: '',
                 email: '',
-                avatar: '',
                 phone: '',
                 address: '',
                 postal_code: '',
@@ -91,8 +91,8 @@ export default {
                     .then(({data}) => (this.form.country_id = data, this.selected = data));
             }
 
-            if(this.form.avatar) {
-                this.profile_pic = this.form.avatar
+            if(this.form.image) {
+                this.profile_pic = this.form.image
             }
 
             if(!response.statusText) {

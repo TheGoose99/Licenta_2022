@@ -12,16 +12,15 @@
             <div class="row">
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img class="rounded-circle mt-6" id="em_photo" :src="profile_pic">
                         <span class="font-weight-bold">{{ form.username }}</span>
                         <span class="text-black-50">{{ form.email }}</span><span> </span>
                     </div>
                 </div>
                 <div class="col-md-9 border-right">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
+                        <h4 class="text-right">Edit Profile</h4>
                     </div>
-                    <form method="PUT" @submit.prevent="updateData">
+                    <form method="PUT" @submit.prevent="updateData" enctype="multipart/form-data">
                         <div class="row mt-2">
                             <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" v-model="form.name"></div>
                             <div class="col-md-6"><label class="labels">Phone</label><input type="number" class="form-control" v-model="form.phone"></div>
@@ -58,14 +57,11 @@ export default {
             form: {
                 name: '',
                 email: '',
-                avatar: '',
-                new_avatar: '',
                 phone: '',
                 address: '',
                 postal_code: '',
                 country_id: '',
             },
-            selected: '',
             error: '',
             profile_pic: null,
             isLoading: false,
@@ -77,21 +73,21 @@ export default {
 
             this.isLoading = true;
 
-            const payload = {
-                name: this.form.name,
-                email: this.form.email,
-                phone: this.form.phone,
-                address: this.form.address,
-                postal_code: this.form.postal_code,
-                country_id: this.form.country_id,
-                avatar: this.form.avatar,
-                new_avatar: this.profile_pic,
+            function isNumeric(num){
+                return !isNaN(num)
+            }
+
+            if(this.form.country_id) {
+                if(isNumeric(this.form.country_id)) {
+                    axios.get('/api/countryName/' + this.form.country_id)
+                        .then(({data}) => (this.form.country_id = data));
+                }
             }
 
             try {
                 await axios.get('/sanctum/csrf-cookie')
-
-                await axios.put('/api/user/'+this.userId, payload, {
+                await axios.put('/api/user/'+this.userId, this.form, {
+                    'Content-Type': 'multipart/form-data',
                     withCredentials: true,
                 })
 
@@ -146,22 +142,6 @@ export default {
         },
         changeCountry() {
             this.form.country_id = this.selected;
-        },
-        onFileSelected(event) {
-            let file = event.target.files[0];
-            if(file.size > 1048770) {
-                Toast.fire({
-                icon: 'error',
-                title: 'File size too big'
-                })
-            } else {
-                let reader = new FileReader();
-                reader.onload = event =>{
-                    this.form.new_avatar = event.target.result
-                };
-                reader.readAsDataURL(file);
-                this.profile_pic = URL.createObjectURL(file);
-            }
         },
     },
     computed:{

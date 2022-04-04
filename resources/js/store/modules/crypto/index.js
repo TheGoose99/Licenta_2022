@@ -10,6 +10,7 @@ export default {
             highestCryptos: [],
             selectedCrypto: '',
             selectedCryptoAmount: '',
+            selectedCryptoSymbol: '',
         };
     },
     mutations,

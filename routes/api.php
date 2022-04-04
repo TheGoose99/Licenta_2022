@@ -11,23 +11,29 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/me', [App\Http\Controllers\AuthController::class, 'me'])->middleware('auth:sanctum');
+Route::post('/user/forgotPassword', [App\Http\Controllers\UserController::class, 'forgotPassword']);
 
-// User
-Route::resource('/user', App\Http\Controllers\UserController::class);
-Route::put('/user/changePassword/{id}', [App\Http\Controllers\UserController::class, 'changePassword']);
-Route::put('/user/changeWallet/{id}', [App\Http\Controllers\UserController::class, 'changeWallet']);
-Route::get('/user/loadWallet/{id}', [App\Http\Controllers\UserController::class, 'loadWallet']);
-Route::get('/user/loadUsername/{id}', [App\Http\Controllers\UserController::class, 'loadUsername']);
-Route::put('/user/changeUsername/{id}', [App\Http\Controllers\UserController::class, 'changeUsername']);
+Route::middleware(['auth:sanctum'])->group(function () {
 
-// Purchase
-Route::resource('/purchases', App\Http\Controllers\PurchaseController::class);
-Route::get('/purchases/user/{id}', [App\Http\Controllers\PurchaseController::class, 'UserPurchase']);
+    // User
+    Route::resource('/user', App\Http\Controllers\UserController::class);
+    Route::put('/user/changeUsername/{id}', [App\Http\Controllers\UserController::class, 'changeUsername']);
+    Route::put('/user/changePassword/{id}', [App\Http\Controllers\UserController::class, 'changePassword']);
+    Route::put('/user/changeWallet/{id}', [App\Http\Controllers\UserController::class, 'changeWallet']);
+    Route::get('/user/loadWallet/{id}', [App\Http\Controllers\UserController::class, 'loadWallet']);
+    Route::get('/user/loadUsername/{id}', [App\Http\Controllers\UserController::class, 'loadUsername']);
 
-// Sell
-Route::resource('/sells', App\Http\Controllers\SellController::class);
-Route::get('/sells/user/{id}', [App\Http\Controllers\SellController::class, 'UserPurchase']);
+    // Purchase
+    Route::resource('/purchases', App\Http\Controllers\PurchaseController::class);
+    Route::get('/purchases/user/{id}', [App\Http\Controllers\PurchaseController::class, 'UserPurchase']);
 
-// Countries
-Route::get('/countryName/{id}', [App\Http\Controllers\CountriesController::class, 'searchCountry']);
-Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index']);
+    // Sell
+    Route::resource('/sells', App\Http\Controllers\SellController::class);
+    Route::get('/sells/user/{id}', [App\Http\Controllers\SellController::class, 'UserPurchase']);
+
+    // Countries
+    Route::get('/countryName/{id}', [App\Http\Controllers\CountriesController::class, 'searchCountry']);
+    Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index']);
+
+});
+

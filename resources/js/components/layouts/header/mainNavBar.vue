@@ -38,15 +38,14 @@
                             <router-link v-if="!isLoggedIn" to="/login" class="nav-link text-white">Login</router-link>
                         </li>
                         <li class="nav-item dropdown" v-if="isLoggedIn">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Profile
-                            </a>
+                            <h3 class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Welcome back, {{ Username }}
+                            </h3>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><router-link class="dropdown-item" to="/profile"><i class="fa-solid fa-pen-to-square"></i> Settings </router-link></li>
                                 <li><base-button mode="navlink" @click="logout" class="dropdown-item text-white"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</base-button></li>
                             </ul>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -62,7 +61,7 @@ export default {
         return {
             navColors: {
                 '/buy': 'black',
-            }
+            },
         }
     },
     methods: {
@@ -88,6 +87,9 @@ export default {
         isLoggedIn() {
             return this.$store.getters.isAuthenticated;
         },
+        Username() {
+            return this.$store.getters.userName;
+        }
     },
     created() {
         this.loginVerify();
@@ -138,6 +140,7 @@ h1 {
     text-decoration: none;
 }
 
+
 .menu a:active,
 .menu a.router-link-active {
     border-radius: 15px;
@@ -163,7 +166,7 @@ a.router-link-active {
     margin: 0 -16px;
 }
 
-.menu a {
+.menu a, h3 {
     color: #fff;
     margin: 0 16px;
     font-weight: 600;

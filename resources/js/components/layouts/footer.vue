@@ -3,7 +3,7 @@
         <strong>Copyright &copy; 2022 <a href="https://github.com/TheGoose99/Licenta_2022">Licenta Potoroaca Marian</a>.</strong>
         All rights reserved.
         <div class="float-end d-none d-sm-inline-block">
-            <b>Version</b> 0.4.9 Beta
+            <b>Version</b> 0.5.9 Beta
         </div>
     </footer>
 </template>
@@ -15,6 +15,7 @@ export default {
             navColors: {
                 '/login': 'white',
                 '/register': 'white',
+                '/forgot': 'white',
                 '/market': 'white',
                 '/about': 'white',
                 '/contact': 'white',
