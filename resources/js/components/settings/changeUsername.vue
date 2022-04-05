@@ -70,9 +70,9 @@ export default {
                     this.$store.commit('setUsername', payload);
 
                     Toast.fire({
-                            icon: 'success',
-                            title: 'Profile updated successfully'
-                        })
+                        icon: 'success',
+                        title: 'Profile updated successfully'
+                    })
                 } catch (error) {
                     console.log(error);
                     this.error = error.message || 'Could not upload data. Try again later.'

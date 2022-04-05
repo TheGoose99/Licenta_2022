@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="justify-content-end">
-                <img class="img-fluid" src="../../../public/backend/images/btc.png">
+                <img class="img-fluid rounded" id="image" src="../../../public/backend/images/btc.png">
             </div>
         </div>
     </div>
@@ -20,10 +20,18 @@
 
 <script>
 export default {
+    data() {
+        return {
+        }
+    }
 }
 </script>
 
 <style scoped>
+
+#image {
+    z-index: 1;
+}
 
 p {
     color: white;

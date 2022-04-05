@@ -92,38 +92,22 @@
 </template>
 
 <script>
+import validators from '../../mixins/validations/validators.js';
+
 export default {
     data() {
         return {
-            form: {
-                username: '',
-                email: '',
-                password: '',
-            },
             showPassword: false,
-            error: '',
-            FormIsvalid: true,
             isLoading: false,
         }
     },
+    mixins: [validators],
     computed: {
         buttonLabel() {
             return (this.showPassword) ? "Hide" : "Show";
         },
     },
     methods: {
-        validateName(name) {
-            if (/(?=.{1,25})/.test(name)) {
-                return (true)
-            }
-            return (false)
-        },
-        validateEmail(email) {
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-                return (true)
-            }
-            return (false)
-        },
         validatePasswordLength(password) {
             if (/(?=.{8,25})/.test(password)) {
                 return (true)
@@ -150,12 +134,6 @@ export default {
         },
         validatePasswordSpecial(password) {
             if (/(?=.*[!@#$%^&*])/.test(password)) {
-                return (true)
-            }
-            return (false)
-        },
-        validatePasswordComplete(password) {
-            if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$/.test(password)) {
                 return (true)
             }
             return (false)
@@ -201,9 +179,6 @@ export default {
         },
         toggleShow() {
             this.showPassword = !this.showPassword;
-        },
-        handleError() {
-            this.error = false;
         },
     },
 }

@@ -61,7 +61,6 @@ export default {
                 break;
         }
     },
-
     cryptoAssignment(context, payload) {
         context.commit('selectedCrypto', {
             name: payload.name,

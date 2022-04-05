@@ -56,22 +56,18 @@
 </template>
 
 <script>
+import validators from '../../mixins/validations/validators.js';
 
 export default {
     data() {
         return {
-            form: {
-                email: '',
-                password: '',
-            },
-            FormIsvalid: true,
             isLoading: false,
-            error: '',
         }
     },
+    mixins: [validators],
     methods: {
         async loginValidation() {
-            if(this.validateLogin(this.form.email, this.form.password)) {
+            if(this.validateEmail(this.form.email) && this.validatePasswordComplete(this.form.password)) {
                 this.FormIsvalid = true;
             } else {
                 this.FormIsvalid = false;
@@ -99,7 +95,6 @@ export default {
 
                     await this.$router.replace(redirectURL);
 
-
                 } catch(error) {
                     console.log(error);
                     this.error = error.message || 'Failed to authenticate. Try again later.'
@@ -114,15 +109,6 @@ export default {
         clearForm() {
             this.form.email = '';
             this.form.password = '';
-        },
-        validateLogin(email, password) {
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$/.test(password)) {
-                return (true)
-            }
-            return (false)
-        },
-        handleError() {
-            this.error = null;
         },
     },
 }

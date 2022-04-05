@@ -141,18 +141,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import loadData from '../mixins/cryptoMixins/loadData.js';
 
 export default {
     data () {
         return {
-            error: '',
-            searchTerm: '',
             currentPage: 1,
             limit: 5,
             timer: '',
             isLoading: true,
         }
     },
+    mixins: [loadData],
     created () {
         this.loadHighest();
         this.loadTrendy();
@@ -162,15 +162,9 @@ export default {
         this.timer = setInterval(this.loadTrendy, 60000);
     },
     computed: {
-        filterSearch() {
-            return this.retrieveHighestCryptoData.filter(crypto => {
-                return crypto.name.match(this.capitalizeFirstLetter(this.searchTerm));
-            })
-        },
         ...mapGetters([
             'retrieveTrendyCryptoData',
             'retrieveVolumeCryptoData',
-            'retrieveHighestCryptoData',
         ]),
     },
     methods: {
@@ -178,18 +172,6 @@ export default {
             const event = new Date(date);
 
             return event.toLocaleString('en-US');
-        },
-        PercentageColor(data) {
-            if(data > 0) {
-                return true;
-            }
-            return false;
-        },
-        hideSpinner() {
-            document.getElementById('spinner').style.display = 'none';
-        },
-        capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
         },
         changePage(number) {
             this.currentPage = number;
@@ -240,7 +222,6 @@ export default {
                 console.log(error);
                 this.error = error;
             };
-
         },
         cancelAutoUpdate () {
             clearInterval(this.timer);

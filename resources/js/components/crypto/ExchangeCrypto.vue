@@ -1,7 +1,7 @@
 <template>
     <div>
         <base-dialog :show="!!error" title="An error occurred" @close="handleError">
-                <p> {{ error }}  </p>
+            <p> {{ error }}  </p>
         </base-dialog>
 
         <base-dialog :show="open" @close="toggleDialogue">
@@ -105,6 +105,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import BaseBadge from '../../components/ui/BaseBadge.vue';
+import loadData from '../mixins/cryptoMixins/loadData.js';
 
 export default {
     components: {
@@ -113,14 +114,13 @@ export default {
     data() {
         return {
             open: false,
-            searchTerm: '',
             spendAmount: '',
             receiveAmount: 0,
             badAmount: false,
-            error: null,
             mode: true,
         }
     },
+    mixins: [loadData],
     created() {
         document.body.style.backgroundColor = "#ffffff";
 
@@ -133,13 +133,7 @@ export default {
         this.$store.dispatch('highestCrypto', payload);
     },
     computed: {
-        filterSearch() {
-            return this.retrieveHighestCryptoData.filter(crypto => {
-                return crypto.name.match(this.searchTerm);
-            })
-        },
         ...mapGetters([
-            'retrieveHighestCryptoData',
             'retrieveselectedCrypto',
             'retrieveselectedCryptoAmount',
             'retrieveselectedCryptoSymbol',
@@ -148,12 +142,6 @@ export default {
     methods: {
         toggleDialogue() {
             this.open = !this.open;
-        },
-        PercentageColor(data) {
-            if(data > 0) {
-                return true;
-            }
-            return false;
         },
         setSelectedCryptoCoin(name, price, cryptoSymbol) {
 
@@ -212,9 +200,6 @@ export default {
                 this.badAmount = true;
                 this.open = true;
             }
-        },
-        handleError() {
-            this.error = !this.error;
         },
         switchMode() {
             if(this.mode) {

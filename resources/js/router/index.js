@@ -14,14 +14,45 @@ import store from '../store/index.js';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/', component: landingPage },
-        { path: '/login', component: loginPage, meta: { requiresUnauth: true } },
-        { path: '/signup', component: signupPage, meta: { requiresUnauth: true } },
-        { path: '/forgot', component: forgotPage, meta: { requiresUnauth: true } },
-        { path: '/buy', component: buyPage, meta: { requiresAuth: true, } },
-        { path: '/market', component: marketPage, name: "marketPage" },
-        { path: '/profile', component: settingsPage, meta: { requiresAuth: true, } },
-        { path: '/:notFound(.*)', component: NotFoundPage, meta: { hideNavbar: true, } },
+        {
+            path: '/',
+            component: landingPage,
+        },
+        {
+            path: '/login',
+            component: loginPage,
+            meta: { requiresUnauth: true }
+        },
+        {
+            path: '/forgot',
+            component: forgotPage,
+            meta: { requiresUnauth: true }
+        },
+        {
+            path: '/signup',
+            component: signupPage,
+            meta: { requiresUnauth: true }
+        },
+        {
+            path: '/buy',
+            component: buyPage,
+            meta: { requiresAuth: true, }
+        },
+        {
+            path: '/market',
+            component: marketPage,
+            name: "marketPage"
+        },
+        {
+            path: '/profile',
+            component: settingsPage,
+            meta: { requiresAuth: true, }
+        },
+        {
+            path: '/:notFound(.*)',
+            component: NotFoundPage,
+            meta: { hideNavbar: true, }
+        },
     ]
 });
 

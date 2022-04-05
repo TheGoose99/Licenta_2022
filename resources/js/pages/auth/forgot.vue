@@ -79,26 +79,21 @@
 </template>
 
 <script>
+import validators from '../../components/mixins/validations/validators.js';
+
 export default {
     data() {
         return {
             form: {
-                email: '',
-                username: '',
-                password: '',
                 new_password: '',
             },
-            FormIsvalid: true,
             isLoading: false,
-            error: '',
         }
     },
+    mixins: [validators],
     methods: {
-        handleError() {
-            this.error = !this.error;
-        },
         validateForgot(email, username, password, newPassword) {
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) && /[a-zA-Z]+/.test(username) && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$/.test(password) && password === newPassword) {
+            if (this.validateEmail(email) && this.validateUsername(username) && this.validatePasswordComplete(password) && password === newPassword) {
                 return (true)
             }
             return (false)

@@ -19,23 +19,21 @@
 </template>
 
 <script>
-import profileEdit from '../components/settings/profileEdit.vue';
-import changePassword from '../components/settings/changePassword.vue';
-import changeUsername from '../components/settings/changeUsername.vue';
-import biling from '../components/settings/biling.vue';
+import { defineAsyncComponent } from 'vue';
+
 import profileRouting from '../components/settings/profileRouting.vue';
 import profileRoutesNav from '../components/settings/profileRoutesNav.vue';
 import profileView from '../components/settings/profileView.vue';
 
 export default {
     components: {
-        profileEdit,
         profileView,
         profileRouting,
         profileRoutesNav,
-        changePassword,
-        changeUsername,
-        biling,
+        "profileEdit": defineAsyncComponent(() => import('../components/settings/profileEdit.vue')),
+        "changePassword": defineAsyncComponent(() => import('../components/settings/changePassword.vue')),
+        "changeUsername": defineAsyncComponent(() => import('../components/settings/changeUsername.vue')),
+        "biling": defineAsyncComponent(() => import('../components/settings/biling.vue')),
     },
     computed: {
         retrieveComponentMethod () {

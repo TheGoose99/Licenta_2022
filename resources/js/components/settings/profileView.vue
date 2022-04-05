@@ -59,51 +59,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import loadProfile from '../mixins/settingsMixins/loadProfile.js';
 
 export default {
-    data () {
-        return {
-            form: {
-                name: '',
-                email: '',
-                phone: '',
-                address: '',
-                postal_code: '',
-                country_id: '',
-            },
-        }
-    },
+    mixins: [loadProfile],
     created() {
-        this.loadData();
+        this.loadProfile();
     },
     methods: {
-        async loadData() {
-            await axios.get('/sanctum/csrf-cookie')
-
-            let url = '/api/user/';
-
-            const response = await axios.get(url + this.userId);
-
-            this.form = await response.data;
-
-            if(this.form.country_id) {
-                axios.get('/api/countryName/' + this.form.country_id)
-                    .then(({data}) => (this.form.country_id = data, this.selected = data));
-            }
-
-            if(this.form.image) {
-                this.profile_pic = this.form.image
-            }
-
-            if(!response.statusText) {
-                const error = new Error(
-                    responseData.message || 'Failed to authenticate. Check your credentials.'
-                );
-            throw error;
-            }
-        },
         emitRoute(payload) {
-            this.$store.commit('setComponent', payload)
+            this.$store.commit('setComponent', payload);
         },
     },
     computed: {
