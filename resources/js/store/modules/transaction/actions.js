@@ -33,25 +33,28 @@ export default {
         const userId = getters.userId;
 
         let wallet= null;
-        let url = '';
+        let url = '/api/purchases/store';
 
-        if(payload.mode == 'buy') {
-            url = '/api/purchases';
-        } else {
-            url = '/api/sells';
+        if(payload.mode == 'sell') {
+            url = '/api/sells/store';
         }
 
+        await axios.get('/sanctum/csrf-cookie')
+
         await axios.get('/api/user/loadWallet/' + userId)
-            .then(({data}) => (wallet = data))
+        .then(({data}) => (wallet = data))
+
         const response = await axios.post(url, {...payload, wallet, userId}, {
             withCredentials: true,
         })
 
+        const responseData = await response.data;
+
         if(!response.statusText) {
             const error = new Error(
-                responseData.message || 'Failed to authenticate. Check your credentials.'
+                responseData.message || 'Failed to finish the transactions. Make sure your credentials are set.'
             );
         throw error;
         }
-    }
+    },
 }

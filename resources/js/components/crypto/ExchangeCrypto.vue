@@ -52,7 +52,7 @@
             </div>
 
             <base-card id="baseCard">
-                <form @submit.prevent="buyFinal">
+                <form @submit.prevent="verifyTransactionData">
                     <div class="row">
                         <div class="col">
                             <label for="spendAmount">Enter Your Amount:</label>
@@ -168,7 +168,7 @@ export default {
                 return this.receiveAmount = 0;
             }
         },
-        async buyFinal() {
+        async verifyTransactionData() {
             if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount && this.spendAmount >= 10 && this.receiveAmount <= 1000000) {
 
                 const payload = {

@@ -118,29 +118,6 @@ class UserController extends Controller
         $user->delete();
     }
 
-    public function changePassword (Request $request, $id) {
-
-        $validatedData = $request->validate([
-            'old_password' => 'required',
-            'password' => 'required|string|min:8|max:25|confirmed',
-            'password_confirmation' => 'required|string|min:8|max:255',
-        ]);
-
-        $user = User::find($id)->first();
-        $old_password = $user->password;
-
-        if (Hash::check($request->old_password, $old_password)) {
-            $user->password = bcrypt($request->password);
-            $user->save();
-
-            // User::where('id', $id)->update(['password' => Hash::make($validatedData['password'])]);
-
-        } else {
-            return response()->json(['message' => 'Incorrect password!'], 401);
-        }
-
-    }
-
     public function changeWallet (Request $request, $id) {
 
         $validatedData = $request->validate([
@@ -183,6 +160,29 @@ class UserController extends Controller
         $user = User::find($id)->first();
         $user->username = $request->username;
         $user->save();
+    }
+
+    public function changePassword (Request $request, $id) {
+
+        $validatedData = $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|string|min:8|max:25|confirmed',
+            'password_confirmation' => 'required|string|min:8|max:255',
+        ]);
+
+        $user = User::find($id)->first();
+        $old_password = $user->password;
+
+        if (Hash::check($request->old_password, $old_password)) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            // User::where('id', $id)->update(['password' => Hash::make($validatedData['password'])]);
+
+        } else {
+            return response()->json(['message' => 'Incorrect password!'], 401);
+        }
+
     }
 
     public function forgotPassword (Request $request) {

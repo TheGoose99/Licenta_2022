@@ -25,10 +25,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Purchase
     Route::resource('/purchases', App\Http\Controllers\PurchaseController::class);
+    Route::post('/purchases/store', [App\Http\Controllers\PurchaseController::class, 'store'])->middleware('validate');
     Route::get('/purchases/user/{id}', [App\Http\Controllers\PurchaseController::class, 'UserPurchase']);
 
     // Sell
     Route::resource('/sells', App\Http\Controllers\SellController::class);
+    Route::post('/sells/store', [App\Http\Controllers\SellController::class, 'store'])->middleware('validate');
     Route::get('/sells/user/{id}', [App\Http\Controllers\SellController::class, 'UserPurchase']);
 
     // Countries
