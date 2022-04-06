@@ -10,8 +10,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Auth
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
-Route::post('/me', [App\Http\Controllers\AuthController::class, 'me'])->middleware('auth:sanctum');
 Route::post('/user/forgotPassword', [App\Http\Controllers\UserController::class, 'forgotPassword']);
+Route::post('/me', [App\Http\Controllers\AuthController::class, 'me'])->middleware('auth:sanctum');
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -22,6 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/user/changeWallet/{id}', [App\Http\Controllers\UserController::class, 'changeWallet']);
     Route::get('/user/loadWallet/{id}', [App\Http\Controllers\UserController::class, 'loadWallet']);
     Route::get('/user/loadUsername/{id}', [App\Http\Controllers\UserController::class, 'loadUsername']);
+    Route::get('/user-role/{id}', [App\Http\Controllers\UserController::class, 'loadRole']);
 
     // Purchase
     Route::resource('/purchases', App\Http\Controllers\PurchaseController::class);
@@ -36,6 +37,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Countries
     Route::get('/countryName/{id}', [App\Http\Controllers\CountriesController::class, 'searchCountry']);
     Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index']);
+
+    // Admin
+    //->middleware('role:admin');
+    Route::group(['prefix' => 'admin',  'middleware' => 'role:admin'], function() {
+
+    });
 
 });
 

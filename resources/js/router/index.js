@@ -6,6 +6,8 @@ import signupPage from '../pages/auth/signup.vue';
 import forgotPage from '../pages/auth/forgot.vue';
 import buyPage from '../pages/crypto/buy.vue';
 import marketPage from '../pages/crypto/market.vue';
+import aboutPage from '../pages/about.vue';
+import adminPage from '../pages/admin/mainAdmin.vue';
 import settingsPage from '../pages/profileMain.vue';
 import NotFoundPage from '../pages/NotFoundPage.vue';
 
@@ -44,6 +46,15 @@ const router = createRouter({
             name: "marketPage"
         },
         {
+            path: '/about',
+            component: aboutPage,
+        },
+        {
+            path: '/admin',
+            component: adminPage,
+            meta: { requiresAuth: true, role: 'Admin' }
+        },
+        {
             path: '/profile',
             component: settingsPage,
             meta: { requiresAuth: true, }
@@ -58,6 +69,9 @@ const router = createRouter({
 
 router.beforeEach(function(to, _, next) {
     if(to.meta.requiresAuth && !store.getters.isAuthenticated) {
+        next('/');
+    }
+    else if(to.meta.requiresAuth && !store.getters.isAuthenticated) {
         next('/login');
     }
     else if(to.meta.requiresUnauth && store.getters.isAuthenticated) {

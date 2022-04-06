@@ -29,7 +29,7 @@
                             <router-link to="/about" class="nav-link text-white">About</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/contact" class="nav-link text-white">Contact</router-link>
+                            <router-link to="/admin" class="nav-link text-white">Admin Panel</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link v-if="!isLoggedIn" to="/signup" class="nav-link text-white">Signup</router-link>
@@ -207,7 +207,7 @@ a.router-link-active {
 
 .dropdown-menu{
    /* metade transparente: alpha = .5 */
-    background-color: transparent;
+    background-color: #181a20;
     min-width: 60px !important;
 }
 

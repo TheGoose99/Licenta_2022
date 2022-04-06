@@ -18,6 +18,7 @@ export default {
                 '/forgot': 'white',
                 '/market': 'white',
                 '/about': 'white',
+                '/admin': 'white',
                 '/contact': 'white',
                 '/profile': 'white',
                 '/': 'white',

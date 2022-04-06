@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use DB;
 
 class UserController extends Controller
@@ -203,4 +204,5 @@ class UserController extends Controller
             return response()->json(['message' => 'Incorrect email or username'], 401);
         }
     }
+
 }

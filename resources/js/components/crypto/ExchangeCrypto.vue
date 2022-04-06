@@ -163,7 +163,7 @@ export default {
             }
 
             if(this.receiveAmount) {
-                return this.receiveAmount = this.receiveAmount.toFixed(3);
+                return this.receiveAmount = this.receiveAmount.toFixed(5);
             } else {
                 return this.receiveAmount = 0;
             }
@@ -270,7 +270,7 @@ export default {
     }
 
     #baseCard {
-        width: 360px;
+        width: 420px;
     }
 
     #btn {

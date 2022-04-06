@@ -50,6 +50,7 @@ body{
     text-align: left;
     background-color: #e2e8f0;
 }
+
 .main-body {
     padding: 15px;
 }
