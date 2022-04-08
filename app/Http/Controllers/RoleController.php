@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\role;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use DB;
 
 class RoleController extends Controller
 {
@@ -14,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -44,9 +46,18 @@ class RoleController extends Controller
      * @param  \App\Models\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(role $role)
+    public function show($id)
     {
-        //
+        // For reverse search, ce useri au rolurile astea:
+        // $roles = User::whereHas(
+        //     'roles', function($q){
+        //         $q->where('name', 'Admin');
+        //     }
+        // )->get();
+        // if($roles->find($id)) {
+            // return response()->json($roles);
+        // }
+
     }
 
     /**

@@ -205,4 +205,9 @@ class UserController extends Controller
         }
     }
 
+    public function getRole($id) {
+        $user = User::find($id)->roles;
+        return response()->json($user);
+    }
+
 }

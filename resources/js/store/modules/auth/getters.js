@@ -11,6 +11,9 @@ export default {
     isAuthenticated(state) {
         return !!state.token;
     },
+    retrieveUserRole(state){
+        return state.userRole;
+    },
     didAutoLogout(state) {
         return state.didAutoLogout;
     }

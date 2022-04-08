@@ -2,7 +2,7 @@
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="col-sm-12 my-auto">
             <h1 class="text-center">Login</h1>
-                <loginForm></loginForm>
+            <loginForm></loginForm>
         </div>
     </div>
 </template>

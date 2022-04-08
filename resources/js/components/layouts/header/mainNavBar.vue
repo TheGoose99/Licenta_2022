@@ -29,17 +29,17 @@
                             <router-link to="/about" class="nav-link text-white">About</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/admin" class="nav-link text-white">Admin Panel</router-link>
+                            <router-link v-if="retrieveUserRole == 'Admin'" to="/admin" class="nav-link text-white">Admin Panel</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link v-if="!isLoggedIn" to="/signup" class="nav-link text-white">Signup</router-link>
+                            <router-link v-if="!loginVerify" to="/signup" class="nav-link text-white">Signup</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link v-if="!isLoggedIn" to="/login" class="nav-link text-white">Login</router-link>
+                            <router-link v-if="!loginVerify" to="/login" class="nav-link text-white">Login</router-link>
                         </li>
-                        <li class="nav-item dropdown" v-if="isLoggedIn">
+                        <li class="nav-item dropdown" v-if="loginVerify">
                             <h3 class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Welcome back, {{ Username }}
+                                Welcome back, {{ userName }}
                             </h3>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><router-link class="dropdown-item" to="/profile"><i class="fa-solid fa-pen-to-square"></i> Settings </router-link></li>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -82,17 +82,21 @@ export default {
             })
         },
         ...mapMutations(['loginVerify']),
+
+        async getRole() {
+            try {
+                await this.$store.dispatch('assignRole');
+            } catch (err) {
+                console.log(err);
+            }
+        }
     },
     computed: {
-        isLoggedIn() {
-            return this.$store.getters.isAuthenticated;
-        },
-        Username() {
-            return this.$store.getters.userName;
-        }
+        ...mapGetters(['isAuthenticated', 'userName', 'retrieveUserRole']),
     },
     created() {
         this.loginVerify();
+        this.getRole();
     },
 }
 </script>

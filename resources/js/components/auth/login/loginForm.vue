@@ -86,6 +86,8 @@ export default {
 
                     await this.$store.dispatch('login', payload);
 
+                    await this.$store.dispatch('assignRole');
+
                     Toast.fire({
                         icon: 'success',
                         title: 'Signed in successfully'

@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/user/changeWallet/{id}', [App\Http\Controllers\UserController::class, 'changeWallet']);
     Route::get('/user/loadWallet/{id}', [App\Http\Controllers\UserController::class, 'loadWallet']);
     Route::get('/user/loadUsername/{id}', [App\Http\Controllers\UserController::class, 'loadUsername']);
-    Route::get('/user-role/{id}', [App\Http\Controllers\UserController::class, 'loadRole']);
+    Route::get('/user/getRole/{id}', [App\Http\Controllers\UserController::class, 'getRole']);
 
     // Purchase
     Route::resource('/purchases', App\Http\Controllers\PurchaseController::class);
@@ -37,6 +37,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Countries
     Route::get('/countryName/{id}', [App\Http\Controllers\CountriesController::class, 'searchCountry']);
     Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index']);
+
+    // Role
+    Route::resource('/roles', App\Http\Controllers\RoleController::class);
 
     // Admin
     //->middleware('role:admin');

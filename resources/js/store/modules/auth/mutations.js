@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default {
     setUser(state, payload) {
         state.token = payload.token;
@@ -13,6 +15,12 @@ export default {
     },
     setUsername(state, payload) {
         state.userName = payload.username;
+    },
+    setRole(state, payload) {
+        state.userRole = payload.name;
+    },
+    removeRole(state) {
+        state.userRole = null;
     },
     loginVerify(state) {
         const storeToken = localStorage.getItem('token');

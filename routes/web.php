@@ -17,7 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route to handle page reload in Vue except for api routes
 Route::get('/{vue_capture?}',function () {
     return view('welcome');
 })->where('vue_capture', '[\/\w\.-]*');
+
+
 Auth::routes();

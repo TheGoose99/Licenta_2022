@@ -88,6 +88,8 @@ export default {
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
 
+        context.commit('removeRole');
+
         clearTimeout(timer);
 
         context.commit('setUser', {
@@ -98,5 +100,25 @@ export default {
     autoLogout(context) {
         context.dispatch('logout');
         context.commit('setAutoLogout');
+    },
+    async assignRole({commit, getters}) {
+
+        const id = getters.userId;
+            if(id) {
+                await axios.get('/sanctum/csrf-cookie');
+
+                const response = await axios.get('/api/user/getRole/' + id);
+                let role = null;
+
+                if(response.data.length == 0) {
+                    role = 'User';
+                } else {
+                    const responseData = response.data;
+                    role = responseData[0].name;
+                }
+                commit('setRole', {
+                    name: role,
+                });
+            }
     },
 };

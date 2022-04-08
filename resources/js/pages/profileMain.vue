@@ -35,6 +35,9 @@ export default {
         "changeUsername": defineAsyncComponent(() => import('../components/settings/changeUsername.vue')),
         "biling": defineAsyncComponent(() => import('../components/settings/biling.vue')),
     },
+    created() {
+        this.$store.commit('setComponent', 'profileView')
+    },
     computed: {
         retrieveComponentMethod () {
             return this.$store.getters.retrieveComponent;

@@ -52,7 +52,7 @@ const router = createRouter({
         {
             path: '/admin',
             component: adminPage,
-            meta: { requiresAuth: true, role: 'Admin' }
+            meta: { requiresAuth: true, requiresAdmin: true }
         },
         {
             path: '/profile',
@@ -68,7 +68,7 @@ const router = createRouter({
 });
 
 router.beforeEach(function(to, _, next) {
-    if(to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    if(to.meta.requiresAuth && store.getters.isAuthenticated && store.getters.retrieveUserRole !== 'Admin' && to.meta.requiresAdmin) {
         next('/');
     }
     else if(to.meta.requiresAuth && !store.getters.isAuthenticated) {
