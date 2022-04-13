@@ -10,6 +10,7 @@ export default {
             token: null,
             didAutoLogout: false,
             userRole: null,
+            isAuthenticated: false,
         };
     },
     mutations,

@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export default {
     setUser(state, payload) {
         state.token = payload.token;
@@ -32,8 +30,11 @@ export default {
             state.userId = storeUser;
             state.userName = storeUserName;
             state.didAutoLogout = false;
+            state.isAuthenticated = true;
+
+            return true;
         } else {
-            return;
+            return false;
         }
     },
 };

@@ -11,7 +11,7 @@
                 aria-expanded="false"
                 aria-lable="Toggle Navbar"
             >
-                <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -29,16 +29,16 @@
                             <router-link to="/about" class="nav-link text-white">About</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link v-if="retrieveUserRole == 'Admin'" to="/admin" class="nav-link text-white">Admin Panel</router-link>
+                            <router-link v-if="retrieveUserRole == 'Admin' && isAuthenticated" to="/admin" class="nav-link text-white">Admin Panel</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link v-if="!loginVerify" to="/signup" class="nav-link text-white">Signup</router-link>
+                            <router-link v-if="!isAuthenticated" to="/signup" class="nav-link text-white">Signup</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link v-if="!loginVerify" to="/login" class="nav-link text-white">Login</router-link>
+                            <router-link v-if="!isAuthenticated" to="/login" class="nav-link text-white">Login</router-link>
                         </li>
-                        <li class="nav-item dropdown" v-if="loginVerify">
-                            <h3 class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown" v-if="isAuthenticated">
+                            <h3 class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Welcome back, {{ userName }}
                             </h3>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
