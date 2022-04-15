@@ -7,9 +7,7 @@
                     <profileRoutesNav></profileRoutesNav>
                     <div class="card-body tab-content">
                         <div class="tab-pane active" id="profile">
-                            <keep-alive>
-                                <component :is="retrieveComponentMethod"></component>
-                            </keep-alive>
+                            <router-view :key="$router.path"></router-view>
                         </div>
                     </div>
                 </div>
@@ -19,29 +17,14 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
 
 import profileRouting from '../components/settings/profileRouting.vue';
 import profileRoutesNav from '../components/settings/profileRoutesNav.vue';
-import profileView from '../components/settings/profileView.vue';
 
 export default {
     components: {
-        profileView,
         profileRouting,
         profileRoutesNav,
-        "profileEdit": defineAsyncComponent(() => import('../components/settings/profileEdit.vue')),
-        "changePassword": defineAsyncComponent(() => import('../components/settings/changePassword.vue')),
-        "changeUsername": defineAsyncComponent(() => import('../components/settings/changeUsername.vue')),
-        "biling": defineAsyncComponent(() => import('../components/settings/biling.vue')),
-    },
-    created() {
-        this.$store.commit('setComponent', 'profileView')
-    },
-    computed: {
-        retrieveComponentMethod () {
-            return this.$store.getters.retrieveComponent;
-        },
     },
 }
 </script>

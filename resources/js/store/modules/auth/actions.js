@@ -104,6 +104,7 @@ export default {
     async assignRole({commit, getters}) {
 
         const id = getters.userId;
+
             if(id) {
                 await axios.get('/sanctum/csrf-cookie');
 

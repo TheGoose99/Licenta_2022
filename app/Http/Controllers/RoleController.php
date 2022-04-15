@@ -16,7 +16,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $roles = Role::all();
 
+        return response()->json($roles);
     }
 
     /**
@@ -26,7 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -37,7 +39,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+        ]);
+
+        $role = Role::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ]);
+
+        $role->save();
     }
 
     /**
@@ -58,6 +70,9 @@ class RoleController extends Controller
             // return response()->json($roles);
         // }
 
+        $role = Role::where('id', $id)->first();
+
+        return response()->json($role);
     }
 
     /**
@@ -78,9 +93,18 @@ class RoleController extends Controller
      * @param  \App\Models\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, role $role)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+        ]);
+
+        $data = array();
+        $data['name'] = $request->name;
+        $data['slug'] = $request->slug;
+
+        Role::where('id', $id)->update($data);
     }
 
     /**
@@ -89,8 +113,10 @@ class RoleController extends Controller
      * @param  \App\Models\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(role $role)
+    public function destroy($id)
     {
-        //
+        $role = Role::find($id);
+
+        $role->delete();
     }
 }

@@ -11,6 +11,7 @@ import App from './App.vue';
 import BaseCard from './components/ui/BaseCard.vue';
 import BaseButton from './components/ui/BaseButton.vue';
 import BaseSpinner from './components/ui/BaseSpinner.vue';
+import Sidebar from './components/layouts/sidebar.vue';
 
 const BaseDialog = defineAsyncComponent(() => import('./components/ui/BaseDialog.vue'));
 
@@ -41,6 +42,7 @@ app.component('BaseCard', BaseCard);
 app.component('BaseButton', BaseButton);
 app.component('BaseSpinner', BaseSpinner);
 app.component('BaseDialog', BaseDialog);
+app.component('Sidebar', Sidebar);
 
 app.use(VueAxios, axios);
 

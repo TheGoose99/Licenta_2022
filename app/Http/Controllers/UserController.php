@@ -18,7 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        return response()->json($users);
     }
 
     /**
@@ -39,7 +41,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255|unique:users',
+            'name' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'nullable|numeric|digits_between:5,15',
+            'address' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|numeric|digits_between:3,200',
+            'country_id' => 'nullable|string|max:255',
+            'wallet' => 'nullable',
+        ]);
+
+        if($request->country_id) {
+            $countryName = DB::table('countries')->where('country_name', $request->country_id)->first();
+        }
+
+        $user = User::create([
+            'username' => $request->username,
+            'name' => $request->name,
+            'password' => $request->password,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'postal_code' => $request->postal_code,
+            'country_id' => $countryName->id,
+            'wallet' => $request->wallet,
+        ]);
+
+        $user->save();
     }
 
     /**
@@ -64,47 +94,31 @@ class UserController extends Controller
     public function update(Request $request, $id) {
 
         $validatedData = $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,'.$id,
             'name' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$id,
             'phone' => 'nullable|numeric|digits_between:5,15',
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|numeric|digits_between:3,200',
             'country_id' => 'nullable|string|max:255',
-            'image' => 'nullable',
-            'newimage' => 'nullable',
+            'wallet' => 'nullable',
         ]);
 
         $data = array();
+        $data['username'] = $request->username;
         $data['name'] = $request->name;
         $data['email'] = $request->email;
         $data['phone'] = $request->phone;
         $data['address'] = $request->address;
         $data['postal_code'] = $request->postal_code;
+        $data['wallet'] = $request->wallet;
 
         if($request->country_id) {
             $countryName = DB::table('countries')->where('country_name', $request->country_id)->first();
             $data['country_id'] = $countryName->id;
         }
 
-        // $destination_path = 'public/images';
-        // $image = $request->file('newimage');
-        // $imagename = $image->getClientOriginalName();
-        // $path = $request->file('newimage')->storeAs($destination_path, $imagename);
-
-        // $data['image'] = $filename;
-
         User::where('id', $id)->update($data);
-
-        // if($change_pic) {
-        //     $data['image'] = $image;
-        //     $img = User::where('id', $id)->first();
-        //     $image_path = $img->avatar;
-        //     $done = unlink($image_path);
-        //     $user = User::where('id', $id)->update($data);
-        // } else {
-        //     $oldphoto = $request->image;
-        //     $data['image'] = $oldphoto;
-        // }
     }
 
     /**

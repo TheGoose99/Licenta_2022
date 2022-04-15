@@ -42,7 +42,13 @@ export default {
 }
 
 .option4 {
-  background-color: red;
+  background-color: #dc3545;
   color: white;
 }
+
+.option5 {
+  background-color: #28a745;
+  color: white;
+}
+
 </style>

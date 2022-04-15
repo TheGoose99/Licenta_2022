@@ -3,10 +3,10 @@
         <sidebar></sidebar>
         <div class="container">
             <div class="row gutters-sm">
-                <div class="vh-100 d-flex justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="card-body tab-content">
-                            <div class="tab-pane active">
+                <div class="vh-100 d-flex justify-content-end align-items-center">
+                    <div class="col-md-10">
+                        <div class="card" style="bottom: 75px;">
+                            <div class="card-body tab-content">
                                 <keep-alive>
                                     <component :is="retrieveComponentMethod"></component>
                                 </keep-alive>
@@ -22,19 +22,19 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 
-import sidebar from '../../components/layouts/sidebar.vue';
 import dashboard from '../../components/admin/dashboard.vue';
 
 export default {
     components: {
-        sidebar,
         dashboard,
         "users": defineAsyncComponent(() => import('../../components/admin/users/users.vue')),
         "create-user": defineAsyncComponent(() => import('../../components/admin/users/create-user.vue')),
+        "edit-user": defineAsyncComponent(() => import('../../components/admin/users/edit-user.vue')),
         "roles": defineAsyncComponent(() => import('../../components/admin/roles/roles.vue')),
         "add-role": defineAsyncComponent(() => import('../../components/admin/roles/add-role.vue')),
+        "edit-role": defineAsyncComponent(() => import('../../components/admin/roles/edit-role.vue')),
     },
-    created() {
+    mounted() {
         this.$store.commit('setComponent', 'dashboard')
     },
     computed: {

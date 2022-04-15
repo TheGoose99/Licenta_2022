@@ -52,7 +52,7 @@ export default {
 
         if(!response.statusText) {
             const error = new Error(
-                responseData.message || 'Failed to finish the transactions. Make sure your credentials are set.'
+                responseData.message
             );
         throw error;
         }

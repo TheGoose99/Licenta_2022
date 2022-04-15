@@ -41,9 +41,9 @@ class PurchaseController extends Controller
     {
         $validatedData = $request->validate([
             'userId' => 'required|numeric',
-            'crypto' => 'required|string|max:255',
+            'crypto' => 'required|string',
             'amount' => 'required|numeric',
-            'for' => 'required|numeric|max:255',
+            'for' => 'required|numeric',
             'wallet' => 'required|numeric'
         ]);
 

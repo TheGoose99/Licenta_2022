@@ -4,6 +4,7 @@ import authModule from './modules/auth/index.js';
 import cryptoModule from './modules/crypto/index.js';
 import profileModule from './modules/profile/index.js';
 import transactionModule from './modules/transaction/index.js';
+import adminModule from './modules/admin/index.js';
 
 const store = createStore({
     modules: {
@@ -11,6 +12,7 @@ const store = createStore({
         crypto: cryptoModule,
         profile: profileModule,
         transaction: transactionModule,
+        admin: adminModule,
     },
 });
 

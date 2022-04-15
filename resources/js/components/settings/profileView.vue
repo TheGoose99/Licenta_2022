@@ -51,7 +51,7 @@
                         <p v-else>No Country Found</p>
                     </div>
                 </div>
-                <div class="mt-3 text-center"><button class="btn btn-primary profile-button" @click="emitRoute('profileEdit')">Edit Profile</button></div>
+                <div class="mt-3 text-center"><router-link to="/profile/edit"><button class="btn btn-primary profile-button" >Edit Profile</button></router-link></div>
             </div>
         </div>
     </div>
@@ -66,23 +66,14 @@ export default {
     created() {
         this.loadProfile();
     },
-    methods: {
-        emitRoute(payload) {
-            this.$store.commit('setComponent', payload);
-        },
-    },
     computed: {
         ...mapGetters({
             userId: 'userId',
-            switchComponent: 'retrieveComponent',
             }),
     },
 }
 </script>
 
 <style scoped>
-    #em_photo {
-        width: 160px;
-        height: 160px;
-    }
+
 </style>

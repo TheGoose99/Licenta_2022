@@ -43,7 +43,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Admin
     //->middleware('role:admin');
-    Route::group(['prefix' => 'admin',  'middleware' => 'role:admin'], function() {
+    Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
+
+        // POS
 
     });
 

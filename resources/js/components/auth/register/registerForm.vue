@@ -70,7 +70,7 @@
                             <li v-show="!validatePasswordNumber(this.form.password)"><i class="fa fa-exclamation-triangle"></i>  At least one number letter (0-9)</li>
                             <li v-show="!validatePasswordSpecial(this.form.password)"><i class="fa fa-exclamation-triangle"></i>  At least one special character</li>
                         </ul>
-
+                <strong><p>By registering you agree to the <a href="https://www.termsandconditionsgenerator.com/live.php?token=5kh7m6HlohMn3GYOkCT1CIHoeCquMjb3">Terms & Conditions</a></p></strong>
                 <div class="form-group">
                     <div class="d-grid gap-2">
                         <button class="btn btn-block" type="submit">Sign Up</button>
@@ -89,6 +89,7 @@
             </div>
         </BaseCard>
     </div>
+
 </template>
 
 <script>
@@ -99,6 +100,7 @@ export default {
         return {
             showPassword: false,
             isLoading: false,
+            test: true,
         }
     },
     mixins: [validators],
@@ -185,7 +187,6 @@ export default {
 </script>
 
 <style scoped>
-
     .routerButtons {
         font-size: 16px;
         text-decoration: none;

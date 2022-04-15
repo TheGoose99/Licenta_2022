@@ -10,24 +10,20 @@
         <hr>
         <div class="container rounded bg-white mt-5 mb-5">
             <div class="row">
-                <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <span class="font-weight-bold">{{ form.username }}</span>
-                        <span class="text-black-50">{{ form.email }}</span><span> </span>
-                    </div>
-                </div>
                 <div class="col-md-9 border-right">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-right">Edit Profile</h4>
                     </div>
-                    <form method="PUT" @submit.prevent="updateData" enctype="multipart/form-data">
+                    <form method="PUT" @submit.prevent="updateData">
                         <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Username</label><input type="text" class="form-control" v-model="form.username"></div>
                             <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" v-model="form.name"></div>
                             <div class="col-md-6"><label class="labels">Phone</label><input type="number" class="form-control" v-model="form.phone"></div>
+                            <div class="col-md-6"><label class="labels">Email</label><input type="email" class="form-control" v-model="form.email"></div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-12"><label class="labels">Email</label><input type="email" class="form-control" v-model="form.email"></div>
-                            <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" v-model="form.address"></div>
+                            <div class="col-md-6"><label class="labels">Wallet</label><input type="text" class="form-control" v-model="form.wallet"></div>
+                            <div class="col-md-6"><label class="labels">Address</label><input type="text" class="form-control" v-model="form.address"></div>
                             <div class="col-md-6"><label class="labels">Postal Code</label><input type="text" class="form-control" v-model="form.postal_code"></div>
                         </div>
                         <div class="row mt-2">
@@ -37,7 +33,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="mt-4 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                        <div class="row mt-2">
+                        <div class="col-md-6 text-start"><button class="btn btn-danger profile-button" @click="emitRoute('users')">Back</button></div>
+                        <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+
+                        </div>
                     </form>
                 </div>
             </div>
@@ -47,12 +47,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import loadProfile from '../mixins/settingsMixins/loadProfile.js';
-import validators from '../mixins/validations/validators.js';
+import loadProfile from '../../mixins/settingsMixins/loadProfile.js';
+import validators from '../../mixins/validations/validators.js';
 
 export default {
     data () {
         return {
+            form: {
+                username: '',
+                wallet: '',
+            },
             error: '',
             isLoading: false,
             countries: [],
@@ -89,12 +93,12 @@ export default {
 
                 try {
                     await axios.get('/sanctum/csrf-cookie')
+
                     await axios.put('/api/user/'+this.userId, this.form, {
-                        'Content-Type': 'multipart/form-data',
                         withCredentials: true,
                     })
 
-                    await this.$router.replace('/profile');
+                    this.emitRoute('users');
 
                     Toast.fire({
                             icon: 'success',
@@ -122,17 +126,19 @@ export default {
         handleError() {
             this.error = false;
         },
+        emitRoute(payload) {
+            this.$store.commit('setComponent', payload);
+        },
     },
     computed:{
-        ...mapGetters({userId: 'userId'})
+        ...mapGetters({userId: 'getSelectedId'}),
     },
 }
 </script>
 
 <style scoped>
-    #em_photo {
-        height: 240px;
-        width: 200px;
+    #profile {
+        padding-top: 160px;
     }
 
     select,

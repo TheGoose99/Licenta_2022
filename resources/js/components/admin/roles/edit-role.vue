@@ -11,16 +11,16 @@
             <div class="row">
                 <div class="col-md-9 border-right">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Create Role</h4>
+                        <h4 class="text-right">Edit Role</h4>
                     </div>
-                    <form method="POST" @submit.prevent="createRole">
+                    <form method="PUT" @submit.prevent="updateData">
                         <div class="row mt-2">
                             <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" v-model="form.name"></div>
                             <div class="col-md-12"><label class="labels">Slug</label><input type="text" class="form-control" v-model="form.slug"></div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6 text-start"><button class="btn btn-danger profile-button" @click="emitRoute('dashboard')">Back</button></div>
-                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Create Role</button></div>
+                            <div class="col-md-6 text-start"><button class="btn btn-danger profile-button" @click="emitRoute('roles')">Back</button></div>
+                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Save Role</button></div>
                         </div>
                     </form>
                 </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import loadProfile from '../../mixins/settingsMixins/loadProfile.js';
+import { mapGetters } from 'vuex'
 
 export default {
     data () {
@@ -43,35 +43,33 @@ export default {
             isLoading: false,
         }
     },
-    mixins: [loadProfile],
     created() {
+        this.loadRoles();
     },
     methods: {
-        async createRole() {
-                if(this.form.name && this.form.slug) {
-                    this.isLoading = true;
+        async updateData() {
 
-                    try {
-                        await axios.get('/sanctum/csrf-cookie')
+                this.isLoading = true;
 
-                        await axios.post('/api/roles', this.form, {
-                            withCredentials: true,
+                try {
+                    await axios.get('/sanctum/csrf-cookie')
+
+                    await axios.put('/api/roles/'+this.userId, this.form, {
+                        withCredentials: true,
+                    })
+
+                    this.emitRoute('roles');
+
+                    Toast.fire({
+                            icon: 'success',
+                            title: 'Role updated successfully'
                         })
 
-                        this.emitRoute('roles');
-
-                        Toast.fire({
-                                icon: 'success',
-                                title: 'Role added successfully'
-                            })
-
-                    } catch(error) {
-                        console.log(error);
-                        this.error = error.message || 'Could not upload data. Try again later.'
-                    }
-                    this.isLoading = false;
+                } catch(error) {
+                    console.log(error);
+                    this.error = error.message || 'Could not upload data. Try again later.'
                 }
-
+                this.isLoading = false;
         },
         handleError() {
             this.error = false;
@@ -79,6 +77,25 @@ export default {
         emitRoute(payload) {
             this.$store.commit('setComponent', payload);
         },
+        async loadRoles() {
+            await axios.get('/sanctum/csrf-cookie')
+
+            let url = '/api/roles/';
+
+            const response = await axios.get(url + this.userId);
+
+            this.form = await response.data;
+
+            if(!response.statusText) {
+                const error = new Error(
+                    responseData.message || 'Failed to authenticate. Check your credentials.'
+                );
+            throw error;
+            }
+        },
+    },
+    computed:{
+        ...mapGetters({userId: 'getSelectedId'}),
     },
 }
 </script>

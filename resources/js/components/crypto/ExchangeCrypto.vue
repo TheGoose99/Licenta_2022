@@ -67,7 +67,10 @@
                             </div>
                         </div>
                     </div>
-                    <base-badge v-if="badAmount" title="Can't order > $1.000.000 in crypto & over $15.000!" :class="'option4'" style="font-size: 10.7px; padding: 10px;"></base-badge>
+                    <div class="row">
+                        <base-badge v-if="badAmount" title="Can't order > $1.000.000 in crypto & over $15.000!" :class="'option4'" id="badge"></base-badge>
+                        <base-badge v-if="spendAmount >= 15000 && !badAmount && mode" title="You get +1% for transactions over $15.000!" :class="'option5'" id="badge"></base-badge>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="input-group mb-3">
@@ -121,7 +124,7 @@ export default {
         }
     },
     mixins: [loadData],
-    created() {
+    mounted() {
         document.body.style.backgroundColor = "#ffffff";
 
         const payload = {
@@ -155,49 +158,57 @@ export default {
 
             if(this.retrieveselectedCryptoAmount && this.mode) {
                 this.receiveAmount = this.spendAmount / this.retrieveselectedCryptoAmount;
+                if(this.spendAmount >= 15000) {
+                    this.receiveAmount += 0.005 * this.receiveAmount;
+                }
             } else if(this.retrieveselectedCryptoAmount && !this.mode) {
                 this.receiveAmount = this.spendAmount * this.retrieveselectedCryptoAmount;
+                if(this.spendAmount >= 10000) {
+                    this.receiveAmount -= 0.01 * this.receiveAmount;
+                }
             } else {
                 this.open = true;
                 this.spendAmount = 0;
             }
 
             if(this.receiveAmount) {
-                return this.receiveAmount = this.receiveAmount.toFixed(5);
+                return this.receiveAmount = this.receiveAmount.toFixed(5).replace(/[.,]00000$/, "");
             } else {
                 return this.receiveAmount = 0;
             }
         },
         async verifyTransactionData() {
-            if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount && this.spendAmount >= 10 && this.receiveAmount <= 1000000) {
+            if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount) {
+                if(this.spendAmount >= 10 && this.receiveAmount <= 1000000) {
+                    this.badAmount = true;
+                } else {
 
-                const payload = {
-                    crypto: this.retrieveselectedCryptoSymbol,
-                    amount: this.retrieveselectedCryptoAmount,
-                    for: this.spendAmount,
-                }
-
-                try {
-                    if(this.mode) {
-                        await this.$store.dispatch('buy', payload);
-                    } else {
-                        await this.$store.dispatch('sell', payload);
+                    const payload = {
+                        crypto: this.retrieveselectedCryptoSymbol,
+                        amount: this.retrieveselectedCryptoAmount,
+                        for: this.spendAmount,
                     }
 
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Transaction made successfully'
-                    })
+                    try {
+                        if(this.mode) {
+                            await this.$store.dispatch('buy', payload);
+                        } else {
+                            await this.$store.dispatch('sell', payload);
+                        }
 
-                    await this.$router.replace('/market');
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Transaction made successfully'
+                        })
 
-                } catch(error) {
-                    console.log(error);
-                    this.error = error.message || 'Failed to finish the transaction. Try again later.'
+                        await this.$router.replace('/market');
+
+                    } catch(error) {
+                        console.log(error);
+                        this.error = 'Failed to finish the transactions. Make sure your credentials are set.'
+                    }
                 }
-
             } else {
-                this.badAmount = true;
                 this.open = true;
             }
         },
@@ -276,6 +287,11 @@ export default {
     #btn {
         border: 1px solid black;
         margin-top: -65px;
+    }
+
+    #badge {
+        font-size: 10px;
+        padding: 8px;
     }
 
 </style>

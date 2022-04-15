@@ -13,8 +13,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _mixins_settingsMixins_loadProfile_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/settingsMixins/loadProfile.js */ "./resources/js/components/mixins/settingsMixins/loadProfile.js");
+/* harmony import */ var _mixins_validations_validators_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/validations/validators.js */ "./resources/js/components/mixins/validations/validators.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -29,6 +30,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -38,7 +40,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selected: ''
     };
   },
-  mixins: [_mixins_settingsMixins_loadProfile_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_settingsMixins_loadProfile_js__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_validations_validators_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   created: function created() {
     this.loadProfile();
     this.loadCountries();
@@ -53,7 +55,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                isNumeric = function _isNumeric(num) {
+                if (_this.validatePasswordComplete(_this.form.password) && _this.validateEmail(_this.form.email) && _this.validateName(_this.form.name) && _this.validateUsername(_this.form.username)) {
+                  _this.FormIsvalid = true;
+                } else {
+                  _this.FormIsvalid = false;
+                }
+
+                if (!_this.FormIsvalid) {
+                  _context.next = 18;
+                  break;
+                }
+
+                isNumeric = function isNumeric(num) {
                   return !isNaN(num);
                 };
 
@@ -68,40 +81,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }
 
-                _context.prev = 3;
-                _context.next = 6;
+                _context.prev = 5;
+                _context.next = 8;
                 return axios.get('/sanctum/csrf-cookie');
 
-              case 6:
-                _context.next = 8;
+              case 8:
+                _context.next = 10;
                 return axios.put('/api/user/' + _this.userId, _this.form, {
                   'Content-Type': 'multipart/form-data',
                   withCredentials: true
                 });
 
-              case 8:
+              case 10:
                 Toast.fire({
                   icon: 'success',
                   title: 'Profile updated successfully'
                 });
-                _context.next = 15;
+                _context.next = 17;
                 break;
 
-              case 11:
-                _context.prev = 11;
-                _context.t0 = _context["catch"](3);
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](5);
                 console.log(_context.t0);
                 _this.error = _context.t0.message || 'Could not upload data. Try again later.';
 
-              case 15:
+              case 17:
                 _this.isLoading = false;
 
-              case 16:
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 11]]);
+        }, _callee, null, [[5, 13]]);
       }))();
     },
     loadCountries: function loadCountries() {
@@ -139,7 +152,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.error = false;
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
     userId: 'userId'
   }))
 });
