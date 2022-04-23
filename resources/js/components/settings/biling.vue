@@ -93,7 +93,7 @@ export default {
             isLoading: false,
         }
     },
-    created() {
+    mounted () {
         this.loadWallet();
         this.loadTransactions();
     },
@@ -130,8 +130,8 @@ export default {
         },
         loadWallet() {
             try {
-                axios.get('/api/user/loadWallet/'+this.userId)
-                .then(({data}) => (this.paymentMethod = data))
+                axios.get('/api/user/loadWallet/' + this.userId)
+                .then(({data}) => {this.paymentMethod = data})
             } catch (error) {
                 console.log(error);
                 this.error = error.message || 'Could not load data. Try again later.'

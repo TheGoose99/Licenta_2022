@@ -26,7 +26,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="marketShare in retrieveHighestCryptoData.slice(0, 5)" :key="marketShare.id">
+                                    <tr v-for="marketShare in retrieveSelectedCurrentPageCrypto.slice(0, 5)" :key="marketShare.id">
                                         <th scope="row"><img :src="marketShare.image" alt="Crypto" id="em_photo"></th>
                                         <th scope="row">{{ marketShare.symbol }}</th>
                                         <th scope="row">{{ marketShare.market_cap_rank }}</th>
@@ -153,18 +153,16 @@ export default {
         }
     },
     mixins: [loadData],
-    created () {
-        this.loadHighest();
-        this.loadTrendy();
-        this.loadVolume();
+    mounted () {
+        this.loadData();
 
-        this.timer = setInterval(this.loadHighest, 60000);
-        this.timer = setInterval(this.loadTrendy, 60000);
+        this.timer = setInterval(this.loadData, 60000);
     },
     computed: {
         ...mapGetters([
             'retrieveTrendyCryptoData',
             'retrieveVolumeCryptoData',
+            'retrieveSelectedCurrentPageCrypto',
         ]),
     },
     methods: {
@@ -184,6 +182,8 @@ export default {
                 currentPage: this.currentPage,
             }
 
+            this.loading = true;
+
             try {
                 await this.$store.dispatch('highestCrypto', payload);
             } catch(error) {
@@ -193,35 +193,42 @@ export default {
 
             this.hideSpinner();
         },
-        async loadTrendy() {
+        async loadData() {
+            const payload4 = {
+                orderType: 'market_cap_desc',
+                perPage: 5,
+                currentPage: 1,
+            }
 
-            const payload = {
+            const payload1 = {
+                orderType: 'market_cap_desc',
+                perPage: 25,
+                currentPage: this.currentPage,
+            }
+
+            const payload2 = {
                 orderType: 'gecko_desc',
                 perPage: 5,
                 currentPage: 1,
             }
 
-            try {
-                await this.$store.dispatch('trendyCrypto', payload);
-            } catch(error) {
-                console.log(error);
-                this.error = error;
-            };
-        },
-        async loadVolume() {
-
-            const payload = {
+            const payload3 = {
                 orderType: 'volume_desc',
                 perPage: 5,
                 currentPage: 1,
             }
 
             try {
-                await this.$store.dispatch('volumeCrypto', payload);
+                await this.$store.dispatch('highestCrypto', payload1);
+                await this.$store.dispatch('trendyCrypto', payload2);
+                await this.$store.dispatch('volumeCrypto', payload3);
+                await this.$store.dispatch('currentPageCrypto', payload4);
             } catch(error) {
                 console.log(error);
                 this.error = error;
             };
+
+            this.hideSpinner();
         },
         cancelAutoUpdate () {
             clearInterval(this.timer);

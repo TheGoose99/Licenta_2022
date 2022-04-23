@@ -4,11 +4,11 @@
             <hr id="separator">
             <ul class="navbar-nav d-flex flex-column mt-5 w-100">
                 <li class="nav-item w-100" style="border-top: 3px solid #4f5256;">
-                    <p @click="emitRoute('dashboard')" class="nav-link has-icon text-light pl-4 text-center"><i class="fa-solid fa-gauge"></i> Dashboard </p>
+                    <router-link :to=" { name: 'dashboard' } "><p @click="emitRoute('dashboard')" class="nav-link has-icon text-light pl-4 text-center"><i class="fa-solid fa-gauge"></i> Dashboard </p></router-link>
                 </li>
                 <hr id="separator">
                 <li class="nav-item w-100">
-                    <p @click="emitRoute('inventory')" class="nav-link has-icon text-light pl-4 text-center"><i class="fas fa-dollar-sign"></i> Statistics </p>
+                    <router-link :to=" { name: 'statistics' } "><p @click="emitRoute('inventory')" class="nav-link has-icon text-light pl-4 text-center"><i class="fas fa-dollar-sign"></i> Statistics </p></router-link>
                 </li>
                 <hr id="separator">
                 <div class="text-light text-center h4">
@@ -22,8 +22,8 @@
                         </a>
                         <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
                             <div class="text-center text-light">
-                                <li><h6 @click="emitRoute('users')" class="dropdown-item"><i class="fas fa-users"></i> All Users</h6></li>
-                                <li><h6 @click="emitRoute('create-user')" class="dropdown-item"><i class="fas fa-user-plus"></i> Create User</h6></li>
+                                <li><router-link :to=" { name: 'users' } "><h6 @click="emitRoute('users')" class="dropdown-item"><i class="fas fa-users"></i> All Users</h6></router-link></li>
+                                <li><router-link :to=" { name: 'createUser' } "><h6 @click="emitRoute('create-user')" class="dropdown-item"><i class="fas fa-user-plus"></i> Create User</h6></router-link></li>
                             </div>
                         </ul>
                     </div>
@@ -36,14 +36,26 @@
                         </a>
                         <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
                             <div class="text-center text-light">
-                                <li><h6 @click="emitRoute('roles')" class="dropdown-item"><i class="fas fa-unlock"></i> All Roles</h6></li>
-                                <li><h6 @click="emitRoute('add-role')" class="dropdown-item"><i class="fas fa-user-lock"></i> Add Role</h6></li>
+                                <li><router-link :to=" { name: 'roles' } "><h6 @click="emitRoute('roles')" class="dropdown-item"><i class="fas fa-unlock"></i> All Roles</h6></router-link></li>
+                                <li><router-link :to=" { name: 'createRole' } "><h6 @click="emitRoute('add-role')" class="dropdown-item"><i class="fas fa-user-lock"></i> Add Role</h6></router-link></li>
                             </div>
                         </ul>
                     </div>
                 </li>
                 <hr class="text-light">
-
+                <li class="nav-item w-100 has-submenu">
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle nav-link text-light pl-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fab fa-product-hunt"></i>Stocks
+                        </a>
+                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                            <div class="text-center text-light">
+                                <li><router-link :to=" { name: 'stocks' } "><h6 @click="emitRoute('stocks')" class="dropdown-item"><i class="fas fa-shopping-cart"></i> All Stocks</h6></router-link></li>
+                                <li><router-link :to=" { name: 'createStock' } "><h6 @click="emitRoute('create-stock')" class="dropdown-item"><i class="fas fa-cart-plus"></i> Create Stock</h6></router-link></li>
+                            </div>
+                        </ul>
+                    </div>
+                </li>
                 <hr id="separator">
             </ul>
         </nav>
@@ -95,7 +107,7 @@ export default {
     }
 
     .dropdown-item:hover {
-        background-color: #181a20;
+        background-color: #5b5b5b;
     }
 
     .dropdown-menu:active,
@@ -115,4 +127,6 @@ export default {
     .active-cont {
         margin-left: 250px;
     }
+
+    a { text-decoration: none; }
 </style>

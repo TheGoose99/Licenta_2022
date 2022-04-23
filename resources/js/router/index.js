@@ -4,17 +4,31 @@ import landingPage from '../pages/landingPage.vue';
 import loginPage from '../pages/auth/login.vue';
 import signupPage from '../pages/auth/signup.vue';
 import forgotPage from '../pages/auth/forgot.vue';
+
 import buyPage from '../pages/crypto/buy.vue';
 import marketPage from '../pages/crypto/market.vue';
 import aboutPage from '../pages/about.vue';
 import adminPage from '../pages/admin/mainAdmin.vue';
 import settingsPage from '../pages/profileMain.vue';
 import NotFoundPage from '../pages/NotFoundPage.vue';
+
 import editPage from '../components/settings/profileEdit.vue';
 import viewPage from '../components/settings/profileView.vue';
 import changeUsername from '../components/settings/changeUsername.vue';
 import changePassword from '../components/settings/changePassword.vue';
 import biling from '../components/settings/biling.vue';
+
+import dashboard from '../components/admin/dashboard.vue';
+import statistics from '../components/admin/statistics.vue';
+import users from '../components/admin/users/users.vue';
+import createUser from '../components/admin/users/create-user.vue';
+import editUser from '../components/admin/users/edit-user.vue';
+import roles from '../components/admin/roles/roles.vue';
+import createRole from '../components/admin/roles/add-role.vue';
+import editRole from '../components/admin/roles/edit-role.vue';
+import createStock from '../components/admin/stocks/create-stock.vue';
+import editStock from '../components/admin/stocks/edit-stock.vue';
+import stocks from '../components/admin/stocks/stocks.vue';
 
 import store from '../store/index.js';
 
@@ -58,6 +72,74 @@ const router = createRouter({
             path: '/admin',
             component: adminPage,
             meta: { requiresAuth: true, requiresAdmin: true },
+            children: [
+                {
+                    path: '',
+                    component: dashboard,
+                    name: 'dashboard',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/statistics',
+                    component: statistics,
+                    name: 'statistics',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/users',
+                    component: users,
+                    name: 'users',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/create-user',
+                    component: createUser,
+                    name: 'createUser',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/edit-user/:id',
+                    component: editUser,
+                    name: 'editUser',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/roles',
+                    component: roles,
+                    name: 'roles',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/create-role',
+                    component: createRole,
+                    name: 'createRole',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/edit-role/:id',
+                    component: editRole,
+                    name: 'editRole',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/stocks',
+                    component: stocks,
+                    name: 'stocks',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/edit-stock/:id',
+                    component: editStock,
+                    name: 'editStock',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/create-stock',
+                    component: createStock,
+                    name: 'createStock',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+            ]
         },
         {
             path: '/profile',

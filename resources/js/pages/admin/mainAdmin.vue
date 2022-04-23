@@ -5,11 +5,9 @@
             <div class="row gutters-sm">
                 <div class="vh-100 d-flex justify-content-end align-items-center">
                     <div class="col-md-10">
-                        <div class="card" style="bottom: 75px;">
-                            <div class="card-body tab-content">
-                                <keep-alive>
-                                    <component :is="retrieveComponentMethod"></component>
-                                </keep-alive>
+                        <div class="card">
+                            <div class="card-body tab-content" style="padding-top: 150px;">
+                                <router-view></router-view>
                             </div>
                         </div>
                     </div>
@@ -20,27 +18,11 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-
 import dashboard from '../../components/admin/dashboard.vue';
 
 export default {
     components: {
         dashboard,
-        "users": defineAsyncComponent(() => import('../../components/admin/users/users.vue')),
-        "create-user": defineAsyncComponent(() => import('../../components/admin/users/create-user.vue')),
-        "edit-user": defineAsyncComponent(() => import('../../components/admin/users/edit-user.vue')),
-        "roles": defineAsyncComponent(() => import('../../components/admin/roles/roles.vue')),
-        "add-role": defineAsyncComponent(() => import('../../components/admin/roles/add-role.vue')),
-        "edit-role": defineAsyncComponent(() => import('../../components/admin/roles/edit-role.vue')),
-    },
-    mounted() {
-        this.$store.commit('setComponent', 'dashboard')
-    },
-    computed: {
-        retrieveComponentMethod () {
-            return this.$store.getters.retrieveComponent;
-        },
     },
 }
 </script>

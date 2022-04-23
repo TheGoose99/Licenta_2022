@@ -58,17 +58,17 @@
                             <label for="spendAmount">Enter Your Amount:</label>
                             <div class="form-control mb-3">
                                 <input type="number"
-                                    placeholder="$10 - $15000"
+                                    placeholder="$10 - $1.000.000"
                                     v-model="spendAmount"
                                     @keyup="dealAmount()"
                                     min="10"
-                                    max="15000"
+                                    max="1000000"
                                     >
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <base-badge v-if="badAmount" title="Can't order > $1.000.000 in crypto & over $15.000!" :class="'option4'" id="badge"></base-badge>
+                        <base-badge v-if="badAmount" title="Can't order over $1.000.000 in crypto!" :class="'option4'" id="badge"></base-badge>
                         <base-badge v-if="spendAmount >= 15000 && !badAmount && mode" title="You get +1% for transactions over $15.000!" :class="'option5'" id="badge"></base-badge>
                     </div>
                     <div class="row">
@@ -179,7 +179,7 @@ export default {
         },
         async verifyTransactionData() {
             if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount) {
-                if(this.spendAmount >= 10 && this.receiveAmount <= 1000000) {
+                if(this.receiveAmount > 1000000) {
                     this.badAmount = true;
                 } else {
 

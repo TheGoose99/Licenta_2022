@@ -16,8 +16,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $users = User::all();
 
         return response()->json($users);
@@ -28,8 +27,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -39,8 +37,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $validatedData = $request->validate([
             'username' => 'required|string|max:255|unique:users',
             'name' => 'nullable|string|max:255',
@@ -53,8 +50,11 @@ class UserController extends Controller
             'wallet' => 'nullable',
         ]);
 
+        $countryId = null;
+
         if($request->country_id) {
             $countryName = DB::table('countries')->where('country_name', $request->country_id)->first();
+            $countryId = $countryName->id;
         }
 
         $user = User::create([
@@ -65,7 +65,7 @@ class UserController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'postal_code' => $request->postal_code,
-            'country_id' => $countryName->id,
+            'country_id' => $countryId,
             'wallet' => $request->wallet,
         ]);
 
@@ -79,7 +79,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $user = DB::table('users')->where('id',$id)->first();
+        $user = DB::table('users')->where('id', $id)->first();
 
         return response()->json($user);
     }
@@ -145,8 +145,8 @@ class UserController extends Controller
         $user->save();
     }
 
-    public function loadWallet (Request $request, $id) {
-        $user = User::find($id)->first();
+    public function loadWallet ($id) {
+        $user = User::findOrFail($id);
 
         if($user->wallet) {
             return response()->json($user->wallet);
@@ -155,9 +155,9 @@ class UserController extends Controller
         }
     }
 
-    public function loadUsername (Request $request, $id) {
+    public function loadUsername ($id) {
 
-        $user = User::find($id)->first();
+        $user = User::findOrFail($id);
 
         if($user->username) {
             return response()->json($user->username);

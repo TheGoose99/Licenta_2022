@@ -1,5 +1,5 @@
 <template>
-    <div id="profile">
+    <div>
         <base-dialog :show="!!error" title="An error occurred" @close="handleError">
                 <p> {{ error }}  </p>
         </base-dialog>
@@ -93,7 +93,7 @@ export default {
                 try {
                     await axios.get('/sanctum/csrf-cookie')
 
-                    await axios.post('/api/user', this.form, {
+                    await axios.post('/api/admin/user', this.form, {
                         withCredentials: true,
                     })
 
@@ -103,6 +103,8 @@ export default {
                             icon: 'success',
                             title: 'User created successfully'
                         })
+
+                    this.$router.replace('/profile/users');
 
                 } catch(error) {
                     console.log(error);
@@ -133,9 +135,6 @@ export default {
 </script>
 
 <style scoped>
-    #profile {
-        padding-top: 160px;
-    }
 
     select,
     select > option

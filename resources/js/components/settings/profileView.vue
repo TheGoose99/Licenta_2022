@@ -51,7 +51,7 @@
                         <p v-else>No Country Found</p>
                     </div>
                 </div>
-                <div class="mt-3 text-center"><router-link to="/profile/edit"><button class="btn btn-primary profile-button" >Edit Profile</button></router-link></div>
+                <div class="mt-3 text-center"><router-link :to=" { name: 'editPage' } "><button class="btn btn-primary profile-button" >Edit Profile</button></router-link></div>
             </div>
         </div>
     </div>

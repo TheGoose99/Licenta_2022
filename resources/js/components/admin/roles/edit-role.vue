@@ -1,5 +1,5 @@
 <template>
-    <div id="profile">
+    <div>
         <base-dialog :show="!!error" title="An error occurred" @close="handleError">
                 <p> {{ error }}  </p>
         </base-dialog>
@@ -18,8 +18,8 @@
                             <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" v-model="form.name"></div>
                             <div class="col-md-12"><label class="labels">Slug</label><input type="text" class="form-control" v-model="form.slug"></div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6 text-start"><button class="btn btn-danger profile-button" @click="emitRoute('roles')">Back</button></div>
+                        <div class="row mt-4">
+                            <div class="col-md-6 text-start"><router-link :to="{ name: 'roles' }"><button class="btn btn-danger profile-button" @click="emitRoute('roles')">Back</button></router-link></div>
                             <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Save Role</button></div>
                         </div>
                     </form>
@@ -44,7 +44,7 @@ export default {
         }
     },
     created() {
-        this.loadRoles();
+        this.loadRole();
     },
     methods: {
         async updateData() {
@@ -54,7 +54,7 @@ export default {
                 try {
                     await axios.get('/sanctum/csrf-cookie')
 
-                    await axios.put('/api/roles/'+this.userId, this.form, {
+                    await axios.put('/api/admin/roles/'+this.userId, this.form, {
                         withCredentials: true,
                     })
 
@@ -64,6 +64,8 @@ export default {
                             icon: 'success',
                             title: 'Role updated successfully'
                         })
+
+                    this.$router.replace('/profile/roles');
 
                 } catch(error) {
                     console.log(error);
@@ -77,10 +79,10 @@ export default {
         emitRoute(payload) {
             this.$store.commit('setComponent', payload);
         },
-        async loadRoles() {
+        async loadRole() {
             await axios.get('/sanctum/csrf-cookie')
 
-            let url = '/api/roles/';
+            let url = '/api/admin/roles/';
 
             const response = await axios.get(url + this.userId);
 
@@ -101,9 +103,6 @@ export default {
 </script>
 
 <style scoped>
-    #profile {
-        padding-top: 160px;
-    }
 
     select,
     select > option

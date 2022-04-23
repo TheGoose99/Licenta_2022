@@ -21,6 +21,13 @@ export default {
         });
     },
 
+    async currentPageCrypto(context, payload) {
+        return context.dispatch('loadData', {
+            ...payload,
+            mode: 'currentPage'
+        });
+    },
+
     async loadData(context, payload) {
 
         var options = {
@@ -52,6 +59,11 @@ export default {
             case 'volumeCrypto':
                 context.commit('setVolumeCryptoData', {
                     volumeCryptos: responseData,
+                });
+                break;
+            case 'currentPage':
+                context.commit('setCurrentPageCryptoData', {
+                    currentPageCrypto: responseData,
                 });
                 break;
             default:

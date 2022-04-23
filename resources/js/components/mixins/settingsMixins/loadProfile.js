@@ -15,7 +15,7 @@ export default {
         async loadProfile() {
             await axios.get('/sanctum/csrf-cookie')
 
-            let url = '/api/user/';
+            let url = '/api/user/show/';
 
             const response = await axios.get(url + this.userId);
 

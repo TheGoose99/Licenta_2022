@@ -33,11 +33,14 @@
                         <div class="row mt-2">
                             <div class="col-md-5"><label class="labels">Country</label>
                                 <select v-model="selected" @click="changeCountry">
-                                    <option v-for="country in countries" :key="country.id" >{{ country.country_name }}</option>
+                                    <option v-for="country in countries" :key="country.id"> {{ country.country_name }} </option>
                                 </select>
                             </div>
                         </div>
-                        <div class="mt-4 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                        <div class="row mt-4">
+                            <div class="col text-start"><router-link :to="{ name: 'viewPage' }"><button class="btn btn-danger profile-button">Back</button></router-link></div>
+                            <div class="col text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -89,8 +92,8 @@ export default {
 
                 try {
                     await axios.get('/sanctum/csrf-cookie')
-                    await axios.put('/api/user/'+this.userId, this.form, {
-                        'Content-Type': 'multipart/form-data',
+
+                    await axios.put('/api/user/update/'+this.userId, this.form, {
                         withCredentials: true,
                     })
 

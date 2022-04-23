@@ -8,6 +8,9 @@ export default {
     setHighestCryptoData(state, payload) {
         state.highestCryptos = payload.highestCryptos;
     },
+    setCurrentPageCryptoData(state, payload) {
+        state.selectedCurrentPageCrypto = payload.currentPageCrypto;
+    },
     selectedCrypto(state, payload) {
         state.selectedCrypto = payload.name;
         state.selectedCryptoAmount = payload.price;

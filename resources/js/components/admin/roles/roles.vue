@@ -22,7 +22,7 @@
                                     <td> {{ role.name }} </td>
                                     <td> {{ role.slug }} </td>
                                     <td>
-                                        <button @click="toEdit('edit-role', role.id)" class="btn btn-sm btn-success">Edit</button>
+                                        <router-link :to="{ path: '/profile/edit-role/'+ role.id }"><button @click="emitId(role.id)" class="btn btn-sm btn-success">Edit</button></router-link>
                                         <button @click="deleteRole(role.id)" class="btn btn-sm btn-danger">Delete</button>
                                     </td>
                                 </tr>
@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         allRoles() {
-            axios.get('/api/roles')
+            axios.get('/api/admin/roles')
             .then((response) => (this.roles = response.data))
             .catch()
         },
@@ -64,7 +64,7 @@ export default {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
             if (result.value) {
-                axios.delete('/api/roles/'+id)
+                axios.delete('/api/admin/roles/'+id)
                 .then(() => {
                     this.roles = this.roles.filter(role => {
                         return role.id != id;
@@ -79,16 +79,14 @@ export default {
             }
             })
         },
-        toEdit(payload, id) {
-            this.$store.commit('setComponent', payload)
-
-            this.$store.commit('AssignIdAdmin', id)
-        },
+        emitId(id) {
+            this.$store.commit('AssignId', id);
+        }
     },
     computed: {
         filterSearch() {
             return this.roles.filter(role => {
-                return role.name.match(this.searchTerm)
+                return role.slug.match(this.searchTerm)
             })
         },
     },

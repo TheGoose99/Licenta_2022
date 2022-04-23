@@ -1,5 +1,5 @@
 export default {
-    AssignIdAdmin(state, payload) {
+    AssignId(state, payload) {
         state.selectedId = payload;
     },
 }

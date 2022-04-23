@@ -6,8 +6,8 @@
                 <div class="card">
                     <profileRoutesNav></profileRoutesNav>
                     <div class="card-body tab-content">
-                        <div class="tab-pane active" id="profile">
-                            <router-view :key="$router.path"></router-view>
+                        <div class="tab-pane active">
+                            <router-view></router-view>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,9 @@ export default {
     retrieveHighestCryptoData(state) {
         return state.highestCryptos;
     },
+    retrieveSelectedCurrentPageCrypto(state) {
+        return state.selectedCurrentPageCrypto;
+    },
     retrieveselectedCrypto(state) {
         return state.selectedCrypto;
     },
@@ -17,4 +20,5 @@ export default {
     retrieveselectedCryptoSymbol(state) {
         return state.selectedCryptoSymbol;
     },
+
 }

@@ -1,5 +1,5 @@
 <template>
-    <div id="profile">
+    <div>
         <base-dialog :show="!!error" title="An error occurred" @close="handleError">
                 <p> {{ error }}  </p>
         </base-dialog>
@@ -34,9 +34,8 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                        <div class="col-md-6 text-start"><button class="btn btn-danger profile-button" @click="emitRoute('users')">Back</button></div>
-                        <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
-
+                            <div class="col-md-6 text-start"><router-link :to="{ name: 'users' }"><button class="btn btn-danger profile-button" @click="emitRoute('users')">Back</button></router-link></div>
+                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                         </div>
                     </form>
                 </div>
@@ -94,16 +93,16 @@ export default {
                 try {
                     await axios.get('/sanctum/csrf-cookie')
 
-                    await axios.put('/api/user/'+this.userId, this.form, {
+                    await axios.put('/api/admin/user/'+this.userId, this.form, {
                         withCredentials: true,
                     })
-
-                    this.emitRoute('users');
 
                     Toast.fire({
                             icon: 'success',
                             title: 'Profile updated successfully'
                         })
+
+                    this.$router.replace('/profile/users');
 
                 } catch(error) {
                     console.log(error);
@@ -137,9 +136,6 @@ export default {
 </script>
 
 <style scoped>
-    #profile {
-        padding-top: 160px;
-    }
 
     select,
     select > option

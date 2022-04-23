@@ -64,6 +64,10 @@ export default {
             },
         }
     },
+    created() {
+        this.loginVerify();
+        this.getRole();
+    },
     methods: {
         logout() {
             Swal.fire({
@@ -93,10 +97,6 @@ export default {
     },
     computed: {
         ...mapGetters(['isAuthenticated', 'userName', 'retrieveUserRole']),
-    },
-    created() {
-        this.loginVerify();
-        this.getRole();
     },
 }
 </script>

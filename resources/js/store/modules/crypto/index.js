@@ -8,6 +8,7 @@ export default {
             trendyCryptos: [],
             volumeCryptos: [],
             highestCryptos: [],
+            selectedCurrentPageCrypto: '',
             selectedCrypto: '',
             selectedCryptoAmount: '',
             selectedCryptoSymbol: '',
