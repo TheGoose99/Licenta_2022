@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Purchase;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use DB;
 
-class PurchaseController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::all();
-
-        return response()->json($purchases);
+        //
     }
 
     /**
@@ -39,30 +35,28 @@ class PurchaseController extends Controller
      */
     public function store(Request $request) {
         $validatedData = $request->validate([
-            'userId' => 'required|numeric',
+            'name' => 'required|string',
             'crypto' => 'required|string',
-            'amount' => 'required|numeric',
             'for' => 'required|numeric',
-            'wallet' => 'required|numeric'
+            'amount' => 'required|numeric',
         ]);
 
-        $data = array();
-        $data['user_id'] = $request->userId;
-        $data['crypto_symbol'] = $request->crypto;
-        $data['bought_for'] = $request->for;
-        $data['bought_amount'] = $request->amount;
-        $data['used_wallet'] = $request->wallet;
+        // $data = array();
+        // $data['name'] = $request->name;
+        // $data['symbol'] = $request->crypto;
+        // $data['bought_price'] = $request->for;
+        // $data['volume'] = $request->amount;
 
-        Purchase::create($data);
+        DB::insert('INSERT INTO stocks (name, symbol, bought_price, volume) VALUES (?, ?, ?, ?)', [$request->name, $request->crypto, $request->for, $request->amount]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Purchase  $purchase
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Purchase $purchase)
+    public function show($id)
     {
         //
     }
@@ -70,10 +64,10 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Purchase  $purchase
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase $purchase)
+    public function edit($id)
     {
         //
     }
@@ -82,10 +76,10 @@ class PurchaseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Purchase  $purchase
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -93,18 +87,11 @@ class PurchaseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Purchase  $purchase
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purchase $purchase)
+    public function destroy($id)
     {
-
-    }
-
-    public function UserPurchase ($id) {
-
-        $purchases = Purchase::where('user_id', $id)->get();
-
-        return response()->json($purchases);
+        //
     }
 }

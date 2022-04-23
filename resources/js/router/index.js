@@ -26,9 +26,9 @@ import editUser from '../components/admin/users/edit-user.vue';
 import roles from '../components/admin/roles/roles.vue';
 import createRole from '../components/admin/roles/add-role.vue';
 import editRole from '../components/admin/roles/edit-role.vue';
-import createStock from '../components/admin/stocks/create-stock.vue';
 import editStock from '../components/admin/stocks/edit-stock.vue';
 import stocks from '../components/admin/stocks/stocks.vue';
+import vendor from '../components/admin/stocks/vendor.vue';
 
 import store from '../store/index.js';
 
@@ -134,9 +134,9 @@ const router = createRouter({
                     meta: { requiresAuth: true, requiresAdmin: true },
                 },
                 {
-                    path: '/profile/create-stock',
-                    component: createStock,
-                    name: 'createStock',
+                    path: '/profile/vendor',
+                    component: vendor,
+                    name: 'vendor',
                     meta: { requiresAuth: true, requiresAdmin: true },
                 },
             ]

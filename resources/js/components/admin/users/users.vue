@@ -141,7 +141,7 @@ export default {
         changePage(number) {
             if(number > 0) {
                 if(this.showRepos.length < 5) {
-                    this.currentPage = this.currentPage -1;
+                    this.currentPage = 1;
                 } else {
                     this.currentPage = number;
                 }

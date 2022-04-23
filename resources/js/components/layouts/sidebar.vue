@@ -46,12 +46,12 @@
                 <li class="nav-item w-100 has-submenu">
                     <div class="dropdown">
                         <a class="btn dropdown-toggle nav-link text-light pl-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fab fa-product-hunt"></i>Stocks
+                            <i class="fas fa-clipboard-list"></i>Stocks
                         </a>
                         <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
                             <div class="text-center text-light">
-                                <li><router-link :to=" { name: 'stocks' } "><h6 @click="emitRoute('stocks')" class="dropdown-item"><i class="fas fa-shopping-cart"></i> All Stocks</h6></router-link></li>
-                                <li><router-link :to=" { name: 'createStock' } "><h6 @click="emitRoute('create-stock')" class="dropdown-item"><i class="fas fa-cart-plus"></i> Create Stock</h6></router-link></li>
+                                <li><router-link :to=" { name: 'stocks' } "><h6 @click="emitRoute('roles')" class="dropdown-item"><i class="fab fa-bitcoin"></i> All Available Stocks</h6></router-link></li>
+                                <li><router-link :to=" { name: 'vendor' } "><p @click="emitRoute('vendor')" class="nav-link has-icon text-light pl-4 text-center"><i class="fas fa-shopping-bag"></i> Vendor </p></router-link></li>
                             </div>
                         </ul>
                     </div>

@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-dark">All stocks</h1>
+    <h1 class="text-dark">All Stocks</h1>
 </template>
 
 <script>

@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::resource('/roles', App\Http\Controllers\RoleController::class);
 
         // POS
+        Route::resource('/stock', App\Http\Controllers\StockController::class);
 
     });
 

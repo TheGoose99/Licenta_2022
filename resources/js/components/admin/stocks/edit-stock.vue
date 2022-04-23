@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-dark">Edit stock</h1>
+    <h1 class="text-dark">Edit Stocks</h1>
 </template>
 
 <script>

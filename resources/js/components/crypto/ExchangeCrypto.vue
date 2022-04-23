@@ -155,7 +155,6 @@ export default {
             this.open = false;
         },
         dealAmount() {
-
             if(this.retrieveselectedCryptoAmount && this.mode) {
                 this.receiveAmount = this.spendAmount / this.retrieveselectedCryptoAmount;
                 if(this.spendAmount >= 15000) {
