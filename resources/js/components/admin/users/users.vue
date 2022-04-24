@@ -1,11 +1,21 @@
 <template>
     <div>
         <div class="card">
-            <div class="form-group">
-                <div class="p-3">
-                    <div class="text-start">
-                        <input v-model="searchTerm" type="text" class="form-control" style="width: 300px;" placeholder="Search Here">
-                    </div>
+            <div class="row mt-4">
+                <div class="col text-start">
+                    <input v-model="searchTermName" type="text" class="col" style="width: 300px;" placeholder="Search By Name">
+                </div>
+                <div class="col-auto">
+                    <label for="countries">Search By Country </label>
+                    <select v-model="searchTermCountry">
+                        <option v-for="country in countries" :key="country.id"> {{ country.country_name }} </option>
+                    </select>
+                </div>
+                <div class="col text-end">
+                    <label for="countries">Search By Role </label>
+                    <select v-model="searchTermRole">
+                        <option v-for="role in roles" :key="role.id"> {{ role.name }} </option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -15,10 +25,12 @@
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Users List</h6>
+                    <button class="btn btn-primary text-end btn-sm" @click="Reset">Reset Filters</button>
                 </div>
-                <table class="table table-striped table-light table-responsive align-items-center table-flush" :showRepos="showRepos">
+                <table class="table table-striped table-light table-responsive align-items-center table-flush" :showRepos="showRepos" v-if="filterSearch.length">
                     <thead class="thead-light">
                         <tr>
+                            <th>ID</th>
                             <th>Username</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -26,11 +38,13 @@
                             <th>Address</th>
                             <th>Country</th>
                             <th>Wallet</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="user in filterSearch" :key="user.id">
+                            <td> {{ user.id }} </td>
                             <td> {{ user.username }} </td>
                             <td> {{ user.name }} </td>
                             <td> {{ user.email }} </td>
@@ -38,6 +52,7 @@
                             <td> {{ user.address }} </td>
                             <td> {{ user.country_id }} </td>
                             <td> {{ user.wallet }} </td>
+                            <td>  <base-badge :title= user.role  :class="'option5'" style="width: 100px; height: 35px; font-size: 16px;"></base-badge></td>
                             <td>
                                 <router-link :to="{ path: '/profile/edit-user/'+ user.id }"><button @click="emitId(user.id)" class="btn btn-sm btn-success">Edit</button></router-link>
                                 <button @click="deleteUser(user.id)" class="btn btn-sm btn-danger">Delete</button>
@@ -45,6 +60,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <h1 class="text-center text-dark" v-else>User could not be found</h1>
                 <ul class="pagination justify-content-center">
                     <li class="page-item" :class="currentPage == 1 ? 'disabled' : ''" @click="changePage(currentPage - 1)">
                         <button class="page-link" href="#">Previous</button>
@@ -64,15 +80,28 @@
 </template>
 
 <script>
+import BaseBadge from '../../ui/BaseBadge.vue';
 
 export default {
+    components: {
+        BaseBadge,
+    },
     mounted() {
+        axios.get('/api/countries')
+            .then(({data}) => (this.countries = data))
+            .then(axios.get('/api/admin/roles')
+            .then(({data}) => (this.roles = data)));
+
         this.allUsers();
     },
     data() {
         return {
             users: [],
-            searchTerm: '',
+            roles: [],
+            countries: [],
+            searchTermName: '',
+            searchTermRole: '',
+            searchTermCountry: '',
             currentPage: 1,
             perPage: 5,
         }
@@ -83,6 +112,15 @@ export default {
             .then((response) => {
                 this.users = response.data
                     this.users.forEach(function(user) {
+                        axios.get('/api/user/getRole/' + user.id)
+                            .then(({data}) => {
+                                if(data.length) {
+                                    user.role = data[0].name;
+                                } else {
+                                    user.role = "User";
+                                }
+                            });
+
                         if(user.country_id) {
                             axios.get('/api/countryName/' + user.country_id)
                                 .then(({data}) => (user.country_id = data));
@@ -105,9 +143,10 @@ export default {
                         if(!user.name) {
                             user.name = "no name";
                         }
+
                     })
+
                 })
-            .catch()
         },
         deleteUser(id) {
             Swal.fire({
@@ -152,13 +191,21 @@ export default {
                 return true;
             }
             return false;
+        },
+        Reset() {
+            this.searchTermName = '';
+            this.searchTermRole = '';
+            this.searchTermCountry = '';
         }
     },
     computed: {
+        // !!Erorile din console log sunt ca rezultat a functiei computed "filterSearch" care cauta de cand au fost incarcate datele, rolurile, insa deoarece se incarca mai
+        //pe urma, nu le gaseste in mod initial si spune ca e o "Eroare"!!
         filterSearch() {
-            return this.showRepos.filter(user => {
-                return user.username.match(this.searchTerm)
-            })
+            return this.showRepos
+                    .filter(user => user.username.toLowerCase().indexOf(this.searchTermName.toLowerCase()) > -1)
+                    .filter(user => user.role.toLowerCase().indexOf(this.searchTermRole.toLowerCase()) > -1)
+                    .filter(user => user.country_id.toLowerCase().indexOf(this.searchTermCountry.toLowerCase()) > -1)
         },
         showRepos() {
             let start = (this.currentPage - 1) * this.perPage;

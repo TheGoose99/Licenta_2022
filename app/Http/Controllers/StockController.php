@@ -37,6 +37,7 @@ class StockController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string',
             'crypto' => 'required|string',
+            'image' => 'required|string',
             'for' => 'required|numeric',
             'amount' => 'required|numeric',
         ]);
@@ -47,7 +48,7 @@ class StockController extends Controller
         // $data['bought_price'] = $request->for;
         // $data['volume'] = $request->amount;
 
-        DB::insert('INSERT INTO stocks (name, symbol, bought_price, volume) VALUES (?, ?, ?, ?)', [$request->name, $request->crypto, $request->for, $request->amount]);
+        DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume) VALUES (?, ?, ?, ?, ?)', [$request->name, $request->crypto, $request->image, $request->for, $request->amount]);
     }
 
     /**

@@ -56,9 +56,6 @@ export default {
 
         await axios.get('/sanctum/csrf-cookie')
 
-        await axios.get('/api/user/loadWallet/' + userId)
-            .then(({data}) => (wallet = data))
-
         if(payload.mode == 'buy_stocks') {
             const response = await axios.post(url, payload, {
                 withCredentials: true,
@@ -74,6 +71,10 @@ export default {
             }
 
         } else {
+
+            await axios.get('/api/user/loadWallet/' + userId)
+            .then(({data}) => (wallet = data))
+
             const response = await axios.post(url, {...payload, wallet, userId}, {
                 withCredentials: true,
             })

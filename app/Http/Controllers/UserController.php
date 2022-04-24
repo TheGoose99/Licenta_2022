@@ -224,4 +224,17 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function attach(User $user, $role) {
+        $attached_role = Role::where('name', $role)->first();
+        $user->roles()->attach($attached_role);
+
+    }
+
+    public function detach(User $user) {
+
+        $user->roles()->detach(request('role'));
+
+        return back();
+    }
+
 }

@@ -7,6 +7,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Role
+Route::get('/user/getRole/{id}', [App\Http\Controllers\UserController::class, 'getRole']);
+
 // Auth
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
@@ -36,9 +39,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/countryName/{id}', [App\Http\Controllers\CountriesController::class, 'searchCountry']);
     Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index']);
 
-    // Role
-    Route::get('/user/getRole/{id}', [App\Http\Controllers\UserController::class, 'getRole']);
-
     // Admin
     //->middleware('role:admin');
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
@@ -47,6 +47,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::resource('/purchases', App\Http\Controllers\PurchaseController::class);
         Route::resource('/sells', App\Http\Controllers\SellController::class);
         Route::resource('/roles', App\Http\Controllers\RoleController::class);
+
+        Route::post('/user/{user}/attach/{role}', [App\Http\Controllers\UserController::class, 'attach']);
+        Route::post('/user/{user}/detach/{role}', [App\Http\Controllers\UserController::class, 'detach']);
 
         // POS
         Route::resource('/stock', App\Http\Controllers\StockController::class);

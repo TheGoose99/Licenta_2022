@@ -25,17 +25,22 @@
                             <div class="col-md-6"><label class="labels">Wallet</label><input type="text" class="form-control" v-model="form.wallet"></div>
                             <div class="col-md-6"><label class="labels">Address</label><input type="text" class="form-control" v-model="form.address"></div>
                             <div class="col-md-6"><label class="labels">Postal Code</label><input type="text" class="form-control" v-model="form.postal_code"></div>
-                        </div>
-                        <div class="row mt-2">
                             <div class="col-md-5"><label class="labels">Country</label>
-                                <select v-model="selected" @click="changeCountry">
-                                    <option v-for="country in countries" :key="country.id" >{{ country.country_name }}</option>
+                                <select v-model="selected" @click="changeCountry" class="form-control">
+                                    <option v-for="country in countries" :key="country.id"> {{ country.country_name }} </option>
                                 </select>
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6 text-start"><router-link :to="{ name: 'users' }"><button class="btn btn-danger profile-button" @click="emitRoute('users')">Back</button></router-link></div>
-                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                            <div class="col-md-6"><label class="labels">Role</label>
+                                <select v-model="selectedRole" @click="changeRole" class="form-control">
+                                    <option v-for="role in roles" :key="role.id"> {{ role.name }} </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6 text-start"><router-link :to="{ name: 'users' }"><button class="btn btn-danger profile-button btn-sm" @click="emitRoute('users')">Back</button></router-link></div>
+                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button btn-sm" type="submit">Save Profile</button></div>
                         </div>
                     </form>
                 </div>
@@ -59,13 +64,16 @@ export default {
             error: '',
             isLoading: false,
             countries: [],
+            roles: [],
             selected: '',
+            selectedRole: '',
         }
     },
     mixins: [loadProfile, validators],
     created() {
         this.loadProfile();
         this.loadCountries();
+        this.loadRoles();
     },
     methods: {
         async updateData() {
@@ -93,9 +101,13 @@ export default {
                 try {
                     await axios.get('/sanctum/csrf-cookie')
 
-                    await axios.put('/api/admin/user/'+this.userId, this.form, {
+                    await axios.put('/api/admin/user/' + this.userId, this.form, {
                         withCredentials: true,
                     })
+
+                    if(this.selectedRole !== 'User') {
+                        await axios.post('/api/admin/user/' + this.userId + '/attach/' + this.selectedRole);
+                    }
 
                     Toast.fire({
                             icon: 'success',
@@ -113,8 +125,6 @@ export default {
         },
         async loadCountries() {
 
-            await axios.get('/sanctum/csrf-cookie');
-
             const response = await axios.get('/api/countries');
 
             this.countries = response.data;
@@ -128,6 +138,17 @@ export default {
         emitRoute(payload) {
             this.$store.commit('setComponent', payload);
         },
+        async loadRoles() {
+            const response = await axios.get('/api/admin/roles');
+            const response2 = await axios.get('/api/user/getRole/' + this.userId);
+
+            if(response2.data.length == 0) {
+                this.selectedRole = 'User';
+            } else {
+                this.selectedRole = response2.data[0].name;
+            }
+            this.roles = response.data;
+        }
     },
     computed:{
         ...mapGetters({userId: 'getSelectedId'}),

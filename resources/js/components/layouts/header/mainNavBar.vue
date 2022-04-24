@@ -64,7 +64,7 @@ export default {
             },
         }
     },
-    created() {
+    mounted() {
         this.loginVerify();
         this.getRole();
     },
@@ -96,7 +96,11 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isAuthenticated', 'userName', 'retrieveUserRole']),
+        ...mapGetters([
+            'isAuthenticated',
+            'userName',
+            'retrieveUserRole',
+        ]),
     },
 }
 </script>

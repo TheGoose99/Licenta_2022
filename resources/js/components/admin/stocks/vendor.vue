@@ -22,7 +22,7 @@
                         <div class="wrapper">
                             <table class="table" v-if="filterSearch.length" style="display: inline-block; overflow: auto;">
                                 <tbody>
-                                    <tr v-for="crypto in filterSearch" :key="crypto.id" @click="setSelectedCryptoCoin(crypto.name, crypto.current_price, crypto.symbol)">
+                                    <tr v-for="crypto in filterSearch" :key="crypto.id" @click="setSelectedCryptoCoin(crypto.name, crypto.current_price, crypto.symbol, crypto.image)">
                                         <th scope="row"><img :src="crypto.image" alt="Crypto" id="em_photo"></th>
                                         <td scope="row"><b>{{ crypto.name }}</b></td>
                                         <td scope="row">{{ crypto.symbol }}</td>
@@ -114,6 +114,7 @@ export default {
             open: false,
             spendAmount: '',
             receiveAmount: 0,
+            crypto_image: '',
         }
     },
     mounted() {
@@ -143,7 +144,9 @@ export default {
                 return this.receiveAmount = 0;
             }
         },
-        setSelectedCryptoCoin(name, price, cryptoSymbol) {
+        setSelectedCryptoCoin(name, price, cryptoSymbol, cryptoImage) {
+
+            this.crypto_image = cryptoImage;
 
             const payload = { name, price, cryptoSymbol }
 
@@ -159,6 +162,7 @@ export default {
                     crypto: this.retrieveselectedCryptoSymbol,
                     amount: this.retrieveselectedCryptoAmount,
                     for: this.spendAmount,
+                    image: this.crypto_image,
                 }
 
                 try {

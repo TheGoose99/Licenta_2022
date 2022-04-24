@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('symbol');
+            $table->string('image');
             $table->integer('bought_price');
             $table->integer('volume');
             $table->timestamps();
