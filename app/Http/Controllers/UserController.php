@@ -221,6 +221,7 @@ class UserController extends Controller
 
     public function getRole($id) {
         $user = User::find($id)->roles;
+
         return response()->json($user);
     }
 
@@ -235,6 +236,45 @@ class UserController extends Controller
         $user->roles()->detach(request('role'));
 
         return back();
+    }
+
+    public function usersList(User $users) {
+        $users = User::all();
+
+        foreach($users as $user) {
+            $roles = User::find($user->id)->roles;
+
+            if($roles->isNotEmpty()) {
+                $user->role = $roles[0]->name;
+            } else {
+                $user->role = "User";
+            }
+
+            if($user->country_id) {
+                $country_name = DB::table('countries')->where('id', $user->country_id)->first();
+                $user->country_id = $country_name->country_name;
+            } else {
+                $user->country_id = "Empty field";
+            }
+
+            if(!$user->name) {
+                $user->name = "Empty field";
+            }
+
+            if(!$user->phone) {
+                $user->phone = "Empty field";
+            }
+
+            if(!$user->wallet) {
+                $user->wallet = "Empty field";
+            }
+
+            if(!$user->address) {
+                $user->address = "Empty field";
+            }
+
+        }
+        return response()->json($users);
     }
 
 }

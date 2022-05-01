@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class PurchaseController extends Controller
 {
@@ -42,18 +43,41 @@ class PurchaseController extends Controller
             'userId' => 'required|numeric',
             'crypto' => 'required|string',
             'amount' => 'required|numeric',
-            'for' => 'required|numeric',
+            'cost' => 'required|numeric',
             'wallet' => 'required|numeric'
         ]);
 
-        $data = array();
-        $data['user_id'] = $request->userId;
-        $data['crypto_symbol'] = $request->crypto;
-        $data['bought_for'] = $request->for;
-        $data['bought_amount'] = $request->amount;
-        $data['used_wallet'] = $request->wallet;
+        if(DB::table('stocks')->where('symbol', $request->crypto)->exists()) {
 
-        Purchase::create($data);
+            $stock = DB::table('stocks')->where('symbol', $request->crypto)->first();
+
+            if($stock->volume >= $request->amount) {
+
+                $data = array();
+                $data['user_id'] = $request->userId;
+                $data['crypto_symbol'] = $request->crypto;
+                $data['bought_for'] = $request->cost;
+                $data['bought_amount'] = $request->amount;
+                $data['used_wallet'] = $request->wallet;
+
+                DB::table('stocks')->where('symbol', $request->crypto)->update([
+                    'volume' => DB::raw('volume -' .$data['bought_amount']),
+                ]);
+
+                Purchase::create($data);
+
+            } else {
+                return response()->json([
+                    'message' => 'Insufficient stocks.'
+                ], 404);
+            }
+
+        } else {
+            return response()->json([
+                'message' => 'Cryptocurrency not found.'
+            ], 404);
+        }
+
     }
 
     /**

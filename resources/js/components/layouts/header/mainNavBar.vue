@@ -20,7 +20,7 @@
                     <ul class="navbar-nav">
 
                         <li class="nav-item">
-                            <router-link to="/buy" class="nav-link text-white">Buy Crypto</router-link>
+                            <router-link to="/buy" class="nav-link text-white">Exchange Crypto</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/market" class="nav-link text-white">Market</router-link>

@@ -155,7 +155,7 @@ export default {
             this.open = false;
         },
         async addToStocks() {
-            if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount) {
+            if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount && this.spendAmount > 0 && this.receiveAmount > 0) {
 
                 const payload = {
                     name: this.retrieveselectedCrypto,
@@ -173,7 +173,7 @@ export default {
                         title: 'Transaction made successfully'
                     })
 
-                    await this.$router.replace('/admin');
+                    await this.$router.replace({ name: 'stocks'});
 
                 } catch(error) {
                     console.log(error);

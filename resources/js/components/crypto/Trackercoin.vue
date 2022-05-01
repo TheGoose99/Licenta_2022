@@ -149,7 +149,7 @@ export default {
             currentPage: 1,
             limit: 5,
             timer: '',
-            isLoading: true,
+            isLoading: false,
         }
     },
     mixins: [loadData],
@@ -194,6 +194,7 @@ export default {
             this.hideSpinner();
         },
         async loadData() {
+            this.StatusSpinner();
             const payload4 = {
                 orderType: 'market_cap_desc',
                 perPage: 5,
@@ -228,7 +229,7 @@ export default {
                 this.error = error;
             };
 
-            this.hideSpinner();
+            this.StatusSpinner();
         },
         cancelAutoUpdate () {
             clearInterval(this.timer);
@@ -242,8 +243,8 @@ export default {
 
             this.$router.replace(redirectURL);
         },
-        hideSpinner() {
-            this.isLoading = false;
+        StatusSpinner() {
+            this.isLoading = !this.isLoading;
         },
     },
     beforeDestroy() {

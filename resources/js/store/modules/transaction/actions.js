@@ -40,7 +40,7 @@ export default {
         const userId = getters.userId;
 
         let wallet= null;
-        let url = '/api/purchases/store';
+        let url = null;
 
         switch (payload.mode) {
             case 'sell':
@@ -50,19 +50,19 @@ export default {
                 url = '/api/admin/stock';
                 break;
             default:
-                url = '/api/buy/store';
+                url = '/api/purchases/store';
                 break;
         }
 
         await axios.get('/sanctum/csrf-cookie')
 
         if(payload.mode == 'buy_stocks') {
+
             const response = await axios.post(url, payload, {
                 withCredentials: true,
             })
 
             const responseData = await response.data;
-
             if(!response.statusText) {
                 const error = new Error(
                     responseData.message
@@ -75,17 +75,35 @@ export default {
             await axios.get('/api/user/loadWallet/' + userId)
             .then(({data}) => (wallet = data))
 
-            const response = await axios.post(url, {...payload, wallet, userId}, {
-                withCredentials: true,
-            })
+            if(payload.mode == 'buy') {
+                const response = await axios.post(url, {...payload, wallet, userId}, {
+                    withCredentials: true,
+                })
 
-            const responseData = await response.data;
+                const responseData = await response.data;
 
-            if(!response.statusText) {
-                const error = new Error(
-                    responseData.message
-                );
-            throw error;
+                if(!response.statusText) {
+                    const error = new Error(
+                        responseData.message
+                    );
+                throw error;
+                }
+            } else {
+
+                const cryptoName = getters.retrieveselectedCrypto;
+
+                const response = await axios.post(url, {...payload, wallet, userId, cryptoName}, {
+                    withCredentials: true,
+                })
+
+                const responseData = await response.data;
+
+                if(!response.statusText) {
+                    const error = new Error(
+                        responseData.message
+                    );
+                throw error;
+                }
             }
         }
 

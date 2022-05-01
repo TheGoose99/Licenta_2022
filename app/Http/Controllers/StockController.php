@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use DateTime;
 
 class StockController extends Controller
 {
@@ -14,7 +15,9 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = DB::select('SELECT * FROM stocks');
+
+        return response()->json($stocks);
     }
 
     /**
@@ -36,19 +39,36 @@ class StockController extends Controller
     public function store(Request $request) {
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'crypto' => 'required|string',
+            'symbol' => 'required|string',
             'image' => 'required|string',
             'for' => 'required|numeric',
             'amount' => 'required|numeric',
         ]);
 
-        // $data = array();
-        // $data['name'] = $request->name;
-        // $data['symbol'] = $request->crypto;
-        // $data['bought_price'] = $request->for;
-        // $data['volume'] = $request->amount;
+        if(!$request->date) {
+            $date = new DateTime();
+        } else {
+            $date = $request->date;
+        }
 
-        DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume) VALUES (?, ?, ?, ?, ?)', [$request->name, $request->crypto, $request->image, $request->for, $request->amount]);
+        if(DB::table('stocks')->where('name', $request->name)) {
+
+            $data = array();
+            $data['bought_price'] = $request->for;
+            $data['volume'] = $request->amount;
+            $data['created_at'] = $date;
+
+            DB::table('stocks')->where('name', $request->name)->update([
+                'bought_price' => $data['bought_price'],
+                'volume' => DB::raw('volume +' .$data['volume']),
+                'created_at' => $data['created_at'],
+            ]);
+
+        } else {
+            DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume, created_at) VALUES (?, ?, ?, ?, ?, ?)', [$request->name, $request->crypto, $request->image, $request->for, $request->amount, $date]);
+        }
+
+        return response('Bought successfully');
     }
 
     /**
@@ -59,7 +79,9 @@ class StockController extends Controller
      */
     public function show($id)
     {
-        //
+        $stock = DB::table('stocks')->where('id', $id)->first();
+
+        return response()->json($stock);
     }
 
     /**
@@ -80,9 +102,31 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'symbol' => 'required|string',
+            'image' => 'required|string',
+            'for' => 'required|numeric',
+            'amount' => 'required|numeric',
+            'date' => 'nullable|string',
+        ]);
+
+        if(!$request->date) {
+            $date = new DateTime();
+        } else {
+            $date = $request->date;
+        }
+
+        $data = array();
+        $data['name'] = $request->name;
+        $data['symbol'] = $request->symbol;
+        $data['image'] = $request->image;
+        $data['bought_price'] = $request->for;
+        $data['volume'] = $request->amount;
+        $data['created_at'] = $request->date;
+
+        DB::table('stocks')->where('id', $id)->update($data);
     }
 
     /**
@@ -91,8 +135,8 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $stock = DB::table('stocks')->where('id', $id)->delete();
     }
+
 }

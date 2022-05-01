@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('/user/{user}/attach/{role}', [App\Http\Controllers\UserController::class, 'attach']);
         Route::post('/user/{user}/detach/{role}', [App\Http\Controllers\UserController::class, 'detach']);
+        Route::get('/usersList', [App\Http\Controllers\UserController::class, 'usersList']);
 
         // POS
         Route::resource('/stock', App\Http\Controllers\StockController::class);

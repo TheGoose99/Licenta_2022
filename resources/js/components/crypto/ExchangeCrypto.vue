@@ -22,7 +22,7 @@
                         <div class="wrapper">
                             <table class="table" v-if="filterSearch.length" style="display: inline-block; overflow: auto;">
                                 <tbody>
-                                    <tr v-for="crypto in filterSearch" :key="crypto.id" @click="setSelectedCryptoCoin(crypto.name, crypto.current_price, crypto.symbol)">
+                                    <tr v-for="crypto in filterSearch" :key="crypto.id" @click="setSelectedCryptoCoin(crypto.name, crypto.current_price, crypto.symbol, crypto.image)">
                                         <th scope="row"><img :src="crypto.image" alt="Crypto" id="em_photo"></th>
                                         <td scope="row"><b>{{ crypto.name }}</b></td>
                                         <td scope="row">{{ crypto.symbol }}</td>
@@ -61,7 +61,7 @@
                                     placeholder="$10 - $1.000.000"
                                     v-model="spendAmount"
                                     @keyup="dealAmount()"
-                                    min="10"
+                                    min="1"
                                     max="1000000"
                                     >
                             </div>
@@ -69,6 +69,7 @@
                     </div>
                     <div class="row">
                         <base-badge v-if="badAmount" title="Can't order over $1.000.000 in crypto!" :class="'option4'" id="badge"></base-badge>
+                        <base-badge v-if="badAmount2" title="You need to invest at least $10!" :class="'option4'" id="badge"></base-badge>
                         <base-badge v-if="spendAmount >= 15000 && !badAmount && mode" title="You get +1% for transactions over $15.000!" :class="'option5'" id="badge"></base-badge>
                     </div>
                     <div class="row">
@@ -120,7 +121,9 @@ export default {
             spendAmount: '',
             receiveAmount: 0,
             badAmount: false,
+            badAmount2: false,
             mode: true,
+            selectedCryptoImage: null,
         }
     },
     mixins: [loadData],
@@ -146,15 +149,21 @@ export default {
         toggleDialogue() {
             this.open = !this.open;
         },
-        setSelectedCryptoCoin(name, price, cryptoSymbol) {
+        setSelectedCryptoCoin(name, price, cryptoSymbol, image) {
 
             const payload = { name, price, cryptoSymbol }
 
             this.$store.dispatch('cryptoAssignment', payload);
 
+            this.selectedCryptoImage = image;
+
             this.open = false;
         },
         dealAmount() {
+
+            this.badAmount = false;
+            this.badAmount2 = false;
+
             if(this.retrieveselectedCryptoAmount && this.mode) {
                 this.receiveAmount = this.spendAmount / this.retrieveselectedCryptoAmount;
                 if(this.spendAmount >= 15000) {
@@ -180,12 +189,15 @@ export default {
             if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount) {
                 if(this.receiveAmount > 1000000) {
                     this.badAmount = true;
+                } else if(this.spendAmount < 10 && this.mode) {
+                    this.badAmount2 = true;
                 } else {
 
                     const payload = {
                         crypto: this.retrieveselectedCryptoSymbol,
-                        amount: this.retrieveselectedCryptoAmount,
-                        for: this.spendAmount,
+                        cost: this.spendAmount,
+                        amount: this.receiveAmount,
+                        image: this.selectedCryptoImage,
                     }
 
                     try {

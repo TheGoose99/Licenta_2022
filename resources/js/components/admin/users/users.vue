@@ -52,7 +52,7 @@
                             <td> {{ user.address }} </td>
                             <td> {{ user.country_id }} </td>
                             <td> {{ user.wallet }} </td>
-                            <td>  <base-badge :title= user.role  :class="'option5'" style="width: 100px; height: 35px; font-size: 16px;"></base-badge></td>
+                            <td> <base-badge :title= user.role  :class="colorRole(user.role)" style="width: 100px; height: 35px; font-size: 16px;"> </base-badge></td>
                             <td>
                                 <router-link :to="{ path: '/profile/edit-user/'+ user.id }"><button @click="emitId(user.id)" class="btn btn-sm btn-success">Edit</button></router-link>
                                 <button @click="deleteUser(user.id)" class="btn btn-sm btn-danger">Delete</button>
@@ -61,6 +61,11 @@
                     </tbody>
                 </table>
                 <h1 class="text-center text-dark" v-else>User could not be found</h1>
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status" v-if="isLoading">
+                        <span class="sr-only">Page Is Loading...</span>
+                    </div>
+                </div>
                 <ul class="pagination justify-content-center">
                     <li class="page-item" :class="currentPage == 1 ? 'disabled' : ''" @click="changePage(currentPage - 1)">
                         <button class="page-link" href="#">Previous</button>
@@ -104,49 +109,15 @@ export default {
             searchTermCountry: '',
             currentPage: 1,
             perPage: 5,
+            isLoading: false,
         }
     },
     methods: {
-        allUsers() {
-            axios.get('/api/admin/user')
-            .then((response) => {
-                this.users = response.data
-                    this.users.forEach(function(user) {
-                        axios.get('/api/user/getRole/' + user.id)
-                            .then(({data}) => {
-                                if(data.length) {
-                                    user.role = data[0].name;
-                                } else {
-                                    user.role = "User";
-                                }
-                            });
-
-                        if(user.country_id) {
-                            axios.get('/api/countryName/' + user.country_id)
-                                .then(({data}) => (user.country_id = data));
-                        } else {
-                            user.country_id = "no country";
-                        }
-
-                        if(!user.address) {
-                            user.address = "no address";
-                        }
-
-                        if(!user.phone) {
-                            user.phone = "no phone";
-                        }
-
-                        if(!user.wallet) {
-                            user.wallet = "no wallet";
-                        }
-
-                        if(!user.name) {
-                            user.name = "no name";
-                        }
-
-                    })
-
-                })
+        async allUsers() {
+            this.statusSpinner();
+            const response = await axios.get('/api/admin/usersList');
+            this.users = response.data;
+            this.statusSpinner();
         },
         deleteUser(id) {
             Swal.fire({
@@ -196,11 +167,24 @@ export default {
             this.searchTermName = '';
             this.searchTermRole = '';
             this.searchTermCountry = '';
+        },
+        colorRole(role) {
+            switch (role) {
+            case 'Admin':
+                return 'option5';
+            case 'Elder':
+                return 'option1';
+            case 'User':
+                return 'option3';
+            default:
+                return 'option2';
+        }
+        },
+        statusSpinner() {
+            this.isLoading = !this.isLoading;
         }
     },
     computed: {
-        // !!Erorile din console log sunt ca rezultat a functiei computed "filterSearch" care cauta de cand au fost incarcate datele, rolurile, insa deoarece se incarca mai
-        //pe urma, nu le gaseste in mod initial si spune ca e o "Eroare"!!
         filterSearch() {
             return this.showRepos
                     .filter(user => user.username.toLowerCase().indexOf(this.searchTermName.toLowerCase()) > -1)
