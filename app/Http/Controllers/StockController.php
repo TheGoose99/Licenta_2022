@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use DateTime;
+use Carbon\Carbon;
 
 class StockController extends Controller
 {
@@ -13,21 +14,10 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $stocks = DB::select('SELECT * FROM stocks');
 
         return response()->json($stocks);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -41,7 +31,7 @@ class StockController extends Controller
             'name' => 'required|string',
             'symbol' => 'required|string',
             'image' => 'required|string',
-            'for' => 'required|numeric',
+            'cost' => 'required|numeric',
             'amount' => 'required|numeric',
         ]);
 
@@ -51,10 +41,10 @@ class StockController extends Controller
             $date = $request->date;
         }
 
-        if(DB::table('stocks')->where('name', $request->name)) {
+        if(DB::table('stocks')->where('name', $request->name)->exists()) {
 
             $data = array();
-            $data['bought_price'] = $request->for;
+            $data['bought_price'] = $request->cost;
             $data['volume'] = $request->amount;
             $data['created_at'] = $date;
 
@@ -65,10 +55,9 @@ class StockController extends Controller
             ]);
 
         } else {
-            DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume, created_at) VALUES (?, ?, ?, ?, ?, ?)', [$request->name, $request->crypto, $request->image, $request->for, $request->amount, $date]);
+            DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume, created_at) VALUES (?, ?, ?, ?, ?, ?)', [$request->name, $request->symbol, $request->image, $request->cost, $request->amount, $date]);
         }
 
-        return response('Bought successfully');
     }
 
     /**
@@ -77,22 +66,10 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $stock = DB::table('stocks')->where('id', $id)->first();
 
         return response()->json($stock);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -137,6 +114,38 @@ class StockController extends Controller
      */
     public function destroy($id) {
         $stock = DB::table('stocks')->where('id', $id)->delete();
+    }
+
+    public function stockout() {
+        $stock = DB::table('stocks')->where('volume', '<', '1')->get();
+
+        return response()->json($stock);
+    }
+
+    public function todaySells() {
+        $today['sells'] = DB::table('purchases')->whereDate('created_at', Carbon::today())->sum('bought_amount');
+        $today['income'] = DB::table('purchases')->whereDate('created_at', Carbon::today())->sum('bought_for');
+        $today['expenses'] = DB::table('sells')->whereDate('created_at', Carbon::today())->sum('sold_for');
+        $today['due'] = $today['income'] - $today['expenses'];
+
+        $today['sells_yesterday'] = DB::table('purchases')->whereDate('created_at', Carbon::yesterday())->sum('bought_amount');
+        $today['income_yesterday'] = DB::table('purchases')->whereDate('created_at', Carbon::yesterday())->sum('bought_for');
+        $today['expenses_yesterday'] = DB::table('sells')->whereDate('created_at', Carbon::yesterday())->sum('sold_for');
+        $today['due_yesterday'] = $today['income_yesterday'] - $today['expenses_yesterday'];
+
+        if($today['income_yesterday']) {
+            $today['income_yesterday'] = $today['income'] / ($today['income_yesterday']) * 100;
+        }
+
+        if($today['sells_yesterday']) {
+            $today['sells_yesterday'] = $today['sells'] / ($today['sells_yesterday']) * 100;
+        }
+
+        if($today['expenses_yesterday']) {
+            $today['expenses_yesterday'] = $today['expenses'] / ($today['expenses_yesterday']) * 100;
+        }
+
+        return response()->json($today);
     }
 
 }

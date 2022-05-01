@@ -52,7 +52,6 @@ class PurchaseController extends Controller
             $stock = DB::table('stocks')->where('symbol', $request->crypto)->first();
 
             if($stock->volume >= $request->amount) {
-
                 $data = array();
                 $data['user_id'] = $request->userId;
                 $data['crypto_symbol'] = $request->crypto;

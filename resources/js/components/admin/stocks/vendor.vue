@@ -60,6 +60,7 @@
                                         placeholder="Enter an amount..."
                                         v-model="spendAmount"
                                         @keyup="dealAmount()"
+                                        min="1"
                                         >
                                 </div>
                             </div>
@@ -117,7 +118,7 @@ export default {
             crypto_image: '',
         }
     },
-    mounted() {
+    created () {
         const payload = {
                 orderType: 'market_cap_desc',
                 perPage: 100,
@@ -125,6 +126,7 @@ export default {
             }
 
         this.$store.dispatch('highestCrypto', payload);
+
     },
     methods: {
         toggleDialogue() {
@@ -153,15 +155,16 @@ export default {
             this.$store.dispatch('cryptoAssignment', payload);
 
             this.open = false;
+
         },
         async addToStocks() {
             if (this.retrieveselectedCrypto && this.retrieveselectedCryptoAmount && this.spendAmount > 0 && this.receiveAmount > 0) {
 
                 const payload = {
                     name: this.retrieveselectedCrypto,
-                    crypto: this.retrieveselectedCryptoSymbol,
-                    amount: this.retrieveselectedCryptoAmount,
-                    for: this.spendAmount,
+                    symbol: this.retrieveselectedCryptoSymbol,
+                    cost: this.spendAmount,
+                    amount: this.receiveAmount,
                     image: this.crypto_image,
                 }
 

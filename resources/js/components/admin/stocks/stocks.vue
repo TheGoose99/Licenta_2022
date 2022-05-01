@@ -63,12 +63,8 @@
 </template>
 
 <script>
-import BaseBadge from '../../ui/BaseBadge.vue';
 
 export default {
-    components: {
-        BaseBadge,
-    },
     mounted() {
         this.allStocks();
     },

@@ -16,4 +16,8 @@ export default {
         state.selectedCryptoAmount = payload.price;
         state.selectedCryptoSymbol = payload.cryptoSymbol;
     },
+    setCryptoAdmin(state, payload) {
+        state.selectedCrypto = payload.name;
+        state.selectedCryptoSymbol = payload.symbol;
+    },
 }

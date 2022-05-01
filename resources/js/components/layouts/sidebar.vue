@@ -7,8 +7,18 @@
                     <router-link :to=" { name: 'dashboard' } "><p @click="emitRoute('dashboard')" class="nav-link has-icon text-light pl-4 text-center"><i class="fa-solid fa-gauge"></i> Dashboard </p></router-link>
                 </li>
                 <hr id="separator">
-                <li class="nav-item w-100">
-                    <router-link :to=" { name: 'statistics' } "><p @click="emitRoute('inventory')" class="nav-link has-icon text-light pl-4 text-center"><i class="fas fa-dollar-sign"></i> Statistics </p></router-link>
+                <li class="nav-item w-100 has-submenu">
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle nav-link text-light pl-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-dollar-sign"></i>Statistics
+                        </a>
+                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                            <div class="text-center text-light">
+                                <li><router-link :to=" { name: 'sold' } "><h6 @click="emitRoute('sold')" class="dropdown-item"><i class="fas fa-users"></i> All Sold Cryptocurrencies</h6></router-link></li>
+                                <li><router-link :to=" { name: 'bought' } "><h6 @click="emitRoute('bought')" class="dropdown-item"><i class="fas fa-user-plus"></i> All Bought Cryptocurrencies</h6></router-link></li>
+                            </div>
+                        </ul>
+                    </div>
                 </li>
                 <hr id="separator">
                 <div class="text-light text-center h4">

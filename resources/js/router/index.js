@@ -19,7 +19,9 @@ import changePassword from '../components/settings/changePassword.vue';
 import biling from '../components/settings/biling.vue';
 
 import dashboard from '../components/admin/dashboard.vue';
-import statistics from '../components/admin/statistics.vue';
+import statistics from '../components/admin/statistics/statistics.vue';
+import bought from '../components/admin/statistics/bought.vue';
+import sold from '../components/admin/statistics/sold.vue';
 import users from '../components/admin/users/users.vue';
 import createUser from '../components/admin/users/create-user.vue';
 import editUser from '../components/admin/users/edit-user.vue';
@@ -83,6 +85,18 @@ const router = createRouter({
                     path: '/profile/statistics',
                     component: statistics,
                     name: 'statistics',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/bought',
+                    component: bought,
+                    name: 'bought',
+                    meta: { requiresAuth: true, requiresAdmin: true },
+                },
+                {
+                    path: '/profile/sold',
+                    component: sold,
+                    name: 'sold',
                     meta: { requiresAuth: true, requiresAdmin: true },
                 },
                 {

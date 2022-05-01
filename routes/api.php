@@ -54,6 +54,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         // POS
         Route::resource('/stock', App\Http\Controllers\StockController::class);
+        Route::get('/stocks/outOfStock', [App\Http\Controllers\StockController::class, 'stockout']);
+        Route::get('/stocks/todaySells', [App\Http\Controllers\StockController::class, 'todaySells']);
 
     });
 
