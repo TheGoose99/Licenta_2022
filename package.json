@@ -17,6 +17,7 @@
         "@mdi/font": "5.9.55",
         "artplayer": "^4.3.4",
         "cors": "^2.8.5",
+        "laravel-vue-pagination": "^3.0.0",
         "mdb-vue-ui-kit": "^1.11.0",
         "roboto-fontface": "*",
         "sweetalert2": "^11.4.8",

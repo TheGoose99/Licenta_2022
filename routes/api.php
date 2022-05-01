@@ -57,6 +57,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/stocks/outOfStock', [App\Http\Controllers\StockController::class, 'stockout']);
         Route::get('/stocks/todaySells', [App\Http\Controllers\StockController::class, 'todaySells']);
 
+        Route::post('/purchase/search', [App\Http\Controllers\PurchaseController::class, 'searchFilters']);
+
     });
 
 });

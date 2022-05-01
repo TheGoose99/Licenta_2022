@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use DateTime;
 
 class PurchaseController extends Controller
 {
@@ -15,21 +16,10 @@ class PurchaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $purchases = Purchase::all();
+    public function index() {
+        $purchases = Purchase::paginate(10);
 
         return response()->json($purchases);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -91,17 +81,6 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Purchase $purchase)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,8 +98,7 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purchase $purchase)
-    {
+    public function destroy(Purchase $purchase) {
 
     }
 
@@ -129,5 +107,25 @@ class PurchaseController extends Controller
         $purchases = Purchase::where('user_id', $id)->get();
 
         return response()->json($purchases);
+    }
+
+    public function searchFilters(Request $request) {
+
+        $from = $request->input('dateA');
+        $to = $request->input('dateB');
+
+        $rangeA = $request->input('boughtA');
+        $rangeB = $request->input('boughtB');
+
+        if((!empty($from) && !empty($to)) && (empty($rangeA) && empty($rangeB))) {
+            $purchases = Purchase::whereBetween('created_at', array($from, $to))->orderBy('created_at', 'ASC')->paginate(10);
+        } else if((!empty($rangeA) && !empty($rangeB)) && (empty($from) && empty($to))) {
+            $purchases = Purchase::whereBetween('bought_amount', array($rangeA, $rangeB))->orderBy('bought_amount', 'ASC')->paginate(10);
+        } else if(!empty($from) && !empty($to) && !empty($rangeA) && !empty($rangeB)) {
+            $purchases = Purchase::whereBetween('bought_amount', array($rangeA, $rangeB))->whereBetween('created_at', array($from, $to))->orderBy('id')->paginate(10);
+        }
+
+        return response()->json($purchases);
+
     }
 }

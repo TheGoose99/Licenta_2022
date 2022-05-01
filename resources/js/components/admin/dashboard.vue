@@ -13,7 +13,7 @@
                             <div class="text-xs font-weight-bold text-uppercase mb-1">Today's sold cryptos amount</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ today_Solds }} Units </div>
                             <div class="mt-2 mb-0 text-muted text-xs">
-                                <span class="text-success mr-2"><i :class="positiveNegative(sells_Evolution) ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>{{ income_Evolution }}%</span>
+                                <span class="text-success mr-2"><i :class="positiveNegative(sells_Evolution) ? 'text-success fa fa-arrow-up' : 'fa fa-arrow-down text-danger'"></i>{{ income_Evolution }}%</span>
                                 <span>Since yesterday</span>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Today's income</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{ today_Income }}</div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i :class="positiveNegative(income_Evolution) ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ income_Evolution }}%</span>
+                                    <span class="text-success mr-2"><i :class="positiveNegative(income_Evolution) ? 'text-success fa fa-arrow-up' : 'fa fa-arrow-down text-danger'"></i> {{ income_Evolution }}%</span>
                                     <span>Since last years</span>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                             <div class="text-xs font-weight-bold text-uppercase mb-1">Today's due</div>
                             <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">$ {{ today_Due }}</div>
                             <div class="mt-2 mb-0 text-muted text-xs">
-                                <span class="text-success mr-2"><i :class="positiveNegative(expenses_Evolution) ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ expenses_Evolution }}%</span>
+                                <span class=" mr-2"><i :class="positiveNegative(expenses_Evolution) ? 'text-success fa fa-arrow-up' : 'fa fa-arrow-down text-danger'"></i> {{ expenses_Evolution }}%</span>
                                 <span>Since last month</span>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">Today's Expenses</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">$ -{{ today_Expense }}</div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-danger mr-2"><i :class="positiveNegative(due_Evolution) ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ due_Evolution }}%</span>
+                                    <span class=" mr-2"><i :class="positiveNegative(due_Evolution) ? ' text-danger fa fa-arrow-up' : 'fa fa-arrow-down text-success'"></i> {{ due_Evolution }}%</span>
                                     <span>Since yesterday</span>
                                 </div>
                             </div>

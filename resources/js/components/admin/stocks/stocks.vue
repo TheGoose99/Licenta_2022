@@ -1,15 +1,18 @@
 <template>
     <div>
-        <div class="card">
-            <div class="row mt-4">
-                <div class="col text-start">
+        <div class="card" style="padding-top: 170px;">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Filters List</h6>
+            </div>
+            <div class="row mt-6">
+                <div class="col text-start p-3">
                     <input v-model="searchTermName" type="text" class="col" style="width: 300px;" placeholder="Search By Name">
                 </div>
-                <div class="col text-center">
-                    <input v-model="searchTermBoughtFor" type="text" class="col" style="width: 300px;" placeholder="Search By Bought Amount">
+                <div class="col text-center p-3">
+                    <input v-model="searchTermBoughtFor" type="number" class="col" style="width: 300px;" placeholder="Search By Bought Amount">
                 </div>
-                <div class="col text-end">
-                    <input v-model="searchTermVolume" type="text" class="col" style="width: 300px;" placeholder="Search By Volume">
+                <div class="col text-end p-3">
+                    <input v-model="searchTermVolume" type="number" class="col" style="width: 300px;" placeholder="Search By Volume">
                 </div>
             </div>
         </div>
@@ -75,7 +78,7 @@ export default {
             searchTermVolume: '',
             searchTermBoughtFor: '',
             currentPage: 1,
-            perPage: 25,
+            perPage: 10,
             isLoading: false,
         }
     },
@@ -118,7 +121,7 @@ export default {
         },
         changePage(number) {
             if(number > 0) {
-                if(this.showRepos.length < 25) {
+                if(this.showRepos.length < 10) {
                     this.currentPage = 1;
                 } else {
                     this.currentPage = number;
