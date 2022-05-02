@@ -15,7 +15,7 @@ class SellController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $sold = Sell::all();
+        $sold = Sell::paginate(10);
 
         return response()->json($sold);
     }
@@ -106,6 +106,25 @@ class SellController extends Controller
     public function UserPurchase ($id) {
 
         $sells = Sell::where('user_id', $id)->get();
+
+        return response()->json($sells);
+    }
+
+    public function searchFilters(Request $request) {
+
+        $from = $request->input('dateA');
+        $to = $request->input('dateB');
+
+        $rangeA = $request->input('soldA');
+        $rangeB = $request->input('soldB');
+
+        if((!empty($from) && !empty($to)) && (empty($rangeA) && empty($rangeB))) {
+            $sells = Sell::whereBetween('created_at', array($from, $to))->orderBy('created_at', 'ASC')->paginate(10);
+        } else if((!empty($rangeA) && !empty($rangeB)) && (empty($from) && empty($to))) {
+            $sells = Sell::whereBetween('sold_amount', array($rangeA, $rangeB))->orderBy('sold_amount', 'ASC')->paginate(10);
+        } else if(!empty($from) && !empty($to) && !empty($rangeA) && !empty($rangeB)) {
+            $sells = Sell::whereBetween('sold_amount', array($rangeA, $rangeB))->whereBetween('created_at', array($from, $to))->orderBy('id')->paginate(10);
+        }
 
         return response()->json($sells);
     }

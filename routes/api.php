@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/stocks/todaySells', [App\Http\Controllers\StockController::class, 'todaySells']);
 
         Route::post('/purchase/search', [App\Http\Controllers\PurchaseController::class, 'searchFilters']);
+        Route::post('/sell/search', [App\Http\Controllers\SellController::class, 'searchFilters']);
 
     });
 

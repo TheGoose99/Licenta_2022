@@ -1,13 +1,175 @@
 <template>
-    <h1 class="text-dark">Sold Crypto</h1>
+    <div>
+
+        <div class="card" style="padding-top: 150px;">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary" @click="hide"><button class="btn btn-primary"> Filters List </button></h6>
+            </div>
+            <div class="row mt-4" :class="visible ? '' : 'hide'">
+                <div class="col text-start">
+                    <div class="p-2">
+                        <input v-model="searchTermSymbol" type="text" class="col" style="width: 300px;" placeholder="Search By Cryptocurrency Symbol">
+                    </div>
+                    <div class="p-2">
+                        <input v-model="searchTermUserId" type="text" class="col" style="width: 300px;" placeholder="Search By Bought User ID">
+                    </div>
+                    <div class="p-2">
+                        <input v-model="searchTermWallet" type="text" class="col" style="width: 300px;" placeholder="Search By User Wallet">
+                    </div>
+                </div>
+                <div class="col text-center">
+                    <div class="p-2">
+                        <input v-model="searchTermBoughtA" type="text" class="col" style="width: 300px;" placeholder="Search Bought For From">
+                    </div>
+                    <div class="p-2">
+                        <label for="termDateB" class="label text-start"> From: <input v-model="searchTermDateA" type="date" class="col" style="width: 300px;" placeholder="Search Bought For From"></label>
+                    </div>
+                </div>
+                <div class="col">
+                    <i class="fas fa-minus col" style="padding-top: 13px;"></i>
+                    <i class="fas fa-minus col" style="padding-top: 52px;"></i>
+                </div>
+                <div class="col text-end">
+                    <div class="p-2">
+                        <input v-model="searchTermBoughtB" type="text" class="col" style="width: 300px;" placeholder="Search From Bought For To">
+                    </div>
+                    <div class="p-2">
+                        <label for="termDateB" class="label text-start"> To: <input v-model="searchTermDateB" type="date" class="col" style="width: 300px;" placeholder="Search Bought For From"></label>
+                    </div>
+                    <div class="p-2">
+                        <button class="btn btn-primary btn-lg" @click="searchFilters">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mb-4">
+        <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Sells List</h6>
+                    <button class="btn btn-primary text-end btn-sm" @click="Reset">Reset Filters</button>
+                </div>
+                <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="sells.data">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>User ID</th>
+                            <th>Cryptocurrency Symbol</th>
+                            <th>Sold For</th>
+                            <th>Sold Amount</th>
+                            <th>Used Wallet</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="sell in filterSearch(sells.data)" :key="sell.id">
+                            <td> {{ sell.id }} </td>
+                            <td> {{ sell.user_id }} </td>
+                            <td> {{ sell.crypto_symbol }} </td>
+                            <td> ${{ sell.sold_for }} </td>
+                            <td> ${{ sell.sold_amount }} </td>
+                            <td> {{ sell.used_wallet }} </td>
+                            <td> {{ formatDate(sell.created_at) }} </td>
+                        </tr>
+                    </tbody>
+                    <Pagination :data="sells" @pagination-change-page="allSells" align="center" />
+                </table>
+                <h1 v-else class="text-center text-dark">Data could not be loaded</h1>
+
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-export default {
+import LaravelVuePagination from 'laravel-vue-pagination';
 
+export default {
+    components: {
+        'Pagination': LaravelVuePagination,
+    },
+    data() {
+        return {
+            searchTermSymbol: '',
+            searchTermUserId: '',
+            searchTermWallet: '',
+            searchTermBoughtA: '',
+            searchTermBoughtB: '',
+            searchTermDateA: '',
+            searchTermDateB: '',
+            sells: {},
+            visible: false,
+        }
+    },
+    mounted() {
+        this.allSells();
+    },
+    methods: {
+        Reset() {
+            this.searchTermSymbol = '';
+            this.searchTermUserId = '';
+            this.searchTermWallet = '';
+            this.searchTermBoughtA = '';
+            this.searchTermBoughtB = '';
+            this.searchTermDateA = '';
+            this.searchTermDateB = '';
+
+            this.allSells();
+        },
+        async allSells(page = 1) {
+            const response = await axios.get(`/api/admin/sells?page=${page}`);
+            this.sells = response.data;
+        },
+        formatDate(date) {
+            const event = new Date(date);
+
+            return event.toLocaleString('en-US');
+        },
+        filterSearch(data) {
+            return data
+                    .filter(sell => sell.crypto_symbol.toLowerCase().indexOf(this.searchTermSymbol.toLowerCase()) > -1)
+                    .filter(sell => sell.user_id.toString().indexOf(this.searchTermUserId.toLowerCase()) > -1)
+                    .filter(sell => sell.used_wallet.toString().indexOf(this.searchTermWallet.toLowerCase()) > -1)
+        },
+        async searchFilters() {
+
+            const payload = {
+                soldA: this.searchTermBoughtA,
+                soldB: this.searchTermBoughtB,
+                dateA: this.searchTermDateA,
+                dateB: this.searchTermDateB,
+            }
+
+            if((this.searchTermBoughtA && this.searchTermBoughtB) || (this.searchTermDateA && this.searchTermDateB)) {
+                const response = await axios.post('/api/admin/sell/search', payload);
+
+                if(response.data.length == 0) {
+                    this.sells = null
+                }
+                this.sells = response.data;
+            }
+
+        },
+        hide() {
+            this.visible = !this.visible;
+        }
+    },
 }
 </script>
 
-<style>
+<style scoped>
+.pagination{
+    margin-bottom: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.input{
+    border: 1px solid black;
+}
 
 </style>

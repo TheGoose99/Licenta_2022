@@ -156,7 +156,7 @@ export default {
     mounted () {
         this.loadData();
 
-        this.timer = setInterval(this.loadData, 60000);
+        this.timer = setInterval(this.loadHighest, 60000);
     },
     computed: {
         ...mapGetters([
@@ -173,6 +173,7 @@ export default {
         },
         changePage(number) {
             this.currentPage = number;
+
             this.loadHighest();
         },
         async loadHighest() {
@@ -182,7 +183,7 @@ export default {
                 currentPage: this.currentPage,
             }
 
-            this.loading = true;
+            this.StatusSpinner();
 
             try {
                 await this.$store.dispatch('highestCrypto', payload);
@@ -191,7 +192,7 @@ export default {
                 this.error = error;
             };
 
-            this.hideSpinner();
+            this.StatusSpinner();
         },
         async loadData() {
             this.StatusSpinner();

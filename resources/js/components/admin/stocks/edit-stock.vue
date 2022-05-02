@@ -22,7 +22,7 @@
                             <div class="col-md-6"><label class="labels">Volume</label><input type="text" class="form-control" v-model="form.volume"></div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Date</label><input type="text" class="form-control" :value="form.created_at" v-model="form.created_at"></div>
+                            <div class="col-md-6"><label class="labels">Date</label><input type="text" class="form-control" v-model="form.created_at"></div>
                             <div class="col-md-6"><label class="labels">Image</label><img type="text" :src="form.image" style="width: 140px; height: 150px;"></div>
                         </div>
                         <div class="row mt-2">
