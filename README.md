@@ -80,4 +80,8 @@
 
   About Vue.js
   
-  <p align="center"><a href="https://vuejs.org" target="_blank"><img src="https://camo.githubusercontent.com/c8f91d18976e27123643a926a2588b8d931a0292fd0b6532c3155379e8591629/68747470733a2f2f7675656a732e6f72672f696d616765732f6c6f676f2e706e67" width="400"></a></p>
+  <p align="center"><a href="https://vuejs.org" target="_blank"><img src="https://camo.githubusercontent.com/c8f91d18976e27123643a926a2588b8d931a0292fd0b6532c3155379e8591629/68747470733a2f2f7675656a732e6f72672f696d616765732f6c6f676f2e706e67" width="400" height="400"></a></p>
+
+  Vue is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, and can easily scale between a library and a framework depending on different use cases. It consists of an approachable core library that focuses on the view layer only, and an ecosystem of supporting libraries that helps you tackle complexity in large Single-Page Applications.
+  
+  Vue.js supports all browsers that are ES5-compliant (IE8 and below are not supported).
