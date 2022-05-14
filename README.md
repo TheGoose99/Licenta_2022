@@ -39,7 +39,7 @@
 7. Routing security in back-end, you cannot request certain data unless you have a certain role (example: Admin for Admin Panel) on certain pages. Data is protected by Permissions and MiddleWares;
 8. The ability to see and access an Admin Panel only as an Admin. The Admin Panel is used for data statistics regarding crypto transactions or for visualising, modifying, deleting or inserting data into different tables (Roles, Users, Stocks, Bought Crypto, Sold Crypto, etc);
 9. Use of Mixins to reduce the repetition of code. In place where code might repeat itself, I am using a file containing it in order to reduce the need to rewrite it;
-10. Use of reusable components for base elements (example: Base Dialogue, Base Button, Base Badge, etc); 
+10. Use of reusable components for base elements (example: Base Dialogue, Base Button, Base Badge, etc)
   and many more...
  
   IV. Software requirements: 
@@ -80,4 +80,4 @@
 
   About Vue.js
   
-  <p align="center"><a href="https://vuejs.org" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+  <p align="center"><a href="https://vuejs.org" target="_blank"><img src="https://camo.githubusercontent.com/c8f91d18976e27123643a926a2588b8d931a0292fd0b6532c3155379e8591629/68747470733a2f2f7675656a732e6f72672f696d616765732f6c6f676f2e706e67" width="400"></a></p>
