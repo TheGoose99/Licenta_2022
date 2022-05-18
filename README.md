@@ -57,7 +57,7 @@
  5. Import the database named "laravel_dblicenta";
  6. In the terminal run "cp .env.example .env";
  7. Open the .env file and make sure the value of DB_DATABASE is the name of the database (example: 'DB_DATABASE=laravel_dblicenta');
- 8. Once all these steps have taken place, you can run in two separate terminals "npm run serve" and "php artisan serve";
+ 8. Once all these steps have taken place, you can run in two separate terminals "npm run dev" and "php artisan serve";
  9. The project is now fully accesible;
 
   VI. Used frameworks: 
