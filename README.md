@@ -54,7 +54,7 @@
  2. In the terminal run "npm install";
  3. After that, in the terminal run "composer install";
  4. Turn on your local server (example: WAMP, XAMP);
- 5. Import the database named "laravel_dblicenta";
+ 5. Create a database named "laravel_dblicenta" and import the SQL file inside the repository into the newly created database;
  6. In the terminal run "cp .env.example .env";
  7. Open the .env file and make sure the value of DB_DATABASE is the name of the database (example: 'DB_DATABASE=laravel_dblicenta');
  8. Once all these steps have taken place, you can run in two separate terminals "npm run dev" and "php artisan serve";
