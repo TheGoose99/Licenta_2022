@@ -33,9 +33,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Symbol</th>
+                                    <th scope="col">Crypto Symbol</th>
+                                    <th scope="col">Purchase Code</th>
                                     <th scope="col">Bought Amount</th>
-                                    <th scope="col">For</th>
+                                    <th scope="col">Cost</th>
                                     <th scope="col">Used Wallet</th>
                                     <th scope="col">Transaction Data</th>
                                 </tr>
@@ -44,6 +45,7 @@
                                     <tr v-for="purchases in PurchasesData" :key="purchases.id">
                                         <th scope="row">{{ purchases.id }}</th>
                                         <td scope="row">{{ purchases.crypto_symbol }}</td>
+                                        <td scope="row">{{ purchases.purchase_code }}</td>
                                         <td scope="row">${{ purchases.bought_amount }}</td>
                                         <td scope="row">${{ purchases.bought_for }}</td>
                                         <td scope="row">{{ purchases.used_wallet }}</td>
@@ -57,8 +59,9 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Symbol</th>
+                                    <th scope="col">Sell Code</th>
                                     <th scope="col">Sold Amount</th>
-                                    <th scope="col">For</th>
+                                    <th scope="col">Cost</th>
                                     <th scope="col">Used Wallet</th>
                                     <th scope="col">Transaction Data</th>
                                 </tr>
@@ -67,6 +70,7 @@
                                 <tr v-for="sells in SellsData" :key="sells.id">
                                     <th scope="row">{{ sells.id }}</th>
                                     <td scope="row">{{ sells.crypto_symbol }}</td>
+                                    <td scope="row">{{ sells.sell_code }}</td>
                                     <td scope="row">${{ sells.sold_amount }}</td>
                                     <td scope="row">${{ sells.sold_for }}</td>
                                     <td scope="row">{{ sells.used_wallet }}</td>

@@ -48,7 +48,16 @@ class PurchaseController extends Controller
                 $data['bought_for'] = $request->cost;
                 $data['bought_amount'] = $request->amount;
                 $data['used_wallet'] = $request->wallet;
-                $data['purchase_code'] = rand(1000, 9999);
+
+                // To generate a random 6 characters alphanumeric code
+                // source: https://stackoverflow.com/questions/45666850/how-to-generate-a-random-6-character-string-with-alternating-letters-and-numbers
+                $letters='abcdefghijklmnopqrstuvwxyz';
+                $string='';
+                for($x=0; $x<3; ++$x){
+                    $string.=$letters[rand(0,25)].rand(0,9);
+                }
+
+                $data['purchase_code'] = $string;
 
                 DB::table('stocks')->where('symbol', $request->crypto)->update([
                     'volume' => DB::raw('volume -' .$data['bought_amount']),

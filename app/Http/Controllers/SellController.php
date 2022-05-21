@@ -36,27 +36,34 @@ class SellController extends Controller
             'wallet' => 'required|numeric'
         ]);
 
-        if(DB::table('stocks')->where('symbol', $request->crypto)->exists()) {
-
-            $data = array();
-            $data['user_id'] = $request->userId;
-            $data['crypto_symbol'] = $request->crypto;
-            $data['sold_for'] = $request->amount;
-            $data['sold_amount'] = $request->cost;
-            $data['used_wallet'] = $request->wallet;
-            $data['sell_code'] = rand(1000, 9999);
-
-            DB::table('stocks')->where('symbol', $request->crypto)->update([
-                'volume' => DB::raw('volume +' .$data['sold_amount']),
-            ]);
-
-            Sell::create($data);
-
-        } else {
+        if(!DB::table('stocks')->where('symbol', $request->crypto)->exists()) {
             $date = new DateTime();
 
             DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume, created_at) VALUES (?, ?, ?, ?, ?, ?)', [$request->cryptoName, $request->crypto, $request->image, $request->cost, $request->amount, $date]);
         }
+
+        $data = array();
+        $data['user_id'] = $request->userId;
+        $data['crypto_symbol'] = $request->crypto;
+        $data['sold_for'] = $request->amount;
+        $data['sold_amount'] = $request->cost;
+        $data['used_wallet'] = $request->wallet;
+
+        // To generate a random 6 characters alphanumeric code
+        // source: https://stackoverflow.com/questions/45666850/how-to-generate-a-random-6-character-string-with-alternating-letters-and-numbers
+        $letters='abcdefghijklmnopqrstuvwxyz';
+        $string='';
+        for($x=0; $x<3; ++$x){
+            $string.=$letters[rand(0,25)].rand(0,9);
+        }
+
+        $data['sell_code'] = $string;
+
+        DB::table('stocks')->where('symbol', $request->crypto)->update([
+            'volume' => DB::raw('volume +' .$data['sold_amount']),
+        ]);
+
+        Sell::create($data);
     }
 
     /**

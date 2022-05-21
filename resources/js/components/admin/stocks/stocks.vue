@@ -41,7 +41,7 @@
                             <td> {{ stock.name }} </td>
                             <td> {{ stock.symbol }} </td>
                             <th scope="row"><img :src="stock.image" alt="Stock" id="em_photo"></th>
-                            <td> {{ stock.bought_price }} </td>
+                            <td> ${{ stock.bought_price }} </td>
                             <td> {{ stock.volume }} </td>
                             <td>
                                 <router-link :to="{ path: '/profile/edit-stock/'+ stock.id }"><button @click="emitId(stock.id)" class="btn btn-sm btn-success">Edit</button></router-link>

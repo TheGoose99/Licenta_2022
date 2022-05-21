@@ -10,7 +10,7 @@
                 <li class="nav-item w-100 has-submenu">
                     <div class="dropdown">
                         <a class="btn dropdown-toggle nav-link text-light pl-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-dollar-sign"></i>Statistics
+                            <i class="fas fa-dollar-sign"></i>tatistics
                         </a>
                         <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
                             <div class="text-center text-light">

@@ -180,7 +180,7 @@ export default {
         },
         addStock() {
 
-            const redirectURL = '/' + (this.$route.query.redirect || 'profile/vendor');
+            const redirectURL = '/' + (this.$route.query.redirect || 'admin/vendor');
 
             this.$router.replace(redirectURL);
         },
