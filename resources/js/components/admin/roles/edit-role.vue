@@ -65,7 +65,7 @@ export default {
                             title: 'Role updated successfully'
                         })
 
-                    this.$router.replace('/profile/roles');
+                    this.$router.replace('/admin/roles');
 
                 } catch(error) {
                     console.log(error);

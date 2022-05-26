@@ -20121,7 +20121,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   title: 'Role updated successfully'
                 });
 
-                _this.$router.replace('/profile/roles');
+                _this.$router.replace('/admin/roles');
 
                 _context.next = 15;
                 break;
@@ -21207,7 +21207,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       countries: [],
       roles: [],
       selected: '',
-      selectedRole: ''
+      selectedRole: '',
+      originalRole: ''
     };
   },
   mixins: [_mixins_settingsMixins_loadProfile_js__WEBPACK_IMPORTED_MODULE_0__["default"], _mixins_validations_validators_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
@@ -21263,7 +21264,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 10:
-                if (!(_this.selectedRole !== 'User')) {
+                if (!(_this.selectedRole !== 'User' && _this.originalRole != _this.selectedRole)) {
                   _context.next = 13;
                   break;
                 }
@@ -21277,7 +21278,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   title: 'Profile updated successfully'
                 });
 
-                _this.$router.replace('/profile/users');
+                _this.$router.replace('/admin/users');
 
                 _context.next = 21;
                 break;
@@ -21355,7 +21356,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response2.data.length == 0) {
                   _this3.selectedRole = 'User';
                 } else {
-                  _this3.selectedRole = response2.data[0].name;
+                  _this3.selectedRole = _this3.originalRole = response2.data[0].name;
                 }
 
                 _this3.roles = response.data;
@@ -24169,7 +24170,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
-        path: '/profile/edit-role/' + role.id
+        path: '/admin/edit-role/' + role.id
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -25260,7 +25261,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
-        path: '/profile/edit-stock/' + stock.id
+        path: '/admin/edit-stock/' + stock.id
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -26477,7 +26478,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS */
     , ["title", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
-        path: '/profile/edit-user/' + user.id
+        path: '/admin/edit-user/' + user.id
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

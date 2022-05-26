@@ -67,6 +67,7 @@ export default {
             roles: [],
             selected: '',
             selectedRole: '',
+            originalRole: '',
         }
     },
     mixins: [loadProfile, validators],
@@ -105,7 +106,7 @@ export default {
                         withCredentials: true,
                     })
 
-                    if(this.selectedRole !== 'User') {
+                    if(this.selectedRole !== 'User' && this.originalRole !=this.selectedRole) {
                         await axios.post('/api/admin/user/' + this.userId + '/attach/' + this.selectedRole);
                     }
 
@@ -114,7 +115,7 @@ export default {
                             title: 'Profile updated successfully'
                         })
 
-                    this.$router.replace('/profile/users');
+                    this.$router.replace('/admin/users');
 
                 } catch(error) {
                     console.log(error);
@@ -145,7 +146,7 @@ export default {
             if(response2.data.length == 0) {
                 this.selectedRole = 'User';
             } else {
-                this.selectedRole = response2.data[0].name;
+                this.selectedRole = this.originalRole = response2.data[0].name;
             }
             this.roles = response.data;
         }

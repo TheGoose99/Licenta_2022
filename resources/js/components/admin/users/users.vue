@@ -54,7 +54,7 @@
                             <td> {{ user.wallet }} </td>
                             <td> <base-badge :title= user.role :class="colorRole(user.role)" style="width: 100px; height: 35px; font-size: 16px;"> </base-badge></td>
                             <td>
-                                <router-link :to="{ path: '/profile/edit-user/'+ user.id }"><button @click="emitId(user.id)" class="btn btn-sm btn-success">Edit</button></router-link>
+                                <router-link :to="{ path: '/admin/edit-user/'+ user.id }"><button @click="emitId(user.id)" class="btn btn-sm btn-success">Edit</button></router-link>
                                 <button @click="deleteUser(user.id)" class="btn btn-sm btn-danger">Delete</button>
                             </td>
                         </tr>

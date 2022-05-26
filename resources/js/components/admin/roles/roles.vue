@@ -22,7 +22,7 @@
                                     <td> {{ role.name }} </td>
                                     <td> {{ role.slug }} </td>
                                     <td>
-                                        <router-link :to="{ path: '/profile/edit-role/'+ role.id }"><button @click="emitId(role.id)" class="btn btn-sm btn-success">Edit</button></router-link>
+                                        <router-link :to="{ path: '/admin/edit-role/'+ role.id }"><button @click="emitId(role.id)" class="btn btn-sm btn-success">Edit</button></router-link>
                                         <button @click="deleteRole(role.id)" class="btn btn-sm btn-danger">Delete</button>
                                     </td>
                                 </tr>

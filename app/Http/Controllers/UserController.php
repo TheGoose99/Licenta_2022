@@ -139,9 +139,10 @@ class UserController extends Controller
             'wallet' => 'required',
         ]);
 
-        $user = User::find($id)->first();
+        $user = User::find($id);
 
-        $user->wallet = $request->wallet;
+        $user->update(['wallet' => $request->wallet]);
+
         $user->save();
     }
 
@@ -172,7 +173,7 @@ class UserController extends Controller
             'username' => 'required|unique:users|alpha_dash',
         ]);
 
-        $user = User::find($id)->first();
+        $user = User::find($id);
         $user->username = $request->username;
         $user->save();
     }

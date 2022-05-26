@@ -110,7 +110,7 @@ export default {
 
                     await axios.get('/sanctum/csrf-cookie')
 
-                    await axios.put('/api/user/changeWallet/'+this.userId, payload, {
+                    await axios.put('/api/user/changeWallet/' + this.userId, payload, {
                         withCredentials: true,
                     })
 
