@@ -229,14 +229,11 @@ class UserController extends Controller
     public function attach(User $user, $role) {
         $attached_role = Role::where('name', $role)->first();
         $user->roles()->attach($attached_role);
-
     }
 
-    public function detach(User $user) {
-
-        $user->roles()->detach(request('role'));
-
-        return back();
+    public function detach(User $user, $role) {
+        $detach_role = Role::where('name', $role)->first();
+        $user->roles()->detach($detach_role);
     }
 
     public function usersList(User $users) {

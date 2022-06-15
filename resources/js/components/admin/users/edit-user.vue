@@ -106,8 +106,17 @@ export default {
                         withCredentials: true,
                     })
 
-                    if(this.selectedRole !== 'User' && this.originalRole !=this.selectedRole) {
+                    if(this.selectedRole !== 'User' && this.originalRole != this.selectedRole) {
+
                         await axios.post('/api/admin/user/' + this.userId + '/attach/' + this.selectedRole);
+
+                        if(this.originalRole) {
+                            console.log(this.originalRole)
+                            await axios.post('/api/admin/user/' + this.userId + '/detach/' + this.originalRole);
+                        }
+
+                    } else if(this.selectedRole == 'User' && this.originalRole != this.selectedRole) {
+                        await axios.post('/api/admin/user/' + this.userId + '/detach/' + this.originalRole);
                     }
 
                     Toast.fire({

@@ -21234,7 +21234,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 if (!_this.FormIsvalid) {
-                  _context.next = 22;
+                  _context.next = 31;
                   break;
                 }
 
@@ -21265,7 +21265,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 10:
                 if (!(_this.selectedRole !== 'User' && _this.originalRole != _this.selectedRole)) {
-                  _context.next = 13;
+                  _context.next = 19;
                   break;
                 }
 
@@ -21273,6 +21273,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.post('/api/admin/user/' + _this.userId + '/attach/' + _this.selectedRole);
 
               case 13:
+                if (!_this.originalRole) {
+                  _context.next = 17;
+                  break;
+                }
+
+                console.log(_this.originalRole);
+                _context.next = 17;
+                return axios.post('/api/admin/user/' + _this.userId + '/detach/' + _this.originalRole);
+
+              case 17:
+                _context.next = 22;
+                break;
+
+              case 19:
+                if (!(_this.selectedRole == 'User' && _this.originalRole != _this.selectedRole)) {
+                  _context.next = 22;
+                  break;
+                }
+
+                _context.next = 22;
+                return axios.post('/api/admin/user/' + _this.userId + '/detach/' + _this.originalRole);
+
+              case 22:
                 Toast.fire({
                   icon: 'success',
                   title: 'Profile updated successfully'
@@ -21280,24 +21303,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$router.replace('/admin/users');
 
-                _context.next = 21;
+                _context.next = 30;
                 break;
 
-              case 17:
-                _context.prev = 17;
+              case 26:
+                _context.prev = 26;
                 _context.t0 = _context["catch"](5);
                 console.log(_context.t0);
                 _this.error = _context.t0.message || 'Could not upload data. Try again later.';
 
-              case 21:
+              case 30:
                 _this.isLoading = false;
 
-              case 22:
+              case 31:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[5, 17]]);
+        }, _callee, null, [[5, 26]]);
       }))();
     },
     loadCountries: function loadCountries() {
