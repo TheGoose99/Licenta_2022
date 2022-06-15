@@ -114,7 +114,7 @@ class PurchaseController extends Controller
 
     public function UserPurchase ($id) {
 
-        $purchases = Purchase::where('user_id', $id)->get();
+        $purchases = Purchase::where('user_id', $id)->paginate(10);
 
         return response()->json($purchases);
     }

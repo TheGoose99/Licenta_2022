@@ -24,60 +24,13 @@
                 </div>
                 <div class="form-group mb-0">
                     <label class="d-block">Payment History</label>
-                    <div v-if="!paymentMethod" class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have no payments.</div>
-                    <div v-else>
-                        <div class="py-1" >
-                            <h1>Bought</h1>
+                    <div class="row py-3">
+                        <div class="col-md-6">
+                            <router-link to="/profile/biling/purchases"><button class="btn btn-primary btn-lg">Purchases History</button></router-link>
                         </div>
-                        <table class="table table-striped table-light">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Crypto Symbol</th>
-                                    <th scope="col">Purchase Code</th>
-                                    <th scope="col">Bought Amount</th>
-                                    <th scope="col">Cost</th>
-                                    <th scope="col">Used Wallet</th>
-                                    <th scope="col">Transaction Data</th>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                    <tr v-for="purchases in PurchasesData" :key="purchases.id">
-                                        <th scope="row">{{ purchases.id }}</th>
-                                        <td scope="row">{{ purchases.crypto_symbol }}</td>
-                                        <td scope="row">{{ purchases.purchase_code }}</td>
-                                        <td scope="row">${{ purchases.bought_amount }}</td>
-                                        <td scope="row">${{ purchases.bought_for }}</td>
-                                        <td scope="row">{{ purchases.used_wallet }}</td>
-                                        <td scope="row">{{ formatDate(purchases.created_at) }}</td>
-                                    </tr>
-                                </tbody>
-                            <div class="py-3">
-                                <h1>Sold</h1>
-                            </div>
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Symbol</th>
-                                    <th scope="col">Sell Code</th>
-                                    <th scope="col">Sold Amount</th>
-                                    <th scope="col">Cost</th>
-                                    <th scope="col">Used Wallet</th>
-                                    <th scope="col">Transaction Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="sells in SellsData" :key="sells.id">
-                                    <th scope="row">{{ sells.id }}</th>
-                                    <td scope="row">{{ sells.crypto_symbol }}</td>
-                                    <td scope="row">{{ sells.sell_code }}</td>
-                                    <td scope="row">${{ sells.sold_amount }}</td>
-                                    <td scope="row">${{ sells.sold_for }}</td>
-                                    <td scope="row">{{ sells.used_wallet }}</td>
-                                    <td scope="row">{{ formatDate(sells.created_at) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="col">
+                            <router-link to="/profile/biling/sells"><button class="btn btn-danger btn-lg">Sells History</button></router-link>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -99,7 +52,6 @@ export default {
     },
     mounted () {
         this.loadWallet();
-        this.loadTransactions();
     },
     methods: {
         async addPaymentMethod() {
@@ -127,11 +79,6 @@ export default {
                 this.error = "Wallet Address Required!"
             }
         },
-        formatDate(date) {
-            const event = new Date(date);
-
-            return event.toLocaleString('en-US');
-        },
         loadWallet() {
             try {
                 axios.get('/api/user/loadWallet/' + this.userId)
@@ -144,17 +91,6 @@ export default {
         handleError() {
             this.error = false;
         },
-        async loadTransactions() {
-            try {
-                await axios.get('/sanctum/csrf-cookie')
-                const payload = { userId: this.userId }
-                this.$store.dispatch('loadTransactions', payload);
-
-            } catch (error) {
-                console.log(error);
-                this.error = error.message || 'Could not load data. Try again later.'
-            }
-        },
     },
     computed: {
         switchModeButtonCaption() {
@@ -166,9 +102,7 @@ export default {
         },
         ...mapGetters({
             userId: 'userId',
-            PurchasesData: 'retrievePurchases',
-            SellsData: 'retrieveSells',
-            }),
+        }),
     },
 }
 </script>

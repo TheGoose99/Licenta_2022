@@ -113,7 +113,7 @@ class SellController extends Controller
 
     public function UserPurchase ($id) {
 
-        $sells = Sell::where('user_id', $id)->get();
+        $sells = Sell::where('user_id', $id)->paginate(10);
 
         return response()->json($sells);
     }
