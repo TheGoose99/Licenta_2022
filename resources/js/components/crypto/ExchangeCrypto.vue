@@ -194,7 +194,8 @@ export default {
                 } else {
 
                     const payload = {
-                        crypto: this.retrieveselectedCryptoSymbol,
+                        crypto: this.retrieveselectedCrypto,
+                        symbol: this.retrieveselectedCryptoSymbol,
                         cost: this.spendAmount,
                         amount: this.receiveAmount,
                         image: this.selectedCryptoImage,

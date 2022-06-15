@@ -21924,7 +21924,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 9:
                 payload = {
-                  crypto: _this.retrieveselectedCryptoSymbol,
+                  crypto: _this.retrieveselectedCrypto,
+                  symbol: _this.retrieveselectedCryptoSymbol,
                   cost: _this.spendAmount,
                   amount: _this.receiveAmount,
                   image: _this.selectedCryptoImage

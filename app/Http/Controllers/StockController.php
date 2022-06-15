@@ -15,7 +15,7 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $stocks = DB::select('SELECT * FROM stocks');
+        $stocks = DB::select('SELECT * FROM stocks WHERE volume > 1');
 
         return response()->json($stocks);
     }
