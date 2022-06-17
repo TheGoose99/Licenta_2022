@@ -56,18 +56,18 @@
                 <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="sells.data">
                     <thead class="thead-light">
                         <tr>
-                            <th>ID</th>
-                            <th>User ID</th>
-                            <th>Cryptocurrency Symbol</th>
-                            <th>Sell Code</th>
-                            <th>Cost</th>
-                            <th>Sold Amount</th>
-                            <th>Used Wallet</th>
-                            <th>Date</th>
+                            <th @click="sort('id')">ID</th>
+                            <th @click="sort('user_id')">User ID</th>
+                            <th @click="sort('crypto_symbol')">Cryptocurrency Symbol</th>
+                            <th @click="sort('sell_code')">Sell Code</th>
+                            <th @click="sort('sold_for')">Cost</th>
+                            <th @click="sort('sold_amount')">Sold Amount</th>
+                            <th @click="sort('used_wallet')">Used Wallet</th>
+                            <th @click="sort('created_at')">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="sell in filterSearch(sells.data)" :key="sell.id">
+                        <tr v-for="sell in sortedSells" :key="sell.id">
                             <td> {{ sell.id }} </td>
                             <td> {{ sell.user_id }} </td>
                             <td> {{ sell.crypto_symbol }} </td>
@@ -107,6 +107,8 @@ export default {
             searchTermDateB: '',
             sells: {},
             visible: false,
+            currentSort:'name',
+            currentSortDir:'asc',
         }
     },
     mounted() {
@@ -162,8 +164,26 @@ export default {
         },
         hide() {
             this.visible = !this.visible;
+        },
+        sort:function(s) {
+            //if s == current sort, reverse
+            if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+            }
+            this.currentSort = s;
         }
     },
+    computed:{
+        sortedSells:function() {
+            return this.filterSearch(this.sells.data).sort((a,b) => {
+                let modifier = 1;
+                if(this.currentSortDir === 'desc') modifier = -1;
+                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                return 0;
+            });
+        }
+    }
 }
 </script>
 

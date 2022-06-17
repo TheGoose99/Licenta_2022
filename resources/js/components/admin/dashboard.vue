@@ -98,7 +98,7 @@
                                     <th>Name</th>
                                     <th>Code</th>
                                     <th>Photo</th>
-                                    <th>Last Bought At</th>
+                                    <th>Last Bought Amount</th>
                                     <th>Status</th>
                                     <th>Quantity</th>
                                     <th>Actions</th>

@@ -88,19 +88,19 @@
         <table class="table table-striped table-dark" v-if="filterSearch.length">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col" @click="sort('market_cap_rank')">#</th>
                     <th scope="col">Image</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Symbol</th>
-                    <th scope="col">Current Price</th>
-                    <th scope="col">Price Change 24h</th>
-                    <th scope="col">% Change 24h</th>
-                    <th scope="col">Last Updated</th>
+                    <th scope="col" @click="sort('name')">Name</th>
+                    <th scope="col" @click="sort('symbol')">Symbol</th>
+                    <th scope="col" @click="sort('current_price')">Current Price</th>
+                    <th scope="col" @click="sort('price_change_24h')">Price Change 24h</th>
+                    <th scope="col" @click="sort('price_change_percentage_24h')">% Change 24h</th>
+                    <th scope="col" @click="sort('last_updated')">Last Updated</th>
                     <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="crypto in filterSearch" :key="crypto.id">
+                <tr v-for="crypto in sortedCrypto" :key="crypto.id">
                     <th scope="row">{{ crypto.market_cap_rank }}</th>
                     <th scope="row"><img :src="crypto.image" alt="Crypto" id="em_photo"></th>
                     <td scope="row"><b>{{ crypto.name }}</b></td>
@@ -150,6 +150,8 @@ export default {
             limit: 5,
             timer: '',
             isLoading: false,
+            currentSort:'market_cap_rank',
+            currentSortDir:'asc'
         }
     },
     mixins: [loadData],
@@ -157,13 +159,6 @@ export default {
         this.loadData();
 
         this.timer = setInterval(this.loadHighest, 60000);
-    },
-    computed: {
-        ...mapGetters([
-            'retrieveTrendyCryptoData',
-            'retrieveVolumeCryptoData',
-            'retrieveSelectedCurrentPageCrypto',
-        ]),
     },
     methods: {
         formatDate(date) {
@@ -247,6 +242,29 @@ export default {
         StatusSpinner() {
             this.isLoading = !this.isLoading;
         },
+        sort:function(s) {
+            //if s == current sort, reverse
+            if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+            }
+            this.currentSort = s;
+        }
+    },
+    computed:{
+        sortedCrypto:function() {
+            return this.filterSearch.sort((a,b) => {
+                let modifier = 1;
+                if(this.currentSortDir === 'desc') modifier = -1;
+                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                return 0;
+            });
+        },
+        ...mapGetters([
+            'retrieveTrendyCryptoData',
+            'retrieveVolumeCryptoData',
+            'retrieveSelectedCurrentPageCrypto',
+        ]),
     },
     beforeDestroy() {
         this.cancelAutoUpdate();

@@ -14,18 +14,19 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-right">Edit Crypto Data</h4>
                     </div>
-                    <form method="PUT" @submit.prevent="updateData">
-                        <div class="row mt-2">
+                    <form method="POST" @submit.prevent="updateData" enctype="multipart/form-data">
+                        <div class="row mt-3">
                             <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" v-model="form.name"></div>
                             <div class="col-md-6"><label class="labels">Symbol</label><input type="text" class="form-control" v-model="form.symbol"></div>
                             <div class="col-md-6"><label class="labels">Bought Price</label><input type="text" class="form-control" v-model="form.bought_price"></div>
                             <div class="col-md-6"><label class="labels">Volume</label><input type="text" class="form-control" v-model="form.volume"></div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-3">
                             <div class="col-md-6"><label class="labels">Date</label><input type="text" class="form-control" v-model="form.created_at"></div>
-                            <div class="col-md-6"><label class="labels">Image</label><img type="text" :src="form.image" style="width: 140px; height: 150px;"></div>
+                            <div class="col-md-6"><label class="labels">Image</label><input type="file" class="form-control" @change="changeImage" /></div>
+                            <div class="col-md-6"><img type="text" :src="form.image" style="width: 140px; height: 150px;"></div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-3">
                             <div class="col-md-6 text-start"><router-link :to="{ name: 'stocks' }"><button class="btn btn-danger profile-button btn-sm" @click="emitRoute('users')">Back</button></router-link></div>
                             <div class="col-md-6 text-center"><button class="btn btn-primary profile-button btn-sm" type="submit">Save Profile</button></div>
                         </div>
@@ -91,6 +92,7 @@ export default {
 
                     await axios.get('/sanctum/csrf-cookie')
 
+                    // Eroare generata de PHP. Nu poti trimite multipart/form-data impreuna cu PUT. O sa afiseze ca si cum ai trimise gol.
                     await axios.put('/api/admin/stock/' + this.userId, payload, {
                         withCredentials: true,
                     })

@@ -50,24 +50,24 @@
         <!-- Simple Tables -->
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Purchased List</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Purchases List</h6>
                     <button class="btn btn-primary text-end btn-sm" @click="Reset">Reset Filters</button>
                 </div>
                 <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="purchases.data">
                     <thead class="thead-light">
                         <tr>
-                            <th>ID</th>
-                            <th>User ID</th>
-                            <th>Cryptocurrency Symbol</th>
-                            <th>Purchase Code</th>
-                            <th>Cost</th>
-                            <th>Bought Amount</th>
-                            <th>Used Wallet</th>
-                            <th>Date</th>
+                            <th @click="sort('id')">ID</th>
+                            <th @click="sort('user_id')">User ID</th>
+                            <th @click="sort('crypto_symbol')">Cryptocurrency Symbol</th>
+                            <th @click="sort('purchase_code')">Purchase Code</th>
+                            <th @click="sort('bought_for')">Cost</th>
+                            <th @click="sort('bought_amount')">Bought Amount</th>
+                            <th @click="sort('used_wallet')">Used Wallet</th>
+                            <th @click="sort('created_at')">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="purchase in filterSearch(purchases.data)" :key="purchase.id">
+                        <tr v-for="purchase in sortedPurchases" :key="purchase.id">
                             <td> {{ purchase.id }} </td>
                             <td> {{ purchase.user_id }} </td>
                             <td> {{ purchase.crypto_symbol }} </td>
@@ -78,7 +78,7 @@
                             <td> {{ formatDate(purchase.created_at) }} </td>
                         </tr>
                     </tbody>
-                    <Pagination :data="purchases" @pagination-change-page="allPurchases" align="center" />
+                    <Pagination :data="purchases" @pagination-change-page="allPurchases"/>
                 </table>
                 <h1 v-else class="text-center text-dark">Data could not be loaded</h1>
 
@@ -107,6 +107,8 @@ export default {
             searchTermDateB: '',
             purchases: {},
             visible: false,
+            currentSort:'name',
+            currentSortDir:'asc'
         }
     },
     mounted() {
@@ -162,8 +164,26 @@ export default {
         },
         hide() {
             this.visible = !this.visible;
+        },
+        sort:function(s) {
+            //if s == current sort, reverse
+            if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+            }
+            this.currentSort = s;
         }
     },
+    computed:{
+        sortedPurchases:function() {
+            return this.filterSearch(this.purchases.data).sort((a,b) => {
+                let modifier = 1;
+                if(this.currentSortDir === 'desc') modifier = -1;
+                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                return 0;
+            });
+        }
+    }
 }
 </script>
 

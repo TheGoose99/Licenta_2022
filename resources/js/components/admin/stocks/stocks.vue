@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card" style="padding-top: 170px;">
+        <div class="card" style="padding-top: 200px;">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Filters List</h6>
             </div>
@@ -24,19 +24,19 @@
                     <h6 class="m-0 font-weight-bold text-primary">Stocks List</h6>
                     <button class="btn btn-primary text-end btn-sm" @click="Reset">Reset Filters</button>
                 </div>
-                <table class="table table-striped table-light table-responsive align-items-center table-flush" :showRepos="showRepos" v-if="filterSearch.length">
+                <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="stocks.data">
                     <thead class="thead-light">
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Symbol</th>
+                            <th @click="sort('id')">ID</th>
+                            <th @click="sort('name')">Name</th>
+                            <th @click="sort('symbol')">Symbol</th>
                             <th>Image</th>
-                            <th>Bought For</th>
-                            <th>Volume</th>
+                            <th @click="sort('bought_price')">Bought For</th>
+                            <th @click="sort('volume')">Volume</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="stock in filterSearch" :key="stock.id">
+                        <tr v-for="stock in sortedStocks" :key="stock.id">
                             <td> {{ stock.id }} </td>
                             <td> {{ stock.name }} </td>
                             <td> {{ stock.symbol }} </td>
@@ -44,21 +44,16 @@
                             <td> ${{ stock.bought_price }} </td>
                             <td> {{ stock.volume }} </td>
                             <td>
-                                <router-link :to="{ path: '/admin/edit-stock/'+ stock.id }"><button @click="emitId(stock.id)" class="btn btn-sm btn-success">Edit</button></router-link>
+                                <router-link :to="{ path: '/admin/edit-stock/' + stock.id }"><button @click="emitId(stock.id)" class="btn btn-sm btn-success">Edit</button></router-link>
                                 <button @click="deleteStock(stock.id)" class="btn btn-sm btn-danger">Delete</button>
                             </td>
                         </tr>
                     </tbody>
+                    <ul class="pagination justify-content-center">
+                        <Pagination :data="stocks" @pagination-change-page="allStocks"/>
+                    </ul>
                 </table>
                 <h1 class="text-center text-dark" v-else>Data could not be loaded</h1>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" :class="currentPage == 1 ? 'disabled' : ''" @click="changePage(currentPage - 1)">
-                        <button class="page-link" href="#">Previous</button>
-                    </li>
-                    <li class="page-item" :class="!lastPage ? 'disabled' : ''">
-                        <button class="page-link" @click="changePage(currentPage + 1)">Next</button>
-                    </li>
-                </ul>
                 <div class="card-footer"></div>
             </div>
         </div>
@@ -66,8 +61,12 @@
 </template>
 
 <script>
+import LaravelVuePagination from 'laravel-vue-pagination';
 
 export default {
+    components: {
+        'Pagination': LaravelVuePagination,
+    },
     mounted() {
         this.allStocks();
     },
@@ -77,15 +76,15 @@ export default {
             searchTermName: '',
             searchTermVolume: '',
             searchTermBoughtFor: '',
-            currentPage: 1,
-            perPage: 10,
             isLoading: false,
+            currentSort:'name',
+            currentSortDir:'asc'
         }
     },
     methods: {
-        async allStocks() {
+        async allStocks(page = 1) {
             this.statusSpinner();
-            const response = await axios.get('/api/admin/stock')
+            const response = await axios.get(`/api/admin/stock?page=${page}`)
 
             this.stocks = response.data;
             this.statusSpinner();
@@ -119,21 +118,6 @@ export default {
         emitId(id) {
             this.$store.commit('AssignId', id);
         },
-        changePage(number) {
-            if(number > 0) {
-                if(this.showRepos.length < 10) {
-                    this.currentPage = 1;
-                } else {
-                    this.currentPage = number;
-                }
-            }
-        },
-        lastPage() {
-            if(this.showRepos.length < 5) {
-                return true;
-            }
-            return false;
-        },
         Reset() {
             this.searchTermName = '';
             this.searchTermVolume = '';
@@ -141,24 +125,32 @@ export default {
         },
         statusSpinner() {
             this.isLoading = !this.isLoading;
+        },
+        filterSearch(data) {
+            return data
+                    .filter(stock => stock.name.toLowerCase().indexOf(this.searchTermName.toLowerCase()) > -1)
+                    .filter(stock => stock.bought_price.toString().indexOf(this.searchTermBoughtFor) > -1)
+                    .filter(stock => stock.volume.toString().indexOf(this.searchTermVolume) > -1)
+        },
+        sort:function(s) {
+            //if s == current sort, reverse
+            if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+            }
+            this.currentSort = s;
         }
     },
-    computed: {
-        // !!Erorile din console log sunt ca rezultat a functiei computed "filterSearch" care cauta de cand au fost incarcate datele, rolurile, insa deoarece se incarca mai
-        //pe urma, nu le gaseste in mod initial si spune ca e o "Eroare"!!
-        filterSearch() {
-            return this.showRepos
-                    .filter(stock => stock.name.toLowerCase().indexOf(this.searchTermName.toLowerCase()) > -1)
-                    .filter(stock => stock.bought_price.toString().indexOf(this.searchTermBoughtFor.toLowerCase()) > -1)
-                    .filter(stock => stock.volume.toString().indexOf(this.searchTermVolume.toLowerCase()) > -1)
-        },
-        showRepos() {
-            let start = (this.currentPage - 1) * this.perPage;
-            let end = start + this.perPage;
-
-            return this.stocks.slice(start, end);
-        },
-    },
+    computed:{
+        sortedStocks:function() {
+            return this.filterSearch(this.stocks.data).sort((a,b) => {
+                let modifier = 1;
+                if(this.currentSortDir === 'desc') modifier = -1;
+                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                return 0;
+            });
+        }
+    }
 }
 </script>
 
@@ -167,4 +159,10 @@ export default {
         height: 40px;
         width: 40px;
     }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 </style>

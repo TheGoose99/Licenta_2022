@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use DateTime;
 use Carbon\Carbon;
+use Image;
 
 class StockController extends Controller
 {
@@ -15,7 +16,7 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $stocks = DB::select('SELECT * FROM stocks WHERE volume > 1');
+        $stocks = DB::table('stocks')->where('stocks.volume', '>', '1')->paginate(10);
 
         return response()->json($stocks);
     }
@@ -81,13 +82,19 @@ class StockController extends Controller
      */
     public function update(Request $request, $id) {
         $validatedData = $request->validate([
-            'name' => 'required|string',
-            'symbol' => 'required|string',
-            'image' => 'required|string',
+            'name' => 'required|string|max:255',
+            'symbol' => 'required|string|max:255',
             'for' => 'required|numeric',
             'amount' => 'required|numeric',
-            'date' => 'nullable|string',
+            'date' => 'nullable|string|max:255',
         ]);
+        // 'image' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048',
+
+        // if($request->hasfile('image')) {
+
+        //     $image = $request->file('image');
+
+        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
 
         if(!$request->date) {
             $date = new DateTime();
@@ -103,7 +110,10 @@ class StockController extends Controller
         $data['volume'] = $request->amount;
         $data['created_at'] = $request->date;
 
+        // Image::make($image)->resize(500, 500)->save(public_path('/images/cryptos/' . $imageName));
+
         DB::table('stocks')->where('id', $id)->update($data);
+        // }
     }
 
     /**
