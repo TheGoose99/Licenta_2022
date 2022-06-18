@@ -88,14 +88,14 @@
         <table class="table table-striped table-dark" v-if="filterSearch.length">
             <thead>
                 <tr>
-                    <th scope="col" @click="sort('market_cap_rank')">#</th>
+                    <th scope="col" @click="sort('market_cap_rank')"># <div class="fa fa-sort"></div></th>
                     <th scope="col">Image</th>
-                    <th scope="col" @click="sort('name')">Name</th>
-                    <th scope="col" @click="sort('symbol')">Symbol</th>
-                    <th scope="col" @click="sort('current_price')">Current Price</th>
-                    <th scope="col" @click="sort('price_change_24h')">Price Change 24h</th>
-                    <th scope="col" @click="sort('price_change_percentage_24h')">% Change 24h</th>
-                    <th scope="col" @click="sort('last_updated')">Last Updated</th>
+                    <th scope="col" @click="sort('name')">Name <div class="fa fa-sort"></div></th>
+                    <th scope="col" @click="sort('symbol')">Symbol <div class="fa fa-sort"></div></th>
+                    <th scope="col" @click="sort('current_price')">Current Price <div class="fa fa-sort"></div></th>
+                    <th scope="col" @click="sort('price_change_24h')">Price Change 24h <div class="fa fa-sort"></div></th>
+                    <th scope="col" @click="sort('price_change_percentage_24h')">% Change 24h <div class="fa fa-sort"></div></th>
+                    <th scope="col" @click="sort('last_updated')">Last Updated <div class="fa fa-sort"></div></th>
                     <th scope="col">Options</th>
                 </tr>
             </thead>

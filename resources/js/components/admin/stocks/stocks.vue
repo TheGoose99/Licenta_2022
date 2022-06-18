@@ -27,12 +27,12 @@
                 <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="stocks.data">
                     <thead class="thead-light">
                         <tr>
-                            <th @click="sort('id')">ID</th>
-                            <th @click="sort('name')">Name</th>
-                            <th @click="sort('symbol')">Symbol</th>
+                            <th @click="sort('id')">ID <div class="fa fa-sort"></div></th>
+                            <th @click="sort('name')">Name <div class="fa fa-sort"></div></th>
+                            <th @click="sort('symbol')">Symbol <div class="fa fa-sort"></div></th>
                             <th>Image</th>
-                            <th @click="sort('bought_price')">Bought For</th>
-                            <th @click="sort('volume')">Volume</th>
+                            <th @click="sort('bought_price')">Bought For <div class="fa fa-sort"></div></th>
+                            <th @click="sort('volume')">Volume <div class="fa fa-sort"></div></th>
                         </tr>
                     </thead>
                     <tbody>

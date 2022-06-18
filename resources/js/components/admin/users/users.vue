@@ -30,15 +30,15 @@
                 <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="users.data">
                     <thead class="thead-light">
                         <tr>
-                            <th @click="sort('id')">ID</th>
-                            <th @click="sort('username')">Username</th>
-                            <th @click="sort('name')">Name</th>
-                            <th @click="sort('email')">Email</th>
-                            <th @click="sort('phone')">Phone</th>
-                            <th @click="sort('address')">Address</th>
-                            <th @click="sort('country_id')">Country</th>
-                            <th @click="sort('wallet')">Wallet</th>
-                            <th @click="sort('role')">Role</th>
+                            <th @click="sort('id')">ID<div class="fa fa-sort"></div></th>
+                            <th @click="sort('username')">Username <div class="fa fa-sort"></div></th>
+                            <th @click="sort('name')">Name<div class="fa fa-sort"></div></th>
+                            <th @click="sort('email')">Email <div class="fa fa-sort"></div></th>
+                            <th @click="sort('phone')">Phone <div class="fa fa-sort"></div></th>
+                            <th @click="sort('address')">Address <div class="fa fa-sort"></div></th>
+                            <th @click="sort('country_id')">Country <div class="fa fa-sort"></div></th>
+                            <th @click="sort('wallet')">Wallet <div class="fa fa-sort"></div></th>
+                            <th @click="sort('role')">Role <div class="fa fa-sort"></div></th>
                             <th>Action</th>
                         </tr>
                     </thead>

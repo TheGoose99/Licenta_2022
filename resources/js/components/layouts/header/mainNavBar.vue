@@ -1,7 +1,14 @@
 <template>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3" :style="{ color: navColors[$route.path] }">
         <div class="container">
-            <router-link to="/" class="navbar-brand"><h1>Proiect Licenta</h1></router-link>
+            <router-link to="/" class="navbar-brand">
+                <div class="d-flex">
+                    <div class="navbar-left logo">
+                        <img src="../../../../../public/images/logo-btr.png" alt="Logo" class="nav-link" width="55" height="55">
+                    </div>
+                    <h4 class="brand brand-name navbar-left"><div class="navbar-left">Bitcoin Romania</div></h4>
+                </div>
+            </router-link>
             <button
                 type="button"
                 class="navbar-toggler"
@@ -117,6 +124,24 @@ export default {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Fira sanss', 'sans-serif';
+}
+
+.logo {
+    display: block;
+    height: auto;
+    width: 52px;
+    padding-top: 5px;
+}
+
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px; /* firefox bug fix */
+  width: auto;
+}
+
+.brand-name {
+    padding-top: 20px;
+    padding-left: 5px;
 }
 
 .container {

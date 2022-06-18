@@ -56,14 +56,14 @@
                 <table class="table table-striped table-light table-responsive align-items-center table-flush" v-if="sells.data">
                     <thead class="thead-light">
                         <tr>
-                            <th @click="sort('id')">ID</th>
-                            <th @click="sort('user_id')">User ID</th>
-                            <th @click="sort('crypto_symbol')">Cryptocurrency Symbol</th>
-                            <th @click="sort('sell_code')">Sell Code</th>
-                            <th @click="sort('sold_for')">Cost</th>
-                            <th @click="sort('sold_amount')">Sold Amount</th>
-                            <th @click="sort('used_wallet')">Used Wallet</th>
-                            <th @click="sort('created_at')">Date</th>
+                            <th @click="sort('id')">ID <div class="fa fa-sort"></div></th>
+                            <th @click="sort('user_id')">User ID <div class="fa fa-sort"></div></th>
+                            <th @click="sort('crypto_symbol')">Cryptocurrency Symbol <div class="fa fa-sort"></div></th>
+                            <th @click="sort('sell_code')">Sell Code <div class="fa fa-sort"></div></th>
+                            <th @click="sort('sold_for')">Cost <div class="fa fa-sort"></div></th>
+                            <th @click="sort('sold_amount')">Sold Amount <div class="fa fa-sort"></div></th>
+                            <th @click="sort('used_wallet')">Used Wallet <div class="fa fa-sort"></div></th>
+                            <th @click="sort('created_at')">Date <div class="fa fa-sort"></div></th>
                         </tr>
                     </thead>
                     <tbody>
