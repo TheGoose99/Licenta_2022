@@ -1,3 +1,5 @@
+import axios from "axios";
+
 // Timer global in file:
 let timer;
 
@@ -96,6 +98,9 @@ export default {
             token: null,
             userId: null,
         });
+
+        axios.get('api/logout');
+
     },
     autoLogout(context) {
         context.dispatch('logout');
