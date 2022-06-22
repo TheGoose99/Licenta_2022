@@ -28,7 +28,7 @@
    c. Trendy Coins;
  and a 4th table containing 25 cryptocurrencies sorted by trendiness, containing various details about them like price change, price percentage change, volume, last updated price change and so on. The table contains pagination which repopulates the table with the next 25 cryptocurrencies.  
 3. A beautiful dialogue panel for selecting cryptocurrencies when buying or selling crypto, while showing the price change of those and their current market value. 
-4. The implementation of a user validation requirement MiddleWare on the backend side, for trading cryptocurrency.
+4. The implementation of a user validation requirement middleware on the backend side, for trading cryptocurrency.
 5. You can become eligible to trade cryptocurrency by filling up data in the Profile Tab, situated in the Settings Tab. The Profile Tab is segmented in 4 mini-tabs:
   a. View Profile, where you can check what data you have validated or you can edit your profile there;
   b. Change Username, which is only possible if the required username is available in the database, as all usernames and e-mails are unique in it;
