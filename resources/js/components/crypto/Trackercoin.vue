@@ -158,7 +158,7 @@ export default {
     mounted () {
         this.loadData();
 
-        this.timer = setInterval(this.loadHighest, 60000);
+        this.timer = setInterval(this.loadHighest, 1000);
     },
     methods: {
         formatDate(date) {

@@ -22121,7 +22121,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mixins: [_mixins_cryptoMixins_loadData_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
   mounted: function mounted() {
     this.loadData();
-    this.timer = setInterval(this.loadHighest, 60000);
+    this.timer = setInterval(this.loadHighest, 1000);
   },
   methods: {
     formatDate: function formatDate(date) {
