@@ -1,4 +1,4 @@
-  This is my Bachelor's Degree project. The project is a Full Stack app (front-end in Laravel + back-end in Vue.js) and the main goal of it is to simulate a functional cryptocurrency marketplace, containg many features which I will cover below:
+  This is my Bachelor's Degree project. The project is a Full Stack app (front-end in Vue.js + back-end in Laravel) and the main goal of it is to simulate a functional cryptocurrency marketplace, containg many features which I will cover below:
   
   I. The main pages of the project are: 
   
@@ -22,13 +22,13 @@
 1. A fully working sign up and login cycle. The ability to change password on request using your email and username;
 2. Login and Sign Up protected by Reggex validation functions;
 3. A well-thought SQL DataBase with various data tables and pivot tables for storing cryptocurrencies and users related data. Most tables have relationships between each other with foreign IDs or by taking advantage of the Laravel's Eloquent Relationships;  
-4. A fully functional marketplace with over 100 cryptocurrencies with real data from an external API which automatically refreshes itself every 1 minute. The pages contains 3 panels sorted by: 
+4. A fully functional marketplace with over 100 cryptocurrencies with real data from an external API which automatically refreshes itself every second. The pages contains 3 panels sorted by: 
    a. Top Coins By Volume; 
    b. Traded Value;
    c. Trendy Coins;
  and a 4th table containing 25 cryptocurrencies sorted by trendiness, containing various details about them like price change, price percentage change, volume, last updated price change and so on. The table contains pagination which repopulates the table with the next 25 cryptocurrencies.  
 3. A beautiful dialogue panel for selecting cryptocurrencies when buying or selling crypto, while showing the price change of those and their current market value. 
-4. The implementation of a user validation requirement MiddleWare on the backend side, for trading cryptocurrency.
+4. The implementation of a user validation requirement middleware on the backend side, for trading cryptocurrency.
 5. You can become eligible to trade cryptocurrency by filling up data in the Profile Tab, situated in the Settings Tab. The Profile Tab is segmented in 4 mini-tabs:
   a. View Profile, where you can check what data you have validated or you can edit your profile there;
   b. Change Username, which is only possible if the required username is available in the database, as all usernames and e-mails are unique in it;
@@ -36,7 +36,7 @@
   d. Change billing, where you can also see your transactions;
 6. The concept of roles with different level of permissions and accesability on different pages of the website;
 6. Routing security in front-end, you cannot enter the Transactions Page unless you are logged into an account;
-7. Routing security in back-end, you cannot request certain data unless you have a certain role (example: Admin for Admin Panel) on certain pages. Data is protected by Permissions and MiddleWares;
+7. Routing security in back-end, you cannot request certain data unless you have a certain role (example: Admin for Admin Panel) on certain pages. Data is protected by Permissions and middlewares;
 8. The ability to see and access an Admin Panel only as an Admin. The Admin Panel is used for data statistics regarding crypto transactions or for visualising, modifying, deleting or inserting data into different tables (Roles, Users, Stocks, Bought Crypto, Sold Crypto, etc);
 9. Use of Mixins to reduce the repetition of code. In place where code might repeat itself, I am using a file containing it in order to reduce the need to rewrite it;
 10. Use of reusable components for base elements (example: Base Dialogue, Base Button, Base Badge, etc)
