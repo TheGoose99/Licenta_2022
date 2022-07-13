@@ -19832,6 +19832,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_layouts_header_mainNavBar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/layouts/header/mainNavBar.vue */ "./resources/js/components/layouts/header/mainNavBar.vue");
 /* harmony import */ var _components_layouts_footer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/layouts/footer.vue */ "./resources/js/components/layouts/footer.vue");
+// In navbar we have an 'IF' statement to hide the navbar if the meta='hidenavbar'.
+// It is used for the 404 Not Found file in order to hide the navbar.
+// In order to use the routes inside the router, we have to use a router-view.
+// It is like a frame that switches its content based on the current accessed page
+// The transition is the animation we see while switching the current page in the router.
+// The component is what we will be seeing animated by the transition.
+//  As we will be seeing these two components throught most of the application, we will import them here.
+//  The reason I did not import them globally is that we only need to use them in the app.vue file
+// and then we can have them be visibile throughout the app:
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -21804,7 +21813,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var payload, redirectURL;
+        var payload;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -21816,7 +21825,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 if (!_this.FormIsvalid) {
-                  _context.next = 17;
+                  _context.next = 16;
                   break;
                 }
 
@@ -21835,29 +21844,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   icon: 'success',
                   title: 'Signed up successfully'
                 });
-                redirectURL = '/' + 'login';
-                _context.next = 11;
-                return _this.$router.replace(redirectURL);
+                _context.next = 10;
+                return _this.$router.push({
+                  path: '/login'
+                });
 
-              case 11:
-                _context.next = 17;
+              case 10:
+                _context.next = 16;
                 break;
 
-              case 13:
-                _context.prev = 13;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](4);
                 console.log(_context.t0);
                 _this.error = _context.t0.message || 'Failed to register. Try again later.';
 
-              case 17:
+              case 16:
                 _this.isLoading = false;
 
-              case 18:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[4, 13]]);
+        }, _callee, null, [[4, 12]]);
       }))();
     },
     toggleShow: function toggleShow() {
@@ -29083,7 +29093,7 @@ var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "text-light text-center h4"
-  }, " CRUD Features ", -1
+  }, " Features ", -1
   /* HOISTED */
   );
 });
@@ -31933,7 +31943,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_layouts_sidebar_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/layouts/sidebar.vue */ "./resources/js/components/layouts/sidebar.vue");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_10__);
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+// Import of the bootstrap file
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Import of the Vue3 app:
+
+
+ // Import of Axios and VueAxios:
+
+
+ // Import of the router, the Vuex store, the Vue3 app and the global components used throught the application:
 
 
 
@@ -31941,13 +31958,12 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-
-
-
+ // I imported BaseDialog component as Async as we don't need it right away in the loading of the app:
 
 var BaseDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineAsyncComponent)(function () {
   return __webpack_require__.e(/*! import() */ "resources_js_components_ui_BaseDialog_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/ui/BaseDialog.vue */ "./resources/js/components/ui/BaseDialog.vue"));
-}); // Sweet Alert start
+}); // Sweet Alert is a popular public package used for alerts inside the application:
+// Sweet Alert setup start
 
 
 window.Swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_10___default());
@@ -31962,7 +31978,9 @@ var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_10___default().mixin({
     toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_10___default().resumeTimer));
   }
 });
-window.Toast = Toast;
+window.Toast = Toast; // Sweet alert setup end
+// We attribute all the imported stuff to the Vue3 application then we mount it in order to be able to use it:
+
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_5__["default"]);
 app.use(_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
 app.use(_store__WEBPACK_IMPORTED_MODULE_4__["default"]);

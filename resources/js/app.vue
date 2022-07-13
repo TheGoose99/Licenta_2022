@@ -9,6 +9,19 @@
 </template>
 
 <script>
+
+// In navbar we have an 'IF' statement to hide the navbar if the meta='hidenavbar'.
+// It is used for the 404 Not Found file in order to hide the navbar.
+
+// In order to use the routes inside the router, we have to use a router-view.
+// It is like a frame that switches its content based on the current accessed page
+
+// The transition is the animation we see while switching the current page in the router.
+// The component is what we will be seeing animated by the transition.
+
+//  As we will be seeing these two components throught most of the application, we will import them here.
+//  The reason I did not import them globally is that we only need to use them in the app.vue file
+// and then we can have them be visibile throughout the app:
 import NavBar from './components/layouts/header/mainNavBar.vue';
 import footerBar from './components/layouts/footer.vue';
 

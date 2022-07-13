@@ -26,8 +26,7 @@ class SellController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $validatedData = $request->validate([
             'userId' => 'required|numeric',
             'crypto' => 'required|string',
@@ -36,10 +35,26 @@ class SellController extends Controller
             'wallet' => 'required|numeric'
         ]);
 
-        if(!DB::table('stocks')->where('symbol', $request->crypto)->exists()) {
-            $date = new DateTime();
+        if(!DB::table('stocks')->where('symbol', $request->symbol)->exists()) {
+
+            if(!$request->date) {
+                $date = new DateTime();
+            } else {
+                $date = $request->date;
+            }
 
             DB::insert('INSERT INTO stocks (name, symbol, image, bought_price, volume, created_at) VALUES (?, ?, ?, ?, ?, ?)', [$request->cryptoName, $request->crypto, $request->image, $request->cost, $request->amount, $date]);
+
+        } else {
+            $stock = DB::table('stocks')->where('symbol', $request->symbol)->first();
+
+            if($stock->volume < $request->amount) {
+
+                DB::table('stocks')->where('symbol', $request->crypto)->update([
+                    'volume' => DB::raw('volume +' . $request->amount),
+                ]);
+
+            }
         }
 
         $data = array();

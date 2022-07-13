@@ -22,7 +22,7 @@
                 </li>
                 <hr id="separator">
                 <div class="text-light text-center h4">
-                    CRUD Features
+                    Features
                 </div>
                 <hr class="text-light">
                 <li class="nav-item w-100 has-submenu">

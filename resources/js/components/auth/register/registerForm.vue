@@ -167,9 +167,7 @@ export default {
                         title: 'Signed up successfully'
                     })
 
-                    const redirectURL = '/' + ('login');
-
-                    await this.$router.replace(redirectURL);
+                    await this.$router.push({ path: '/login' });
 
                 } catch(error) {
                     console.log(error);

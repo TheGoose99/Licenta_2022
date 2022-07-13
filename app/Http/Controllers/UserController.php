@@ -237,7 +237,7 @@ class UserController extends Controller
     }
 
     public function usersList(User $users) {
-        $users = User::paginate(10);
+        $users = User::orderBy('id', 'desc')->paginate(10);
 
         foreach($users as $user) {
             $roles = User::find($user->id)->roles;

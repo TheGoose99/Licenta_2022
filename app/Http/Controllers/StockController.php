@@ -16,7 +16,7 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $stocks = DB::table('stocks')->where('stocks.volume', '>', '1')->paginate(10);
+        $stocks = DB::table('stocks')->where('stocks.volume', '>', '1')->orderBy('name', 'asc')->paginate(10);
 
         return response()->json($stocks);
     }
