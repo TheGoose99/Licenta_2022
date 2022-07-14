@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 14, 2022 at 02:09 PM
+-- Generation Time: Jul 14, 2022 at 04:32 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -325,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -343,7 +343,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2022_03_29_200821_create_roles_permissions_table', 1),
 (29, '2022_04_01_131017_create_sells_table', 3),
 (25, '2022_04_23_173517_create_stocks_table', 2),
-(28, '2022_03_30_174747_create_purchases_table', 3);
+(28, '2022_03_30_174747_create_purchases_table', 3),
+(32, '2022_06_17_150459_add_default_image_to_stocks_table', 4);
 
 -- --------------------------------------------------------
 
@@ -439,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `personal_access_tokens`
@@ -526,7 +527,51 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (78, 'App\\Models\\User', 1, 'auth_token', '1a122078d13fc8c909f80dbaffaa525e0a71f62aece273698c4af8cff9a350fa', '[\"*\"]', NULL, '2022-05-01 10:22:13', '2022-05-01 10:22:13'),
 (79, 'App\\Models\\User', 1, 'auth_token', '359d13b800beb81839c071ebad841004a5ef50c79286ad716b87aa40123c4eea', '[\"*\"]', NULL, '2022-05-02 06:23:34', '2022-05-02 06:23:34'),
 (80, 'App\\Models\\User', 1, 'auth_token', 'a0742b27c69049267872175287ec4a7a800b9f4938e2a37710d859a2ef7bcf9f', '[\"*\"]', NULL, '2022-05-02 13:09:26', '2022-05-02 13:09:26'),
-(81, 'App\\Models\\User', 1, 'auth_token', '4eb004214c2049caffda3c130d91c232176d16b89e5e115e9908d694e98e6594', '[\"*\"]', NULL, '2022-05-14 10:59:06', '2022-05-14 10:59:06');
+(81, 'App\\Models\\User', 1, 'auth_token', '4eb004214c2049caffda3c130d91c232176d16b89e5e115e9908d694e98e6594', '[\"*\"]', NULL, '2022-05-14 10:59:06', '2022-05-14 10:59:06'),
+(82, 'App\\Models\\User', 1, 'auth_token', '4257445b1336c5dac1c59c959859a8ef682d4415ac653c90cf218266daf4e4bf', '[\"*\"]', NULL, '2022-05-21 08:55:51', '2022-05-21 08:55:51'),
+(83, 'App\\Models\\User', 1, 'auth_token', 'a022745458aa1143a51acbc4dd5aaa0a499584769cbfed5def8b0810c22b0985', '[\"*\"]', NULL, '2022-05-21 12:04:22', '2022-05-21 12:04:22'),
+(84, 'App\\Models\\User', 1, 'auth_token', '8dd3457bed25092ef70261c70b9fd420eddeaeaceada5b0010edd3d41d0a0019', '[\"*\"]', NULL, '2022-05-23 11:54:10', '2022-05-23 11:54:10'),
+(85, 'App\\Models\\User', 1, 'auth_token', 'd72718523d249e3e0c7b5b6ce04f2c69e8f16e6a1073c8f1a361c27658f65788', '[\"*\"]', NULL, '2022-05-23 14:57:26', '2022-05-23 14:57:26'),
+(86, 'App\\Models\\User', 1, 'auth_token', 'a141395339f58dd20c384de1a6abd75faa39830705054bfa98e61ceae3509b6f', '[\"*\"]', NULL, '2022-05-24 12:04:56', '2022-05-24 12:04:56'),
+(87, 'App\\Models\\User', 1, 'auth_token', 'd6bb44495f2f295ddb85db0a5b0270d96ef1bbb37e116e01d426f67998adc3f1', '[\"*\"]', NULL, '2022-05-26 06:18:10', '2022-05-26 06:18:10'),
+(88, 'App\\Models\\User', 1, 'auth_token', '200d37325f0cf306ed4e8b739cc7ad5e8ead8ebfbb261a95124ed9b5c7e4c090', '[\"*\"]', NULL, '2022-05-26 06:28:29', '2022-05-26 06:28:29'),
+(89, 'App\\Models\\User', 6, 'auth_token', '1ddc3292753c0b68607309fa770b968fe44220ac59d25379d2c20bb6aa15d09a', '[\"*\"]', NULL, '2022-05-26 07:28:51', '2022-05-26 07:28:51'),
+(90, 'App\\Models\\User', 6, 'auth_token', 'c8dc25c48c6868419284523d096e75217f1b7fbe973104b67392fb7189f68871', '[\"*\"]', NULL, '2022-05-26 07:39:48', '2022-05-26 07:39:48'),
+(91, 'App\\Models\\User', 1, 'auth_token', '5d767ebef037cbe8ad3765e189a22ec96be597133f5b5323e7bb48500323b0e6', '[\"*\"]', NULL, '2022-05-26 07:40:49', '2022-05-26 07:40:49'),
+(92, 'App\\Models\\User', 1, 'auth_token', 'c13be1ae50260dbb253a96926f51e4691311dc1f3081f3214b8eedb80b0dfc04', '[\"*\"]', NULL, '2022-05-27 13:00:43', '2022-05-27 13:00:43'),
+(93, 'App\\Models\\User', 1, 'auth_token', '14772183996a968b3b6ef7e66a8e05ed4914ae09533daaa3dc754c7362ca26d2', '[\"*\"]', NULL, '2022-05-31 09:20:52', '2022-05-31 09:20:52'),
+(94, 'App\\Models\\User', 1, 'auth_token', 'ccc82452c1a9536ce41a9268e8422c18eea435c6bd416d28469657fdcfcd867d', '[\"*\"]', NULL, '2022-06-15 07:32:13', '2022-06-15 07:32:13'),
+(95, 'App\\Models\\User', 1, 'auth_token', 'f1e84c14dd209a0cddbb771a0743803c39d57b15981e51b6e89dec79cc24f659', '[\"*\"]', NULL, '2022-06-15 12:25:11', '2022-06-15 12:25:11'),
+(96, 'App\\Models\\User', 1, 'auth_token', '2306a4855b0995f2873a6389a971b5eaaa3a17e1e94ff59d4f126e727ac74b7f', '[\"*\"]', NULL, '2022-06-17 11:12:41', '2022-06-17 11:12:41'),
+(97, 'App\\Models\\User', 1, 'auth_token', '19e72f4f943695e5250e876af1aba053a901e01aa175ce299534bf2a19b7b705', '[\"*\"]', NULL, '2022-06-18 06:50:09', '2022-06-18 06:50:09'),
+(98, 'App\\Models\\User', 1, 'auth_token', '5e8450ba8227672408f1997172540836260238eed62d57a99836c491ae4d51b6', '[\"*\"]', NULL, '2022-06-18 13:57:34', '2022-06-18 13:57:34'),
+(99, 'App\\Models\\User', 1, 'auth_token', 'da4090f4b6a4d8689c0ba88cf097451522b225282ee452f8130f9a021e22e385', '[\"*\"]', NULL, '2022-06-18 13:58:29', '2022-06-18 13:58:29'),
+(100, 'App\\Models\\User', 1, 'auth_token', '1917ccbb21804155cd36cd6185374551e8498729458df0bcdaaedd3b069e7ead', '[\"*\"]', NULL, '2022-06-18 13:59:51', '2022-06-18 13:59:51'),
+(101, 'App\\Models\\User', 1, 'auth_token', '70edbee836e72d3d006395e933c43cb5f420567594eb7097e5df5466236263c1', '[\"*\"]', NULL, '2022-06-20 06:17:30', '2022-06-20 06:17:30'),
+(102, 'App\\Models\\User', 1, 'auth_token', 'a7443f4a9c33cd1ecc4710306202030b7a06eccc3a49fa6591e2f1be466db9e0', '[\"*\"]', NULL, '2022-07-02 07:31:55', '2022-07-02 07:31:55'),
+(103, 'App\\Models\\User', 1, 'auth_token', '717233245d637dbe4f889342bf846876e09579d8b6e31b5216ccb99d2036d5e4', '[\"*\"]', NULL, '2022-07-02 07:34:42', '2022-07-02 07:34:42'),
+(104, 'App\\Models\\User', 1, 'auth_token', 'b9bd600b7a0cd83023e1a1acb864bd2086517ea72c0a76063640779b3d5c70dd', '[\"*\"]', NULL, '2022-07-02 07:52:46', '2022-07-02 07:52:46'),
+(105, 'App\\Models\\User', 1, 'auth_token', '09398f93f91f4ba26220f87c98e9499cc55df94d31e909871028579956e7818e', '[\"*\"]', NULL, '2022-07-04 07:06:21', '2022-07-04 07:06:21'),
+(106, 'App\\Models\\User', 1, 'auth_token', '2ab7f79aac10acaa9e9e50aa6e63a19aa21ea11102b4a22238253b1d9cdf982f', '[\"*\"]', NULL, '2022-07-10 07:40:56', '2022-07-10 07:40:56'),
+(107, 'App\\Models\\User', 1, 'auth_token', 'cf7216d2af39dd8bc84ec9a4217c983a115c02446a0e2991a2a30ce02cd0ffca', '[\"*\"]', NULL, '2022-07-10 07:43:24', '2022-07-10 07:43:24'),
+(108, 'App\\Models\\User', 7, 'auth_token', '8d00ac756e883752b2123bd97c8f02ef7ff01be9c66125ce7b5b662d656e9c75', '[\"*\"]', NULL, '2022-07-10 07:50:10', '2022-07-10 07:50:10'),
+(109, 'App\\Models\\User', 1, 'auth_token', '96ba4261526aa94678d91fba75bf870a51397952e18ac6de1a6128fec9ab64bd', '[\"*\"]', NULL, '2022-07-10 07:50:50', '2022-07-10 07:50:50'),
+(110, 'App\\Models\\User', 1, 'auth_token', '3716a73b4fa1753e713f8ceda5f697afc817b7430818887237acc81d0e12deca', '[\"*\"]', NULL, '2022-07-10 07:51:54', '2022-07-10 07:51:54'),
+(111, 'App\\Models\\User', 17, 'auth_token', '934079ae141766d0f70b0e9f3a93281613b1ec3bc6786aac78e9d2ce10547ea0', '[\"*\"]', NULL, '2022-07-10 08:01:45', '2022-07-10 08:01:45'),
+(112, 'App\\Models\\User', 1, 'auth_token', '5da2dae6aa440fc4e6e6a2f2d15db40a335cb69545b4843b15a9cb3cb6859e65', '[\"*\"]', NULL, '2022-07-10 08:02:57', '2022-07-10 08:02:57'),
+(113, 'App\\Models\\User', 1, 'auth_token', '6dbcd0691c6c4efa1dc3138a9372ef6679833cd616cbfcc3fa7529bcfbc216f0', '[\"*\"]', NULL, '2022-07-12 10:46:19', '2022-07-12 10:46:19'),
+(114, 'App\\Models\\User', 1, 'auth_token', '115cc9df79d0f1bcc5a34d51ce9d60d18ce582aa087f84f1b19329b2136bd4a6', '[\"*\"]', NULL, '2022-07-13 11:56:46', '2022-07-13 11:56:46'),
+(115, 'App\\Models\\User', 20, 'auth_token', '76af96dfe27c847e54d6c27b739351af5bfc62c13c5964f2783ee823b9785ef5', '[\"*\"]', NULL, '2022-07-13 11:58:40', '2022-07-13 11:58:40'),
+(116, 'App\\Models\\User', 20, 'auth_token', '18bcea6e7abd647b0acf20469c0f3fd510d1fa9fb93631f0324ba2695790a27b', '[\"*\"]', NULL, '2022-07-13 11:58:51', '2022-07-13 11:58:51'),
+(117, 'App\\Models\\User', 1, 'auth_token', '13f530387ffdb5446c92593318be5e915a13ed1083864fe219df92d0abf10059', '[\"*\"]', NULL, '2022-07-13 12:01:56', '2022-07-13 12:01:56'),
+(118, 'App\\Models\\User', 1, 'auth_token', '551ce5510c84553a758b920263493b136686c628fa4c0e5b3681b52611e74c4a', '[\"*\"]', NULL, '2022-07-13 12:05:36', '2022-07-13 12:05:36'),
+(119, 'App\\Models\\User', 20, 'auth_token', '187b7634e22e3f976cbcc95c21ad13163ac9ac918460e34306a7375c8e7429d6', '[\"*\"]', NULL, '2022-07-13 12:08:48', '2022-07-13 12:08:48'),
+(120, 'App\\Models\\User', 21, 'auth_token', '2b1cf963e9421afbcb35d50cb03e90d9a34be83fa350c8eff7f958a1ba385496', '[\"*\"]', NULL, '2022-07-13 12:11:16', '2022-07-13 12:11:16'),
+(121, 'App\\Models\\User', 21, 'auth_token', '0ad751cda2bf4a7a11edf56fe4f5c42e457c381837dda7ea909b7cf7a74bd0d4', '[\"*\"]', NULL, '2022-07-13 12:11:22', '2022-07-13 12:11:22'),
+(122, 'App\\Models\\User', 22, 'auth_token', '68cb6f92ddb687cb2be893db5a0e0678666910a3706ae6fe70b307dc6c2408a4', '[\"*\"]', NULL, '2022-07-13 12:16:21', '2022-07-13 12:16:21'),
+(123, 'App\\Models\\User', 23, 'auth_token', '54203e9311389b9a9b8ecf9a7947b4cd0faac7147203dcd1c68553d9d7f24903', '[\"*\"]', NULL, '2022-07-13 12:16:45', '2022-07-13 12:16:45'),
+(124, 'App\\Models\\User', 23, 'auth_token', 'f27bf9df6ee343bc19ebc0224eea6653e8e93f140eeaf9052600a4638989d032', '[\"*\"]', NULL, '2022-07-13 12:17:04', '2022-07-13 12:17:04'),
+(125, 'App\\Models\\User', 1, 'auth_token', 'cb54fdc1637083d06083466710560e07ee43933f5076f7973e7ed152cc2b17f9', '[\"*\"]', NULL, '2022-07-13 12:20:06', '2022-07-13 12:20:06');
 
 -- --------------------------------------------------------
 
@@ -544,27 +589,49 @@ CREATE TABLE IF NOT EXISTS `purchases` (
   `used_wallet` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `purchase_code` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `purchases`
 --
 
-INSERT INTO `purchases` (`id`, `user_id`, `crypto_symbol`, `bought_for`, `bought_amount`, `used_wallet`, `created_at`, `updated_at`) VALUES
-(1, 1, 'eth', '321', '0.11389', '5644444', '2022-05-01 14:23:16', '2022-05-01 14:23:16'),
-(2, 1, 'eth', '312', '0.11087', '5644444', '2022-05-01 14:50:10', '2022-05-01 14:50:10'),
-(3, 1, 'dai', '13', '12.98701', '5644444', '2022-05-01 14:52:39', '2022-05-01 14:52:39'),
-(4, 1, 'eth', '13', '0.00463', '5644444', '2022-04-30 15:10:35', '2022-05-01 15:10:35'),
-(5, 1, 'btc', '25', '0.00065', '5644444', '2022-05-01 15:10:40', '2022-05-01 15:10:40'),
-(6, 1, 'wbtc', '14', '0.00036', '5644444', '2022-05-01 15:13:54', '2022-05-01 15:13:54'),
-(7, 1, 'btc', '1000', '0.02602', '5644444', '2022-04-30 15:15:36', '2022-05-01 15:15:36'),
-(9, 1, 'btc', '10000', '0.26022', '5644444', '2022-05-01 15:16:21', '2022-05-01 15:16:21'),
-(10, 1, 'btc', '213', '0.00563', '5644444', '2022-05-01 16:33:36', '2022-05-01 16:33:36'),
-(11, 1, 'steth', '412', '0.14919', '5644444', '2022-05-01 16:33:41', '2022-05-01 16:33:41'),
-(12, 1, 'eth', '412', '0.14898', '5644444', '2022-05-01 16:33:46', '2022-05-01 16:33:46'),
-(13, 1, 'btc', '45', '0.00115', '5644444', '2022-05-02 06:35:47', '2022-05-02 06:35:47'),
-(14, 1, 'btc', '5000', '0.12930', '5644444', '2022-05-02 13:12:32', '2022-05-02 13:12:32');
+INSERT INTO `purchases` (`id`, `user_id`, `crypto_symbol`, `bought_for`, `bought_amount`, `used_wallet`, `created_at`, `updated_at`, `purchase_code`) VALUES
+(24, 1, 'vet', '15', '667.58794', '622245533', '2022-06-15 14:13:47', '2022-06-15 14:13:47', 'i4u0w8'),
+(23, 1, 'vet', '12', '534.07035', '622245533', '2022-06-15 14:12:14', '2022-06-15 14:12:14', 'd5o5c4'),
+(22, 1, 'xec', '12', '337552.74262', '622245533', '2022-06-15 14:09:55', '2022-06-15 14:09:55', 'b8l2d4'),
+(21, 1, 'hot', '12', '6124.82391', '622245533', '2022-06-15 14:06:37', '2022-06-15 14:06:37', 'q0f6r3'),
+(20, 1, 'grt', '124', '1274.89384', '622245533', '2022-06-15 14:04:58', '2022-06-15 14:04:58', 'a0c7b6'),
+(19, 1, 'atom', '12', '1.87500', '622245533', '2022-06-15 14:03:28', '2022-06-15 14:03:28', 'l0s6x1'),
+(18, 6, 'usdt', '12', '12', '21122', '2022-05-26 07:40:39', '2022-05-26 07:40:39', 'f9d2l0'),
+(15, 1, 'dai', '10', '9.97009', '5644444', '2022-05-21 08:55:59', '2022-05-21 08:55:59', '1259'),
+(16, 1, 'eth', '12', '166.51634', '5644444', '2022-05-21 08:56:23', '2022-05-21 08:56:23', '8709'),
+(17, 1, 'btc', '10', '0.00034', '5644444', '2022-05-21 12:05:22', '2022-05-21 12:05:22', 'r3p1a2'),
+(25, 1, 'vet', '500', '22457.41625', '622245533', '2022-06-15 14:15:02', '2022-06-15 14:15:02', 'c5b3u1'),
+(26, 1, 'tfuel', '42', '1041.23798', '622245533', '2022-06-15 14:23:50', '2022-06-15 14:23:50', 'i5b9r2'),
+(27, 1, 'tfuel', '10000', '247913.80533', '622245533', '2022-06-15 14:24:32', '2022-06-15 14:24:32', 'v1k5y2'),
+(28, 1, 'leo', '50000', '10090.36145', '622245533', '2022-06-15 14:25:59', '2022-06-15 14:25:59', 'm9q1v7'),
+(29, 1, 'btc', '1242', '0.05961', '622245533', '2022-06-15 14:29:01', '2022-06-15 14:29:01', 'x5q9w3'),
+(30, 1, 'leo', '50000', '10110.66398', '622245533', '2022-06-15 14:29:20', '2022-06-15 14:29:20', 's0v1y3'),
+(31, 1, 'flow', '100', '68.49315', '622245533', '2022-06-15 14:30:26', '2022-06-15 14:30:26', 'n0v7c3'),
+(32, 1, 'avax', '15', '0.98103', '622245533', '2022-06-18 07:39:55', '2022-06-18 07:39:55', 'g6d8u4'),
+(33, 1, 'eth', '100', '0.09912', '622245533', '2022-06-18 07:41:40', '2022-06-18 07:41:40', 'j3n2f7'),
+(34, 1, 'tusd', '2212', '2217.20155', '622245533', '2022-06-20 06:21:26', '2022-06-20 06:21:26', 'o1j8p4'),
+(35, 1, 'ltc', '150', '2.96384', '622245533', '2022-07-04 07:06:53', '2022-07-04 07:06:53', 'y6u4p5'),
+(36, 1, 'avax', '12', '0.62080', '622245533', '2022-07-10 07:41:06', '2022-07-10 07:41:06', 'o7h4f8'),
+(37, 1, 'dot', '50', '7.10227', '4143225332', '2022-07-10 08:08:31', '2022-07-10 08:08:31', 't1l3s4'),
+(38, 1, 'flow', '100', '59.88024', '4143225332', '2022-07-10 08:09:10', '2022-07-10 08:09:10', 'x8l4i4'),
+(39, 1, 'link', '123', '20.60302', '4143225332', '2022-07-13 11:57:04', '2022-07-13 11:57:04', 'j2k4w2'),
+(40, 20, 'leo', '123', '22.69373', '132', '2022-07-13 11:59:52', '2022-07-13 11:59:52', 'k6h3i1'),
+(41, 20, 'xlm', '125', '1223.04411', '132', '2022-07-13 12:00:27', '2022-07-13 12:00:27', 's1j0h1'),
+(42, 1, 'cro', '123', '1098.07703', '4143225332', '2022-07-13 12:05:17', '2022-07-13 12:05:17', 'r5j5n9'),
+(43, 21, 'mana', '4000', '5048.70103', '746464', '2022-07-13 12:12:56', '2022-07-13 12:12:56', 'v9e7j4'),
+(44, 23, 'ltc', '4500', '93.73047', '4211422', '2022-07-13 12:18:05', '2022-07-13 12:18:05', 't6s6b1'),
+(45, 23, 'xlm', '1230', '11975.58150', '4211422', '2022-07-13 12:18:13', '2022-07-13 12:18:13', 'd4u7y7'),
+(46, 23, 'xlm', '1230', '11975.58150', '4211422', '2022-07-13 12:18:14', '2022-07-13 12:18:14', 'g7w5v1'),
+(47, 23, 'btc', '100', '0.00510', '4211422', '2022-07-13 12:18:20', '2022-07-13 12:18:20', 'e7r8j2'),
+(48, 23, 'usdt', '4500', '4501.77370', '4211422', '2022-07-13 12:18:54', '2022-07-13 12:18:54', 'o1m9u9');
 
 -- --------------------------------------------------------
 
@@ -614,11 +681,13 @@ CREATE TABLE IF NOT EXISTS `role_user` (
 INSERT INTO `role_user` (`user_id`, `role_id`) VALUES
 (1, 1),
 (6, 1),
-(6, 3),
 (7, 1),
 (10, 1),
-(10, 3),
-(11, 1);
+(11, 1),
+(13, 3),
+(14, 3),
+(20, 1),
+(23, 3);
 
 -- --------------------------------------------------------
 
@@ -636,17 +705,30 @@ CREATE TABLE IF NOT EXISTS `sells` (
   `used_wallet` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `sell_code` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `sells`
 --
 
-INSERT INTO `sells` (`id`, `user_id`, `crypto_symbol`, `sold_for`, `sold_amount`, `used_wallet`, `created_at`, `updated_at`) VALUES
-(5, 1, 'doge', '1290.36600', '10000', '5644444', '2022-05-02 13:21:04', '2022-05-02 13:21:04'),
-(4, 1, 'eth', '2807.94000', '1', '5644444', '2022-05-01 15:14:05', '2022-05-01 15:14:05'),
-(3, 1, 'dai', '421.42100', '421', '5644444', '2022-05-01 14:52:17', '2022-05-01 14:52:17');
+INSERT INTO `sells` (`id`, `user_id`, `crypto_symbol`, `sold_for`, `sold_amount`, `used_wallet`, `created_at`, `updated_at`, `sell_code`) VALUES
+(6, 1, 'wbtc', '351768', '12', '5644444', '2022-05-21 08:59:05', '2022-05-21 08:59:05', '9998'),
+(7, 1, 'trx', '0.86478', '12', '5644444', '2022-05-21 08:59:38', '2022-05-21 08:59:38', '7904'),
+(8, 1, 'btc', '353556', '12', '5644444', '2022-05-21 12:09:41', '2022-05-21 12:09:41', 's1e8j2'),
+(9, 1, 'cro', '4.34192', '23', '5644444', '2022-05-21 12:09:52', '2022-05-21 12:09:52', 'v4j8i0'),
+(10, 1, 'link', '7.05000', '1', '5644444', '2022-05-21 12:10:47', '2022-05-21 12:10:47', 'v7k4f8'),
+(11, 1, 'cake', '54.84000', '12', '5644444', '2022-05-21 12:11:26', '2022-05-21 12:11:26', 'x0k9r9'),
+(12, 1, 'axs', '2570.70000', '123', '5644444', '2022-05-21 12:14:07', '2022-05-21 12:14:07', 'u3v3a2'),
+(13, 1, 'Ethereum Classic', '13.70000', '1', '622245533', '2022-06-18 07:40:12', '2022-06-18 07:40:12', 'g3b1i4'),
+(14, 20, 'Dai', '2002', '2000', '132', '2022-07-13 12:00:57', '2022-07-13 12:00:57', 'e0r7v4'),
+(15, 1, 'Cronos', '13.77920', '123', '4143225332', '2022-07-13 12:08:24', '2022-07-13 12:08:24', 'k4t1j9'),
+(17, 20, 'Cronos', '13.79445', '123', '132', '2022-07-13 12:08:55', '2022-07-13 12:08:55', 'x7q9f4'),
+(18, 21, 'Stellar', '51.25800', '500', '746464', '2022-07-13 12:13:05', '2022-07-13 12:13:05', 'g9j5f3'),
+(19, 23, 'Lido Staked Ether', '123176.40000', '120', '4211422', '2022-07-13 12:18:28', '2022-07-13 12:18:28', 'a5b2s2'),
+(20, 23, 'Ethereum', '37383.85000', '35', '4211422', '2022-07-13 12:18:35', '2022-07-13 12:18:35', 'q2n8e9'),
+(21, 23, 'Ethereum', '320433', '300', '4211422', '2022-07-13 12:18:45', '2022-07-13 12:18:45', 'p3c1l5');
 
 -- --------------------------------------------------------
 
@@ -659,36 +741,60 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `symbol` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cryptos/default-image.jpg',
   `bought_price` int(11) NOT NULL,
   `volume` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `stocks_name_unique` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `stocks`
 --
 
 INSERT INTO `stocks` (`id`, `name`, `symbol`, `image`, `bought_price`, `volume`, `created_at`, `updated_at`) VALUES
-(4, 'Bitcoin', 'btc', 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 132, 115686, '2022-05-02 06:34:03', NULL),
-(3, 'Wrapped Bitcoin', 'wbtc', 'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1548822744', 132, 38683, '2022-04-28 21:00:00', NULL),
-(5, 'Ethereum', 'eth', 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880', 50000, 5964, '2022-05-01 14:56:57', NULL),
+(4, 'Bitcoin', 'btc', 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 132, 115698, '2022-05-02 06:34:03', NULL),
+(3, 'Wrapped Bitcoin', 'wbtc', 'https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1548822744', 132, 38695, '2022-04-28 21:00:00', NULL),
+(5, 'Ethereum', 'eth', 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880', 50000, 5797, '2022-05-01 14:56:57', NULL),
 (6, 'BNB', 'bnb', 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1644979850', 6, 9785, '2022-05-01 13:25:57', NULL),
-(8, 'Dai', 'dai', 'https://assets.coingecko.com/coins/images/9956/large/4943.png?1636636734', 1000, 1408, '2022-05-01 15:07:36', NULL),
-(9, 'Dogecoin', 'doge', 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png?1547792256', 100000, 760260, '2022-05-01 14:58:42', NULL),
-(10, 'Tether', 'usdt', 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', 10000, 10122, '2022-05-01 14:57:03', NULL),
+(8, 'Dai', 'dai', 'https://assets.coingecko.com/coins/images/9956/large/4943.png?1636636734', 1000, 3398, '2022-05-01 15:07:36', NULL),
+(43, 'Stellar', 'xlm', 'https://assets.coingecko.com/coins/images/100/large/Stellar_symbol_black_RGB.png?1552356157', 24000, 209718, '2022-07-13 12:20:43', NULL),
+(10, 'Tether', 'usdt', 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', 10000, 5608, '2022-05-01 14:57:03', NULL),
 (11, 'Lido Staked Ether', 'steth', 'https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1608607546', 12300, 346078, '2022-05-01 14:57:39', NULL),
-(12, 'Cronos', 'cro', 'https://assets.coingecko.com/coins/images/7310/large/oCw2s3GI_400x400.jpeg?1645172042', 41221, 132081, '2022-05-01 15:09:10', NULL),
+(12, 'Cronos', 'cro', 'https://assets.coingecko.com/coins/images/7310/large/oCw2s3GI_400x400.jpeg?1645172042', 41221, 131006, '2022-05-01 15:09:10', NULL),
 (13, 'Polygon', 'matic', 'https://assets.coingecko.com/coins/images/4713/large/matic-token-icon.png?1624446912', 312, 346, '2022-05-01 14:52:25', NULL),
 (14, 'ApeCoin', 'ape', 'https://assets.coingecko.com/coins/images/24383/large/apecoin.jpg?1647476455', 41, 2, '2022-05-01 15:33:42', NULL),
 (15, 'The Sandbox', 'sand', 'https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1597397942', 512, 240, '2022-05-01 15:04:53', NULL),
-(16, 'Polkadot', 'dot', 'https://assets.coingecko.com/coins/images/12171/large/polkadot.png?1639712644', 4212, 274, '2022-05-01 15:08:49', NULL),
+(16, 'Polkadot', 'dot', 'https://assets.coingecko.com/coins/images/12171/large/polkadot.png?1639712644', 4212, 267, '2022-05-01 15:08:49', NULL),
 (17, 'FTX Token', 'ftt', 'https://assets.coingecko.com/coins/images/9026/large/F.png?1609051564', 42112, 1085, '2022-05-01 15:08:58', NULL),
 (18, 'Binance USD', 'busd', 'https://assets.coingecko.com/coins/images/9576/large/BUSD.png?1568947766', 14, 14, '2022-05-01 15:13:20', NULL),
-(19, 'Avalanche', 'avax', 'https://assets.coingecko.com/coins/images/12559/large/coin-round-red.png?1604021818', 14, 834, '2022-05-01 15:13:33', NULL);
+(19, 'Avalanche', 'avax', 'https://assets.coingecko.com/coins/images/12559/large/coin-round-red.png?1604021818', 14, 832, '2022-05-01 15:13:33', NULL),
+(20, 'TRON', 'trx', 'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png?1547035066', 12, 13, '2022-05-21 08:59:16', NULL),
+(21, 'Shiba Inu', 'shib', 'https://assets.coingecko.com/coins/images/11939/large/shiba.png?1622619446', 1, 91491, '2022-05-26 06:18:32', NULL),
+(22, 'Algorand', 'algo', 'https://assets.coingecko.com/coins/images/4380/large/download.png?1547039725', 32, 14, '2022-05-21 12:09:19', NULL),
+(23, 'Chainlink', 'link', 'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1547034700', 12, 65, '2022-05-21 12:10:31', NULL),
+(24, 'PancakeSwap', 'cake', 'https://assets.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1629359065', 12, 67, '2022-05-21 12:11:05', NULL),
+(25, 'Axie Infinity', 'axs', 'https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1604471082', 123, 2694, '2022-05-21 12:14:07', NULL),
+(26, 'Radix', 'xrd', 'https://assets.coingecko.com/coins/images/4374/large/Radix.png?1629701658', 1, 17, '2022-06-15 13:43:02', NULL),
+(27, 'NEM', 'xem', 'https://assets.coingecko.com/coins/images/242/large/NEM_WC_Logo_200px.png?1642668663', 1, 26, '2022-06-15 13:43:27', NULL),
+(28, 'IOTA', 'miota', 'https://assets.coingecko.com/coins/images/692/large/IOTA_Swirl.png?1604238557', 10, 40, '2022-06-15 14:01:09', NULL),
+(29, 'Aave', 'aave', 'https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1601374110', 12, 0, '2022-06-15 14:01:53', NULL),
+(30, 'Cosmos Hub', 'atom', 'https://assets.coingecko.com/coins/images/1481/large/cosmos_hub.png?1555657960', 12, 2, '2022-06-15 14:03:28', NULL),
+(31, 'The Graph', 'grt', 'https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1608145566', 1275, 1275, '2022-06-15 14:04:58', NULL),
+(32, 'Decred', 'dcr', 'https://assets.coingecko.com/coins/images/329/large/decred.png?1547034093', 12, 0, '2022-06-15 14:06:14', NULL),
+(33, 'STEPN', 'gmt', 'https://assets.coingecko.com/coins/images/23597/large/gmt.png?1644658792', 12, 0, '2022-06-15 14:06:30', NULL),
+(34, 'Holo', 'hot', 'https://assets.coingecko.com/coins/images/3348/large/Holologo_Profile.png?1547037966', 12, 6125, '2022-06-15 14:06:37', NULL),
+(35, 'eCash', 'xec', 'https://assets.coingecko.com/coins/images/16646/large/Logo_final-22.png?1628239446', 12, 337553, '2022-06-15 14:09:17', NULL),
+(36, 'VeChain', 'vet', 'https://assets.coingecko.com/coins/images/1167/large/VeChain-Logo-768x725.png?1547035194', 12, 534, '2022-06-15 14:10:54', NULL),
+(37, 'Theta Fuel', 'tfuel', 'https://assets.coingecko.com/coins/images/8029/large/1_0YusgngOrriVg4ZYx4wOFQ.png?1553483622', 42, 1041, '2022-06-15 14:21:26', NULL),
+(38, 'LEO Token', 'leo', 'https://assets.coingecko.com/coins/images/8418/large/leo-token.png?1558326215', 400, 60, '2022-07-13 12:20:28', NULL),
+(39, 'Flow', 'flow', 'https://assets.coingecko.com/coins/images/13446/large/5f6294c0c7a8cda55cb1c936_Flow_Wordmark.png?1631696776', 100, 0, '2022-06-15 14:30:26', NULL),
+(40, 'Ethereum Classic', 'Ethereum Classic', 'https://assets.coingecko.com/coins/images/453/large/ethereum-classic-logo.png?1547034169', 1, 15, '2022-06-18 07:40:12', NULL),
+(41, 'TrueUSD', 'tusd', 'https://assets.coingecko.com/coins/images/3449/large/tusd.png?1618395665', 2212, 0, '2022-06-20 06:21:26', NULL),
+(42, 'Litecoin', 'ltc', 'https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580', 100, 880, '2022-07-13 12:21:03', NULL),
+(44, 'Decentraland', 'mana', 'https://assets.coingecko.com/coins/images/878/large/decentraland-mana.png?1550108745', 4000, 0, '2022-07-13 12:12:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -714,22 +820,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_username_unique` (`username`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `email`, `email_verified_at`, `password`, `phone`, `address`, `postal_code`, `country_id`, `wallet`, `created_at`, `updated_at`) VALUES
-(1, 'Ricardo_Milos', 'Marian', 'marianpoto@yahoo.com', NULL, '$2y$10$XVVSGc/OwMAwR/oQyhxONuhUY8.nl1txVprC.zl5Lr/JRTqDKSd0q', 765265837, 'Ileana Cosanzeana 15', 61133791, 247, '5644444', '2022-04-02 13:13:23', '2022-04-29 13:04:43'),
-(7, 'Mu1', 'Ricardo', 'marianpoto1@yahoo.com', NULL, '$2y$10$qK4FYqQkZAhyUPSjhZcdluOYqSTGBMT43IjUGlrgw4Vzf.Vc8ugp.', 765265837, 'SAFafsafs', 21132132, 10, '1232123', '2022-04-23 06:43:18', '2022-04-23 10:41:24'),
-(6, 'Radu', 'Radu', 'radu@andrei.com', NULL, '$2y$10$VYDUPIqZ8HmcwK2fmF4YmeTKF8YD4RP19HZczXavYYDmp1SS5Jb9S', NULL, NULL, NULL, NULL, NULL, '2022-04-16 09:01:29', '2022-05-02 13:10:25'),
-(10, 'Toor', '1', 'wrwa@wdwdw.com', NULL, 'Praciwre4!', 765265837, 'e212', 1232, 19, '11', '2022-04-23 07:38:49', '2022-05-02 13:10:16'),
-(11, 'Ceva', '3112', 'mariar@wwe.wdo', NULL, 'Praciwre4!', 765265837, 'awwwdaw', 13221, 19, '32112', '2022-04-23 07:39:23', '2022-04-24 16:55:09'),
-(16, 'Ma', NULL, 'domar@ayahoo.com', NULL, '$2y$10$AYd9N/h38IKCo8YR3.3Yue8VjO7b6JcduGXJNeloGvz3t97LGkGYm', NULL, NULL, NULL, NULL, NULL, '2022-04-29 12:58:20', '2022-04-29 12:58:20'),
-(13, 'Mari', '1312', 'mara123@gmail.com', NULL, 'Praciwre4!', NULL, NULL, NULL, NULL, NULL, '2022-04-23 07:43:00', '2022-04-23 07:43:00'),
-(14, 'Ramadan', '1', 'asra@wew.com', NULL, 'Praciwre4!', NULL, NULL, NULL, NULL, NULL, '2022-04-23 07:43:26', '2022-04-24 17:27:31'),
-(15, 'SE', '1', 'rwa@wedwdw.com', NULL, 'Praciwre4!', NULL, NULL, NULL, 19, NULL, '2022-04-23 11:48:27', '2022-04-23 11:48:27');
+(1, 'The_Goose99', 'TestName', 'test@test.com', NULL, '$2y$10$SH7iR3T8UNGnFKZiuWSxZ.UwWrN22paMfm5Akq82cFNTk0EdMdn4q', 728123815, 'Bucuresti, str. 32, Ap. 12, Sc. A', 43412643, 247, '4143225332', '2022-04-02 13:13:23', '2022-07-10 08:05:06'),
+(23, 'TestNumber4', 'Daniel', 'marianpoto@yahoo.com', NULL, '$2y$10$GBGwyjUhd.aDCI.JN/GGYuqdUuWsVTCVcFUs40Az2L/8XLhyojeLe', 132471934, 'Str. Biruintei nr 74 Sc. B', 123123, 152, '4211422', '2022-07-13 12:16:45', '2022-07-13 12:29:12'),
+(20, 'Test123', 'Test', 'test@yahoo.com', NULL, '$2y$10$wpA/inHC.Q6WZVptN7UzUuSiyOr/DqiqdeXdpoC7TKF8b7NIBt4E2', 765265837, 'Str. Hunedoara', 613779, 184, '132', '2022-07-13 11:58:40', '2022-07-13 12:22:29'),
+(21, 'TestNumber2', 'TestName', 'gamingro99@yahoo.com', NULL, '$2y$10$MpatE.Y1fQs1M7e7vJHMs.FmfJ9iNbg3IRgTogmqSx6oAFnbuUR1G', 432148315, 'Str. Dummy Data', 665837, 163, '746464', '2022-07-13 12:11:16', '2022-07-13 12:12:44'),
+(22, 'TestNumber3', NULL, 'gamingro991@yahoo.com', NULL, '$2y$10$hXXAKP6DMvLroDnrcth1keIcJaOXx9hslnhwJxvW6qgber4NSwHL2', NULL, NULL, NULL, NULL, NULL, '2022-07-13 12:16:21', '2022-07-13 12:16:21');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
